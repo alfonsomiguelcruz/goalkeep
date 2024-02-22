@@ -29,7 +29,7 @@
             android:id="@+id/ib_edit_goal_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/btn_star"
+            android:src="@android:drawable/checkbox_on_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
-            android:src="@android:drawable/btn_star"
+            android:src="@android:drawable/btn_dialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ib_edit_goal_confirm"
             app:layout_constraintTop_toTopOf="parent" />
@@ -173,7 +173,11 @@
     <Button
         android:id="@+id/btn_delete_goal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Goal" />
+        android:layout_height="35dp"
+        android:background="@drawable/corners"
+        android:backgroundTint="#B21D32"
+        android:enabled="false"
+        android:text="Delete Goal"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

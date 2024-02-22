@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:orientation="vertical"
-        android:padding="25dp">
+        android:padding="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tv_view_goal_title"
@@ -45,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@color/white"
+                android:background="@drawable/corners"
                 android:text="PriorityState"
                 android:textAlignment="center"
                 android:textColor="#000000" />
@@ -56,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:background="@color/black"
+                android:background="@drawable/corners"
+                android:backgroundTint="@color/black"
                 android:text="TagName"
                 android:textAlignment="center"
                 android:textColor="@color/white" />
@@ -71,13 +75,13 @@
             android:textColor="#FFFFFF" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_view_goal"
+            android:id="@+id/cl_view_goal_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/ll_view_goal_progress"
-                android:layout_width="wrap_content"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -91,18 +95,21 @@
                     android:text="TasksRemaining"
                     android:textColor="#FFFFFF" />
 
-                <TextView
-                    android:id="@+id/pb_view_goal"
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Placeholder for Progress Bar" />
+                    android:background="@drawable/corners_gt"
+                    android:max="100" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/btn_complete_goal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="25dp"
+                android:background="@drawable/corners"
                 android:text="Complete Goal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

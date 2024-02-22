@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/corners"
             android:ems="10"
             android:inputType="text"
             android:textSize="16sp" />
@@ -64,7 +64,8 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="110dp"
-        android:background="#252AAA"
+        android:background="@drawable/corners"
+        android:backgroundTint="#252AAA"
         android:text="Add Goal"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
