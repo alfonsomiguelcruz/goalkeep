@@ -27,10 +27,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        findViewById<Button>(R.id.btn_getdate).setOnClickListener {
-//            val newFragment = DatePickerFragment()
-//            newFragment.show(supportFragmentManager, "datePicker")
-//        }
-//        }
+
     }
 }
