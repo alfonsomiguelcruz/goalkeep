@@ -3,7 +3,8 @@
     android:id="@+id/ll_goal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.GoalKeep">
 
     <LinearLayout
         android:id="@+id/ll_goal_body"

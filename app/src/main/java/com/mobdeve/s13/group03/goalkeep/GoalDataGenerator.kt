@@ -6,16 +6,16 @@ class GoalDataGenerator {
             var goals = ArrayList<Goal>()
             goals.add(Goal(1, "MOBDEVE MCO2", "XXXX-XX-XX",
                 "2024-02-24", "XXXX-XX-XX", "MOBDEVE MP",
-                "High Priority", "Incomplete", "Academics"))
-            goals.add(Goal(2, "CSC612M Exercise 2", "XXXX-XX-XX",
+                "High", "Incomplete", "Academics"))
+            goals.add(Goal(2, "CSARCH2 Exercise 2", "XXXX-XX-XX",
                 "2024-02-26", "XXXX-XX-XX", "TinyML and IMC",
-                "Medium Priority", "Incomplete", "Academics"))
-            goals.add(Goal(3, "CSC611M Exercises", "XXXX-XX-XX",
+                "Medium", "Incomplete", "Academics"))
+            goals.add(Goal(3, "STDISCM Exercises", "XXXX-XX-XX",
                 "2024-02-24", "XXXX-XX-XX", "Mutual Exclusion",
-                "Low Priority", "Incomplete", "Academics"))
-            goals.add(Goal(4, "MSLABS1 Presentation", "XXXX-XX-XX",
+                "Low", "Incomplete", "Academics"))
+            goals.add(Goal(4, "THS-ST2 Presentation", "XXXX-XX-XX",
                 "2024-02-24", "XXXX-XX-XX", "ChatGPT Transformers",
-                "High Priority", "Incomplete", "Academics"))
+                "High", "Incomplete", "Academics"))
             return goals
         }
     }

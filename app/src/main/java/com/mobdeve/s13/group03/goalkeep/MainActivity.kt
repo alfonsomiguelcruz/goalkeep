@@ -1,32 +1,30 @@
 package com.mobdeve.s13.group03.goalkeep
 
-import android.app.DatePickerDialog
 import android.os.Bundle
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.fragment.app.FragmentActivity
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import com.mobdeve.s13.group03.goalkeep.ui.theme.GoalKeepTheme
-import java.text.DateFormat
-import java.util.Calendar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.databinding.ActivityMainBinding
 
 class MainActivity : ComponentActivity() {
+    private val goals = GoalDataGenerator.generateGoalData()
+    private val tasks = TaskDataGenerator.generateTaskData()
+    private lateinit var rv : RecyclerView
+    private lateinit var goalsAdapter : GoalAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        val vb : ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(vb.root)
 
+        this.rv = vb.rvGoals
+        this.goalsAdapter = GoalAdapter(goals, tasks)
+        this.rv.adapter =this.goalsAdapter
+
+        val verticalLM = LinearLayoutManager(this)
+        verticalLM.orientation = LinearLayoutManager.VERTICAL
+
+        vb.rvGoals.layoutManager = verticalLM
     }
 }
