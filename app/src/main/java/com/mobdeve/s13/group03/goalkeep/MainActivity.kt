@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
             println("Clicked FAB")
             val addGoalIntent = Intent(this, AddGoalTitleActivity::class.java)
             startActivity(addGoalIntent)
-
         }
 
         this.rv = vb.rvGoals

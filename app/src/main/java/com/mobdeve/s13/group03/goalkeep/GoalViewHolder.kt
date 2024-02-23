@@ -16,10 +16,9 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
         this.goalVB.tvGoalTimeExpected.text = g.timeExpected
         this.goalVB.pbGoals.progress = computeProgress(g)
 
-//        this.goalVB.llGoalBody.setBackground()
         this.goalVB.llGoalBody.background.setTint(getGoalColor(g.priority))
-//        this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
-//        this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))
+        this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
+        this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))
 //        this.goalVB.tvGoalPriority.setBackgroundColor(R.color.white)
 //        this.goalVB.tvGoalTag.background.setTint(R.color.black)
     }
@@ -27,6 +26,7 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
     private fun computeProgress(g: Goal): Int {
         var totalMatched: Int = 0
         var totalComplete: Int = 0
+        var progress: Int
 
         for(i in 0..<tasksList.size)
             if(tasksList[i].goalId == g.goalId) {
@@ -35,7 +35,13 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
                     totalComplete++
             }
 
-        return (totalComplete * 100 / totalMatched)
+        try {
+            ((totalComplete * 100) / totalMatched).also { progress = it }
+        } catch (e: ArithmeticException) {
+            progress = 0
+        }
+
+        return progress
     }
 
     private fun getGoalColor(priority: String): Int {
