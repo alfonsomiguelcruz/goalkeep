@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GoalKeep</string>
+    <string name="goaltitle_error">Goal Title is Missing.</string>
+    <string name="goaldescription_error">Goal Description is Missing.</string>
+    <string name="goaltime_error">Goal Time is Missing.</string>
+    <string name="goaltag_error">Goal Tag is Missing.</string>
+
 </resources>
