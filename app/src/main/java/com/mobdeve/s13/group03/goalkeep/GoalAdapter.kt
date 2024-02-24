@@ -15,7 +15,7 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: Arr
         val tempViewHolder = GoalViewHolder(goalViewBinding, tasksList)
 
         tempViewHolder.itemView.setOnClickListener{
-            var goalInt = Intent(parent.context, ViewGoalActivity::class.java)
+            val goalInt = Intent(parent.context, ViewGoalActivity::class.java)
             // Title of the Goal
             goalInt.putExtra(ViewGoalActivity.TITLE_KEY, goalViewBinding.tvGoalName.text.toString())
             // Time Expected to complete the Goal
@@ -30,6 +30,8 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: Arr
             goalInt.putExtra(ViewGoalActivity.PROGRESS_KEY, computeProgress(goals[tempViewHolder.bindingAdapterPosition]))
             // Get the state of the progress, used to enable the button that completes a goal
             goalInt.putExtra(ViewGoalActivity.STATE_KEY, computeProgress(goals[tempViewHolder.bindingAdapterPosition]) == 100)
+
+            /* TODO: Find a way to Send the Intent to ViewGoalActivity */
         }
 
         return tempViewHolder

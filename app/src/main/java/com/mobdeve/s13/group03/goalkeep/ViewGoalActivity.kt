@@ -2,6 +2,7 @@ package com.mobdeve.s13.group03.goalkeep
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mobdeve.s13.group03.goalkeep.databinding.ViewGoalLayoutBinding
 
 class ViewGoalActivity : AppCompatActivity() {
     companion object {
@@ -15,6 +16,9 @@ class ViewGoalActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //TODO: Continue View Goal Activity
+        val vb: ViewGoalLayoutBinding = ViewGoalLayoutBinding.inflate(layoutInflater)
+        setContentView(vb.root)
+
+        /* TODO: Continue Other Activities */
     }
 }
