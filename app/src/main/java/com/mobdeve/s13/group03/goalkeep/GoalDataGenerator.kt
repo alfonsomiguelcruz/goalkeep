@@ -16,6 +16,24 @@ class GoalDataGenerator {
             goals.add(Goal(4, "THS-ST2 Presentation", "XXXX-XX-XX",
                 "2024-02-24", "XXXX-XX-XX", "ChatGPT Transformers",
                 "High", "Incomplete", "Academics"))
+            goals.add(Goal(5, "MOBDEVE MCO3 Deadline", "XXXX-XX-XX",
+                "2024-04-01", "XXXX-XX-XX", "Final Deliverables",
+                "Medium", "Incomplete", "Academics"))
+            goals.add(Goal(6, "STELEC2 Activity", "XXXX-XX-XX",
+                "2024-03-12", "XXXX-XX-XX", "Activity on Paper Reporting",
+                "Low", "Incomplete", "Academics"))
+            goals.add(Goal(7, "STELEC3 Quiz", "XXXX-XX-XX",
+                "2024-03-13", "XXXX-XX-XX", "French Nouns and Verbs",
+                "Low", "Incomplete", "Academics"))
+            goals.add(Goal(8, "Finalize Pre-Acts Document", "XXXX-XX-XX",
+                "2024-03-20", "XXXX-XX-XX", "Finalize Pre-Acts for MGS with LSCS",
+                "Low", "Incomplete", "Organization"))
+            goals.add(Goal(9, "Birthday Preparation", "XXXX-XX-XX",
+                "2024-03-31", "XXXX-XX-XX", "Birthday mo, Birthday ko?",
+                "Low", "Incomplete", "Personal"))
+            goals.add(Goal(10, "Grade Consultation Day", "XXXX-XX-XX",
+                "2024-04-15", "XXXX-XX-XX", "Consult with MOBDEVE Grade",
+                "Low", "Incomplete", "Academics"))
             return goals
         }
     }
