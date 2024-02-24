@@ -2,6 +2,8 @@ package com.mobdeve.s13.group03.goalkeep
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -24,26 +26,51 @@ class AddGoalTagActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         addGoalTagnameLayoutBinding = AddGoalTagnameLayoutBinding.inflate(layoutInflater)
         setContentView(addGoalTagnameLayoutBinding.root)
+        addGoalTagnameLayoutBinding.tvAddGoalTagnameErr.text = ""
 
         val goalTitle : String = intent.getStringExtra(AddGoalTagActivity.TITLE_KEY).toString()
         val goalDescription : String = intent.getStringExtra(AddGoalTagActivity.DESCRIPTION_KEY).toString()
         val goalTime : String = intent.getStringExtra(AddGoalTagActivity.TIME_KEY).toString()
         val intentMain = Intent(this, MainActivity::class.java)
 
+        addGoalTagnameLayoutBinding.etAddGoalTagname.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(s.toString().isEmpty())
+                    addGoalTagnameLayoutBinding.tvAddGoalTagnameErr.text = getString(R.string.goaltag_error)
+                else
+                    addGoalTagnameLayoutBinding.tvAddGoalTagnameErr.text = ""
+            }
+
+        })
+
         addGoalTagnameLayoutBinding.btnAddGoal.setOnClickListener(View.OnClickListener {
             if(goalTitle.isNotEmpty() && goalDescription.isNotEmpty()
                 && goalTime.isNotEmpty() && addGoalTagnameLayoutBinding.etAddGoalTagname.text.toString().isNotEmpty()) {
+                intentMain.putExtra(MainActivity.TITLE_KEY, goalTitle)
+                intentMain.putExtra(MainActivity.TAG_KEY,
+                    addGoalTagnameLayoutBinding.etAddGoalTagname.text.toString())
+                intentMain.putExtra(MainActivity.DESCRIPTION_KEY, goalDescription)
+                intentMain.putExtra(MainActivity.TIME_KEY, goalTime)
+
                 startActivity(intentMain)
                 finish()
             }
         })
+
+
     }
 
     public override fun onTouchEvent(touchevent : MotionEvent): Boolean {
-        val intentAddTag = Intent(this, MainActivity::class.java)
-        val goalTitle : String = intent.getStringExtra(AddGoalTagActivity.TITLE_KEY).toString()
-        val goalDescription : String = intent.getStringExtra(AddGoalTagActivity.DESCRIPTION_KEY).toString()
-        val goalTime : String = intent.getStringExtra(AddGoalTagActivity.TIME_KEY).toString()
+//        val intentAddTag = Intent(this, MainActivity::class.java)
+//        val goalTitle : String = intent.getStringExtra(AddGoalTagActivity.TITLE_KEY).toString()
+//        val goalDescription : String = intent.getStringExtra(AddGoalTagActivity.DESCRIPTION_KEY).toString()
+//        val goalTime : String = intent.getStringExtra(AddGoalTagActivity.TIME_KEY).toString()
 
         when(touchevent.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -55,27 +82,10 @@ class AddGoalTagActivity : AppCompatActivity() {
                 y2 = touchevent.y
 
                 // Swipe Left, else Swipe Right
-                if(x1 >= x2) {
-                    // Carry Over Data to the Next Activity
-                    // Title -> Description -> Time -> Tag
-
-                    intentAddTag.putExtra(MainActivity.TITLE_KEY,
-                        goalTitle)
-
-                    intentAddTag.putExtra(MainActivity.DESCRIPTION_KEY,
-                        goalDescription)
-
-                    intentAddTag.putExtra(MainActivity.TIME_KEY,
-                        goalTime)
-
-                    intentAddTag.putExtra(MainActivity.TAG_KEY,
-                        addGoalTagnameLayoutBinding.etAddGoalTagname.text.toString())
-
-                    startActivity(intentAddTag)
-                    finish()
-                } else {
+                if(x1 < x2) {
                     // Go Back to the Previous Pane
                     val intentAddTime : Intent = Intent(this, AddGoalTimeActivity::class.java)
+
                     startActivity(intentAddTime)
                     finish()
                 }

@@ -2,6 +2,8 @@ package com.mobdeve.s13.group03.goalkeep
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.group03.goalkeep.databinding.AddGoalTimeexpectedLayoutBinding
@@ -22,6 +24,23 @@ class AddGoalTimeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         addGoalTimeExpectedLayoutBinding = AddGoalTimeexpectedLayoutBinding.inflate(layoutInflater)
         setContentView(addGoalTimeExpectedLayoutBinding.root)
+        addGoalTimeExpectedLayoutBinding.tvAddGoalTimeexpectedErr.text = ""
+
+        addGoalTimeExpectedLayoutBinding.etAddGoalTimeexpected.addTextChangedListener(object :TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(s.toString().isEmpty())
+                    addGoalTimeExpectedLayoutBinding.tvAddGoalTimeexpectedErr.text = getString(R.string.goaltime_error)
+                else
+                    addGoalTimeExpectedLayoutBinding.tvAddGoalTimeexpectedErr.text = ""
+            }
+
+        })
     }
 
     public override fun onTouchEvent(touchevent : MotionEvent): Boolean {
@@ -43,17 +62,24 @@ class AddGoalTimeActivity : AppCompatActivity() {
                 if(x1 >= x2) {
                     // Carry Over Data to the Next Activity
                     // Title -> Description -> [Time -> Tag]
+                    if(addGoalTimeExpectedLayoutBinding.tvAddGoalTimeexpectedErr.text.toString().isNotEmpty()) {
+                        addGoalTimeExpectedLayoutBinding.tvAddGoalTimeexpectedErr.text = ""
 
-                    intentAddTag.putExtra(AddGoalTagActivity.TITLE_KEY,
-                        goalTitle)
+                        intentAddTag.putExtra(AddGoalTagActivity.TITLE_KEY,
+                            goalTitle)
 
-                    intentAddTag.putExtra(AddGoalTagActivity.DESCRIPTION_KEY,
-                        goalDescription)
+                        intentAddTag.putExtra(AddGoalTagActivity.DESCRIPTION_KEY,
+                            goalDescription)
 
-                    intentAddTag.putExtra(AddGoalTagActivity.TIME_KEY,
-                        addGoalTimeExpectedLayoutBinding.etAddGoalTimeexpected.text.toString())
+                        intentAddTag.putExtra(AddGoalTagActivity.TIME_KEY,
+                            addGoalTimeExpectedLayoutBinding.etAddGoalTimeexpected.text.toString())
 
-                    startActivity(intentAddTag)
+                        startActivity(intentAddTag)
+                        finish()
+                    } else {
+                        addGoalTimeExpectedLayoutBinding.tvAddGoalTimeexpectedErr.text = getString(R.string.goaltime_error)
+                    }
+
                 } else {
                     // Go Back to the Previous Pane
                     val intentAddDescription : Intent = Intent(this, AddGoalDescriptionActivity::class.java)
