@@ -14,25 +14,25 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: Arr
         val tempViewHolder = GoalViewHolder(goalViewBinding, tasksList)
         this.parent = parent
 
-        tempViewHolder.itemView.setOnClickListener{
-            val goalInt = Intent(parent.context, ViewGoalActivity::class.java)
-            // Title of the Goal
-            goalInt.putExtra(ViewGoalActivity.TITLE_KEY, goalViewBinding.tvGoalName.text.toString())
-            // Time Expected to complete the Goal
-            goalInt.putExtra(ViewGoalActivity.TIME_KEY, goalViewBinding.tvGoalTimeExpected.text.toString())
-            // Priority of the Goal
-            goalInt.putExtra(ViewGoalActivity.PRIORITY_KEY, goalViewBinding.tvGoalPriority.toString())
-            // Tag of the Goal
-            goalInt.putExtra(ViewGoalActivity.TAG_KEY, goalViewBinding.tvGoalTag.text.toString())
-            // Description of the Goal
-            goalInt.putExtra(ViewGoalActivity.DESCRIPTION_KEY, goals[tempViewHolder.bindingAdapterPosition].description)
-            // Get the progress percentage (min: 0, max: 100)
-            goalInt.putExtra(ViewGoalActivity.PROGRESS_KEY, computeProgress(goals[tempViewHolder.bindingAdapterPosition]))
-            // Get the state of the progress, used to enable the button that completes a goal
-            goalInt.putExtra(ViewGoalActivity.STATE_KEY, computeProgress(goals[tempViewHolder.bindingAdapterPosition]) == 100)
-
-            /* TODO: Find a way to Send the Intent to ViewGoalActivity */
-        }
+//        tempViewHolder.itemView.setOnClickListener{
+//            val goalInt = Intent(parent.context, ViewGoalActivity::class.java)
+//            // Title of the Goal
+//            goalInt.putExtra(ViewGoalActivity.TITLE_KEY, goalViewBinding.tvGoalName.text.toString())
+//            // Time Expected to complete the Goal
+//            goalInt.putExtra(ViewGoalActivity.TIME_KEY, goalViewBinding.tvGoalTimeExpected.text.toString())
+//            // Priority of the Goal
+//            goalInt.putExtra(ViewGoalActivity.PRIORITY_KEY, goalViewBinding.tvGoalPriority.toString())
+//            // Tag of the Goal
+//            goalInt.putExtra(ViewGoalActivity.TAG_KEY, goalViewBinding.tvGoalTag.text.toString())
+//            // Description of the Goal
+//            goalInt.putExtra(ViewGoalActivity.DESCRIPTION_KEY, goals[tempViewHolder.bindingAdapterPosition].description)
+//            // Get the progress percentage (min: 0, max: 100)
+//            goalInt.putExtra(ViewGoalActivity.PROGRESS_KEY, computeProgress(goals[tempViewHolder.bindingAdapterPosition]))
+//            // Get the state of the progress, used to enable the button that completes a goal
+//            goalInt.putExtra(ViewGoalActivity.STATE_KEY, computeProgress(goals[tempViewHolder.bindingAdapterPosition]) == 100)
+//
+//            /* TODO: Find a way to Send the Intent to ViewGoalActivity */
+//        }
 
         return tempViewHolder
     }
@@ -46,8 +46,11 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: Arr
         holder.itemView.setOnClickListener {
             println("Clicked Goal " + this.goals[position].name)
             val context = parent.context
-            val viewGoalIntent = Intent(context, ViewGoalActivity::class.java)
-            viewGoalIntent.putExtra("goal_position", position)
+
+            val viewGoalIntent = Intent(parent.context, ViewGoalActivity::class.java)
+            // ID of the Goal
+            viewGoalIntent.putExtra("GOAL_KEY", this.goals[position])
+
             context.startActivity(viewGoalIntent)
         }
     }
