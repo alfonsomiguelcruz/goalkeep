@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.GoalKeep" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.GoalKeep" parent="android:Theme.Material">
+        <item name="colorPrimary">#FFFFFFFF</item>
+        <item name="colorSecondary">#FFFFFFFF</item>
+        <item name="colorTertiary">#FFFFFFFF</item>
+    </style>
 </resources>

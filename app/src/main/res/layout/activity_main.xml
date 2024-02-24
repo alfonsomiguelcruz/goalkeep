@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_goal_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.GoalKeep">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_goals"
@@ -22,7 +23,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/icons8_plus"
-        android:theme="@style/Theme.AppCompat"
+        android:theme="@style/Theme.GoalKeep"
         app:backgroundTint="#E6E6E6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
