@@ -18,6 +18,17 @@ class ViewGoalActivity : AppCompatActivity() {
     private lateinit var vb : ViewGoalLayoutBinding
     private lateinit var rv : RecyclerView
     private lateinit var tasksAdapter: TaskAdapter
+	
+	companion object {
+        const val TITLE_KEY = "TITLE_KEY"
+        const val TIME_KEY = "TIME_KEY"
+        const val PRIORITY_KEY = "PRIORITY_KEY"
+        const val TAG_KEY = "TAG_KEY"
+        const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
+        const val PROGRESS_KEY = "PROGRESS_KEY"
+        const val STATE_KEY = "STATE_KEY"
+    }
+	
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

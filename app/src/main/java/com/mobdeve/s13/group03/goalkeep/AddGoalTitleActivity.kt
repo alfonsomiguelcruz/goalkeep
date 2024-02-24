@@ -2,6 +2,8 @@ package com.mobdeve.s13.group03.goalkeep
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,6 +27,22 @@ class AddGoalTitleActivity : AppCompatActivity() {
         goalTitleLayoutBinding = AddGoalTitleLayoutBinding.inflate(layoutInflater)
         setContentView(goalTitleLayoutBinding.root)
         goalTitleLayoutBinding.tvAddGoalTitleErr.text = ""
+
+        goalTitleLayoutBinding.etAddGoalTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(s.toString().isEmpty())
+                    goalTitleLayoutBinding.tvAddGoalTitleErr.text = getString(R.string.goaltitle_error)
+                else
+                    goalTitleLayoutBinding.tvAddGoalTitleErr.text = ""
+            }
+        })
+
     }
 
     override fun onTouchEvent(touchevent : MotionEvent): Boolean {
@@ -43,10 +61,16 @@ class AddGoalTitleActivity : AppCompatActivity() {
                 // Swipe Left
                 if(x1 >= x2) {
                     // [Title -> Description] -> Time -> Tag
-                    val intentAddDescription = Intent(this, AddGoalDescriptionActivity::class.java)
-                    intentAddDescription.putExtra(AddGoalDescriptionActivity.TITLE_KEY,
-                        goalTitleLayoutBinding.etAddGoalTitle.text.toString())
-                    startActivity(intentAddDescription)
+                    if(goalTitleLayoutBinding.tvAddGoalTitleErr.text.toString().isNotEmpty()) {
+                        goalTitleLayoutBinding.tvAddGoalTitleErr.text = ""
+
+                        val intentAddDescription = Intent(this, AddGoalDescriptionActivity::class.java)
+                        intentAddDescription.putExtra(AddGoalDescriptionActivity.TITLE_KEY,
+                            goalTitleLayoutBinding.etAddGoalTitle.text.toString())
+                        startActivity(intentAddDescription)
+                    } else {
+                        goalTitleLayoutBinding.tvAddGoalTitleErr.text = getString(R.string.goaltitle_error)
+                    }
                 }
             }
             else -> {

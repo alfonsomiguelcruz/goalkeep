@@ -31,9 +31,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(vb.root)
 
         vb.fabAddGoalList.setOnClickListener {
-            println("Clicked FAB")
             val addGoalIntent = Intent(this, AddGoalTitleActivity::class.java)
             startActivity(addGoalIntent)
+        }
+
+        try {
+            val goalTitle = intent.getStringExtra(MainActivity.TITLE_KEY).toString()
+            val goalDescription = intent.getStringExtra(MainActivity.DESCRIPTION_KEY).toString()
+            val goalTime = intent.getStringExtra(MainActivity.TIME_KEY).toString()
+            val goalTag = intent.getStringExtra(MainActivity.TAG_KEY).toString()
+
+            // Temporary Setting for Priority Assignment
+            goals.add(Goal(goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
+                "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag))
+
+        } catch (e : Exception) {
+            println("EXCEPTION FOUND!")
+            println(e)
         }
 
         this.rv = vb.rvGoals
