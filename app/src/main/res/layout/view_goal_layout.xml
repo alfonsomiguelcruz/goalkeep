@@ -121,9 +121,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tasks"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="495dp"
-        android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,9 +134,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
+        android:background="@color/white"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/add"
         android:theme="@style/Theme.AppCompat"
+        app:backgroundTint="#E6E6E6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -147,9 +148,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="10dp"
+        android:background="@color/white"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
-        android:theme="@style/Theme.AppCompat"
+        android:src="@drawable/edit"
+        android:theme="@style/Theme.GoalKeep"
+        app:backgroundTint="#E6E6E6"
         app:layout_constraintBottom_toTopOf="@+id/fab_add_task"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
