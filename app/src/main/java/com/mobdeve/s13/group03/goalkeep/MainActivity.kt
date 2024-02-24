@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         this.rv = vb.rvGoals
-        this.goalsAdapter = GoalAdapter(goals, tasks)
+        this.goalsAdapter = GoalAdapter(this, goals, tasks)
         this.rv.adapter =this.goalsAdapter
 
         val verticalLM = LinearLayoutManager(this)

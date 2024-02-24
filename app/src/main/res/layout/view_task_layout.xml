@@ -16,7 +16,7 @@
         android:background="@android:color/darker_gray">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/btn_close_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -39,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TaskTitle"
+            android:textColor="@android:color/primary_text_light"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -48,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:text="TimeExpected"
+            android:textColor="@android:color/secondary_text_light"
             android:textSize="14sp" />
 
         <LinearLayout
@@ -69,14 +71,14 @@
                 android:textColor="#FFFFFF" />
 
             <TextView
-                android:id="@+id/tv_view_task_tag"
+                android:id="@+id/tv_view_task_state"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/corners"
                 android:backgroundTint="@android:color/darker_gray"
-                android:text="TagName"
+                android:text="State"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
@@ -86,7 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Description" />
+            android:text="Description"
+            android:textColor="@android:color/secondary_text_light" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_view_task_edit"
