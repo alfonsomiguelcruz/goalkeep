@@ -46,7 +46,10 @@
             android:layout_marginBottom="25dp"
             android:background="@drawable/corners"
             android:ems="10"
+            android:hint="@string/tasktime_contentdesc"
             android:inputType="time"
+            android:minHeight="48dp"
+            android:textColor="#000000"
             android:textSize="16sp" />
 
         <TextView
@@ -60,7 +63,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_add_goal"
+        android:id="@+id/btn_add_task"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="110dp"

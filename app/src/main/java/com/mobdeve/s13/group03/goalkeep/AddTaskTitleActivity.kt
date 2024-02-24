@@ -6,14 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
-import com.mobdeve.s13.group03.goalkeep.databinding.AddGoalTitleLayoutBinding
+import com.mobdeve.s13.group03.goalkeep.databinding.AddTaskTitleLayoutBinding
 
-class AddGoalTitleActivity : AppCompatActivity() {
+class AddTaskTitleActivity: AppCompatActivity() {
     private var x1 : Float = 0.0f
     private var x2 : Float = 0.0f
     private var y1 : Float = 0.0f
     private var y2 : Float = 0.0f
-    private lateinit var goalTitleLayoutBinding : AddGoalTitleLayoutBinding
+    private lateinit var taskTitleLayoutBinding : AddTaskTitleLayoutBinding
 
     companion object {
         const val TITLE_KEY = "TITLE_KEY"
@@ -21,11 +21,11 @@ class AddGoalTitleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        goalTitleLayoutBinding = AddGoalTitleLayoutBinding.inflate(layoutInflater)
-        setContentView(goalTitleLayoutBinding.root)
-        goalTitleLayoutBinding.tvAddGoalTitleErr.text = ""
+        taskTitleLayoutBinding = AddTaskTitleLayoutBinding.inflate(layoutInflater)
+        setContentView(taskTitleLayoutBinding.root)
+        taskTitleLayoutBinding.tvAddTaskTitleErr.text = ""
 
-        goalTitleLayoutBinding.etAddGoalTitle.addTextChangedListener(object : TextWatcher {
+        taskTitleLayoutBinding.etAddTaskTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -34,9 +34,9 @@ class AddGoalTitleActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if(s.toString().isEmpty())
-                    goalTitleLayoutBinding.tvAddGoalTitleErr.text = getString(R.string.goaltitle_error)
+                    taskTitleLayoutBinding.tvAddTaskTitleErr.text = getString(R.string.goaltitle_error)
                 else
-                    goalTitleLayoutBinding.tvAddGoalTitleErr.text = ""
+                    taskTitleLayoutBinding.tvAddTaskTitleErr.text = ""
             }
         })
 
@@ -58,15 +58,15 @@ class AddGoalTitleActivity : AppCompatActivity() {
                 // Swipe Left
                 if(x1 >= x2) {
                     // [Title -> Description] -> Time -> Tag
-                    if(goalTitleLayoutBinding.tvAddGoalTitleErr.text.toString().isNotEmpty()) {
-                        goalTitleLayoutBinding.tvAddGoalTitleErr.text = ""
+                    if(taskTitleLayoutBinding.tvAddTaskTitleErr.text.toString().isNotEmpty()) {
+                        taskTitleLayoutBinding.tvAddTaskTitleErr.text = ""
 
-                        val intentAddDescription = Intent(this, AddGoalDescriptionActivity::class.java)
-                        intentAddDescription.putExtra(AddGoalDescriptionActivity.TITLE_KEY,
-                            goalTitleLayoutBinding.etAddGoalTitle.text.toString())
+                        val intentAddDescription = Intent(this, AddTaskDescriptionActivity::class.java)
+                        intentAddDescription.putExtra(AddTaskDescriptionActivity.TITLE_KEY,
+                            taskTitleLayoutBinding.etAddTaskTitle.text.toString())
                         startActivity(intentAddDescription)
                     } else {
-                        goalTitleLayoutBinding.tvAddGoalTitleErr.text = getString(R.string.goaltitle_error)
+                        taskTitleLayoutBinding.tvAddTaskTitleErr.text = getString(R.string.goaltitle_error)
                     }
                 }
             }

@@ -28,7 +28,6 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: Arr
             val context = parent.context
 
             val viewGoalIntent = Intent(parent.context, ViewGoalActivity::class.java)
-            // ID of the Goal
             viewGoalIntent.putExtra("GOAL_KEY", this.goals[position])
 
             context.startActivity(viewGoalIntent)

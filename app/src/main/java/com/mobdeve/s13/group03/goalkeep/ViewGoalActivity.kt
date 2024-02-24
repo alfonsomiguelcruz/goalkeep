@@ -1,6 +1,7 @@
 package com.mobdeve.s13.group03.goalkeep
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -52,6 +53,11 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.tvViewGoalPriority.text = goal.priority
             vb.tvViewGoalTag.text = goal.tag
             vb.tvViewGoalDescription.text = goal.description
+        }
+
+        vb.fabAddTask.setOnClickListener{
+            val addTaskIntent = Intent(this, AddTaskTitleActivity::class.java)
+            startActivity(addTaskIntent)
         }
 
         this.rv = vb.rvTasks
