@@ -16,6 +16,7 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
         this.goalVB.tvGoalTimeExpected.text = g.timeExpected
         this.goalVB.pbGoals.progress = computeProgress(g)
 
+        /* Issue #1 The */
         this.goalVB.llGoalBody.background.setTint(getGoalColor(g.priority))
 //        this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
 //        this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))

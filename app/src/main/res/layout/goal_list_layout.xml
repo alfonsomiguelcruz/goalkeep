@@ -14,6 +14,7 @@
         android:layout_margin="25dp"
         android:background="@drawable/corners_gt"
         android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTintMode="src_over"
         android:orientation="vertical"
         android:padding="15dp"
         android:theme="@style/Theme.GoalKeep">

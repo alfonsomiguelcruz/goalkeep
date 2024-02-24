@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
         const val TIME_KEY = "TIME_KEY"
         const val TAG_KEY = "TAG_KEY"
+        const val RESPONSE_KEY = "RESPONSE_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,15 +37,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            val goalTitle = intent.getStringExtra(MainActivity.TITLE_KEY).toString()
-            val goalDescription = intent.getStringExtra(MainActivity.DESCRIPTION_KEY).toString()
-            val goalTime = intent.getStringExtra(MainActivity.TIME_KEY).toString()
-            val goalTag = intent.getStringExtra(MainActivity.TAG_KEY).toString()
+            if(intent.getStringExtra(MainActivity.RESPONSE_KEY).toString() == "OKAY") {
+                val goalTitle = intent.getStringExtra(MainActivity.TITLE_KEY).toString()
+                val goalDescription = intent.getStringExtra(MainActivity.DESCRIPTION_KEY).toString()
+                val goalTime = intent.getStringExtra(MainActivity.TIME_KEY).toString()
+                val goalTag = intent.getStringExtra(MainActivity.TAG_KEY).toString()
 
-            // Temporary Setting for Priority Assignment
-            goals.add(Goal(goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
-                "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag))
-
+                // Temporary Setting for Priority Assignment
+                goals.add(Goal(goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
+                    "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag))
+            }
         } catch (e : Exception) {
             println("EXCEPTION FOUND!")
             println(e)

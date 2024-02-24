@@ -57,7 +57,7 @@ class AddGoalTagActivity : AppCompatActivity() {
                     addGoalTagnameLayoutBinding.etAddGoalTagname.text.toString())
                 intentMain.putExtra(MainActivity.DESCRIPTION_KEY, goalDescription)
                 intentMain.putExtra(MainActivity.TIME_KEY, goalTime)
-
+                intentMain.putExtra(MainActivity.RESPONSE_KEY, "OKAY")
                 startActivity(intentMain)
                 finish()
             }
