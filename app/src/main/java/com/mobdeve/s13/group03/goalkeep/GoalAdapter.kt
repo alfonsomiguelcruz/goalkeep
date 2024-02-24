@@ -3,16 +3,16 @@ package com.mobdeve.s13.group03.goalkeep
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.databinding.GoalListLayoutBinding
 
-class GoalAdapter(private val context: AppCompatActivity, private val goals: ArrayList<Goal>, private val tasksList: ArrayList<Task>) : RecyclerView.Adapter<GoalViewHolder>() {
+class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: ArrayList<Task>) : RecyclerView.Adapter<GoalViewHolder>() {
+    lateinit var parent: ViewGroup
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GoalViewHolder {
         val goalViewBinding : GoalListLayoutBinding = GoalListLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
         val tempViewHolder = GoalViewHolder(goalViewBinding, tasksList)
+        this.parent = parent
 
         tempViewHolder.itemView.setOnClickListener{
             val goalInt = Intent(parent.context, ViewGoalActivity::class.java)
@@ -45,6 +45,7 @@ class GoalAdapter(private val context: AppCompatActivity, private val goals: Arr
         holder.bindGoalData(this.goals[position])
         holder.itemView.setOnClickListener {
             println("Clicked Goal " + this.goals[position].name)
+            val context = parent.context
             val viewGoalIntent = Intent(context, ViewGoalActivity::class.java)
             viewGoalIntent.putExtra("goal_position", position)
             context.startActivity(viewGoalIntent)
