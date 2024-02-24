@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:background="@drawable/corners_gt"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="@color/white"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="15dp"
+        android:theme="@style/Theme.GoalKeep">
 
         <TextView
             android:id="@+id/tv_goal_name"

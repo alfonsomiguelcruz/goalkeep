@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.databinding.GoalListLayoutBinding
 
 class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val tasksList: ArrayList<Task>) : RecyclerView.ViewHolder(goalVB.root) {
-    @SuppressLint("ResourceAsColor")
+
     fun bindGoalData(g: Goal) {
         this.goalVB.tvGoalName.text = g.name
         this.goalVB.tvGoalPriority.text = g.priority
@@ -17,10 +17,8 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
         this.goalVB.pbGoals.progress = computeProgress(g)
 
         this.goalVB.llGoalBody.background.setTint(getGoalColor(g.priority))
-        this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
-        this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))
-//        this.goalVB.tvGoalPriority.setBackgroundColor(R.color.white)
-//        this.goalVB.tvGoalTag.background.setTint(R.color.black)
+//        this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
+//        this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))
     }
 
     private fun computeProgress(g: Goal): Int {
@@ -45,26 +43,28 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
     }
 
     private fun getGoalColor(priority: String): Int {
-        var color: Int = 0
-
-        when(priority) {
-            "High" -> color = R.color.high_default
-            "Medium" -> color = R.color.medium_default
-            "Low" -> color = R.color.low_default
+        val color: Int = when(priority) {
+            "High" -> R.color.high_default
+            "Medium" -> R.color.medium_default
+            "Low" -> R.color.low_default
+            else -> {
+                R.color.black
+            }
         }
 
         return color
     }
 
     private fun getGoalSubColor(priority: String): Int {
-        var subcolor: Int = 0
-
-        when(priority) {
-            "High" -> subcolor = R.color.high_sub
-            "Medium" -> subcolor = R.color.medium_sub
-            "Low" -> subcolor = R.color.low_sub
+        val color: Int = when(priority) {
+            "High" -> R.color.high_sub
+            "Medium" -> R.color.medium_sub
+            "Low" -> R.color.low_sub
+            else -> {
+                R.color.black
+            }
         }
 
-        return subcolor
+        return color
     }
 }
