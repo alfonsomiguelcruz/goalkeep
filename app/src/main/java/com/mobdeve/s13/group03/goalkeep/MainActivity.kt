@@ -34,11 +34,10 @@ class MainActivity : AppCompatActivity() {
             println("Clicked FAB")
             val addGoalIntent = Intent(this, AddGoalTitleActivity::class.java)
             startActivity(addGoalIntent)
-
         }
 
         this.rv = vb.rvGoals
-        this.goalsAdapter = GoalAdapter(goals, tasks)
+        this.goalsAdapter = GoalAdapter(this, goals, tasks)
         this.rv.adapter =this.goalsAdapter
 
         val verticalLM = LinearLayoutManager(this)
