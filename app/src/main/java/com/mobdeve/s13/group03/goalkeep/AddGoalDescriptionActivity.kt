@@ -1,6 +1,5 @@
 package com.mobdeve.s13.group03.goalkeep
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -42,7 +41,7 @@ class AddGoalDescriptionActivity : AppCompatActivity() {
         })
     }
 
-    public override fun onTouchEvent(touchevent : MotionEvent): Boolean {
+    override fun onTouchEvent(touchevent : MotionEvent): Boolean {
         val intentAddTime = Intent(this, AddGoalTimeActivity::class.java)
         val goalTitle : String = intent.getStringExtra(AddGoalDescriptionActivity.TITLE_KEY).toString()
 
