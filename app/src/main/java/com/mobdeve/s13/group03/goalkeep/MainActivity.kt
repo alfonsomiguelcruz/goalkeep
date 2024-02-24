@@ -37,11 +37,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            if(intent.getStringExtra(MainActivity.RESPONSE_KEY).toString() == "OKAY") {
-                val goalTitle = intent.getStringExtra(MainActivity.TITLE_KEY).toString()
-                val goalDescription = intent.getStringExtra(MainActivity.DESCRIPTION_KEY).toString()
-                val goalTime = intent.getStringExtra(MainActivity.TIME_KEY).toString()
-                val goalTag = intent.getStringExtra(MainActivity.TAG_KEY).toString()
+            if(intent.getStringExtra(RESPONSE_KEY).toString() == "OKAY") {
+                val goalTitle = intent.getStringExtra(TITLE_KEY).toString()
+                val goalDescription = intent.getStringExtra(DESCRIPTION_KEY).toString()
+                val goalTime = intent.getStringExtra(TIME_KEY).toString()
+                val goalTag = intent.getStringExtra(TAG_KEY).toString()
 
                 // Temporary Setting for Priority Assignment
                 goals.add(Goal(goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,

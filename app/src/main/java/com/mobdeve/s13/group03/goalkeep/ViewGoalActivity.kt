@@ -55,6 +55,12 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.tvViewGoalDescription.text = goal.description
         }
 
+        vb.fabEditGoal.setOnClickListener {
+            val editGoalIntent = Intent(this, EditGoalActivity::class.java)
+            editGoalIntent.putExtra(GOAL_KEY, goal)
+            startActivity(editGoalIntent)
+        }
+
         vb.fabAddTask.setOnClickListener{
             val addTaskIntent = Intent(this, AddTaskTitleActivity::class.java)
             startActivity(addTaskIntent)

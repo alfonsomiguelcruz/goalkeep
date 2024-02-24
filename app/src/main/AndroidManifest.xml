@@ -41,6 +41,10 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
+            android:name=".EditGoalActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
             android:name=".ViewGoalActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
