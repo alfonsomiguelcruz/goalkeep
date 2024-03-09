@@ -5,8 +5,7 @@
     android:id="@+id/cl_goal_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:theme="@style/Theme.GoalKeep">
+    android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -102,7 +101,7 @@
                 android:id="@+id/rv_goals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/Theme.GoalKeep" />
+                android:theme="@style/Theme.AppCompat" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
