@@ -53,6 +53,11 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.tvViewGoalPriority.text = goal.priority
             vb.tvViewGoalTag.text = goal.tag
             vb.tvViewGoalDescription.text = goal.description
+
+            vb.llViewGoal.background.setTint(getGoalColor(goal.priority))
+            vb.pbViewGoal.background.setTint(getGoalSubColor(goal.priority))
+            vb.tvViewGoalPriority.setTextColor(getGoalSubColor(goal.priority))
+            vb.tvViewGoalTag.background.setTint(getGoalSubColor("N/A"))
         }
 
         vb.fabEditGoal.setOnClickListener {
@@ -73,5 +78,54 @@ class ViewGoalActivity : AppCompatActivity() {
         val verticalLM = LinearLayoutManager(this)
         verticalLM.orientation = LinearLayoutManager.VERTICAL
         vb.rvTasks.layoutManager = verticalLM
+    }
+
+    private fun computeProgress(g: Goal): Int {
+        var totalMatched: Int = 0
+        var totalComplete: Int = 0
+        var progress: Int
+
+//        for(i in 0..<tasksList.size)
+//            if(tasksList[i].goalId == g.goalId) {
+//                totalMatched++
+//                if (tasksList[i].state == "Complete")
+//                    totalComplete++
+//            }
+        totalMatched = 3
+        totalComplete = 5
+
+        try {
+            ((totalComplete * 100) / totalMatched).also { progress = it }
+        } catch (e: ArithmeticException) {
+            progress = 0
+        }
+
+        return progress
+    }
+
+    private fun getGoalColor(priority: String): Int {
+        val color: Int = when(priority) {
+            "High" -> R.color.high_default
+            "Medium" -> R.color.medium_default
+            "Low" -> R.color.low_default
+            else -> {
+                R.color.black
+            }
+        }
+
+        return color
+    }
+
+    private fun getGoalSubColor(priority: String): Int {
+        val color: Int = when(priority) {
+            "High" -> R.color.high_sub
+            "Medium" -> R.color.medium_sub
+            "Low" -> R.color.low_sub
+            else -> {
+                R.color.black
+            }
+        }
+
+        return color
     }
 }

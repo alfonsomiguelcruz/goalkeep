@@ -18,10 +18,10 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
         this.goalVB.tvGoalTimeExpected.text = g.timeExpected
         this.goalVB.pbGoals.progress = computeProgress(g)
 
-        /* Issue #1 The */
         this.goalVB.llGoalBody.background.setTint(getGoalColor(g.priority))
         this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
         this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))
+        this.goalVB.tvGoalTag.background.setTint(getGoalSubColor("N/A"))
     }
 
     private fun computeProgress(g: Goal): Int {
@@ -51,7 +51,7 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
             "Medium" -> R.color.medium_default
             "Low" -> R.color.low_default
             else -> {
-                R.drawable.corners_gt
+                R.color.black
             }
         }
 
@@ -64,7 +64,7 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
             "Medium" -> R.color.medium_sub
             "Low" -> R.color.low_sub
             else -> {
-                R.color.white
+                R.color.black
             }
         }
 

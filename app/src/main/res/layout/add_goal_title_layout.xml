@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/add_goal_gradient_drawable">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Swipe Left to Proceed to the Next Screen."
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:id="@+id/ll_add_goal_title"
         android:layout_width="0dp"

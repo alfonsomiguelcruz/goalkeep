@@ -11,6 +11,7 @@
     android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/fl_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray">
@@ -64,8 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/corners"
-                android:backgroundTint="@android:color/darker_gray"
+                android:background="@drawable/corners_gt"
                 android:text="PriorityState"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />
@@ -76,8 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/corners"
-                android:backgroundTint="@android:color/darker_gray"
+                android:background="@drawable/corners_gt"
                 android:text="State"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />
@@ -98,13 +97,12 @@
             android:layout_gravity="end"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="25dp"
-            android:background="@color/white"
             android:clickable="true"
             android:contentDescription="Task Edit"
             android:focusable="true"
             android:src="@android:drawable/ic_menu_edit"
             android:theme="@style/Theme.AppCompat"
-            app:backgroundTint="#E6E6E6" />
+            app:backgroundTint="#FFFFFF" />
 
     </LinearLayout>
 

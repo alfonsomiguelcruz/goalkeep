@@ -23,7 +23,8 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/darker_gray"
+                android:layout_margin="10dp"
+                android:background="@color/white"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,9 +34,10 @@
 
                     <EditText
                         android:id="@+id/editTextText2"
-                        android:layout_width="300dp"
+                        android:layout_width="285dp"
                         android:layout_height="35dp"
-                        android:background="@android:color/transparent"
+                        android:background="@drawable/corners_gt"
+                        android:backgroundTint="#EFEFEF"
                         android:ems="10"
                         android:inputType="text"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -116,7 +118,7 @@
         android:focusable="true"
         android:src="@drawable/add"
         android:theme="@style/Theme.GoalKeep"
-        app:backgroundTint="#E6E6E6"
+        app:backgroundTint="#EFEFEF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

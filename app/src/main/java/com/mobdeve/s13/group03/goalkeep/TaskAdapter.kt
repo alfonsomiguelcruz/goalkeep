@@ -1,5 +1,6 @@
 package com.mobdeve.s13.group03.goalkeep
 
+import android.content.Intent
 import android.content.Context
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -75,10 +76,57 @@ class TaskAdapter (private val context: AppCompatActivity, private val tasks: Ar
         vbTask.tvViewTaskDescription.text = task.description
         vbTask.llViewTask.clipToOutline = true
 
+        vbTask.tvViewTaskPriority.background.setTint(getTaskColor(task.priority))
+        vbTask.flTask.background.setTint(getTaskColor(task.priority))
+        vbTask.tvViewTaskState.background.setTint(getStateColors(task.state))
+
+        vbTask.fabViewTaskEdit.setOnClickListener{
+            val editTaskIntent = Intent(this.context, EditGoalActivity::class.java)
+//            startActivity(editTaskIntent)
+        }
+
         popUp.showAtLocation(vbTask.root, Gravity.TOP, 0, 100)
 
         vbTask.btnCloseTask.setOnClickListener {
             popUp.dismiss()
         }
+    }
+
+    private fun getTaskColor(priority: String): Int {
+        val color: Int = when(priority) {
+            "High" -> R.color.high_default
+            "Medium" -> R.color.medium_default
+            "Low" -> R.color.low_default
+            else -> {
+                R.drawable.corners_gt
+            }
+        }
+
+        return color
+    }
+
+    private fun getTaskSubColor(priority: String): Int {
+        val color: Int = when(priority) {
+            "High" -> R.color.high_sub
+            "Medium" -> R.color.medium_sub
+            "Low" -> R.color.low_sub
+            else -> {
+                R.color.white
+            }
+        }
+
+        return color
+    }
+
+    private fun getStateColors(state: String): Int {
+        val color: Int = when(state) {
+            "Complete" -> R.color.complete
+            "Incomplete" -> R.color.incomplete
+            else -> {
+                R.color.white
+            }
+        }
+
+        return color
     }
 }
