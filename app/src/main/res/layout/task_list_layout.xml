@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
-        android:background="@drawable/corners_gt"
+        android:background="@drawable/corners_low"
         android:orientation="vertical"
         android:padding="15dp">
 
@@ -40,7 +40,7 @@
 
             <TextView
                 android:id="@+id/tv_task_priority"
-                android:layout_width="75dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
@@ -48,7 +48,11 @@
                 android:backgroundTint="@color/white"
                 android:text="PriorityState"
                 android:textAlignment="center"
-                android:textColor="#000000" />
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/dark_grey"
+                android:textColorHint="@color/dark_grey"
+                android:textColorLink="@color/dark_grey"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_task_state"
@@ -56,10 +60,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/corners_gt"
+                android:background="@drawable/corners_complete"
                 android:text="Complete"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

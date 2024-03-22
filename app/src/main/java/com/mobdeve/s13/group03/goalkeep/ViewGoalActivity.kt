@@ -54,11 +54,14 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.tvViewGoalTag.text = goal.tag
             vb.tvViewGoalDescription.text = goal.description
 
-            vb.llViewGoal.background.setTint(getGoalColor(goal.priority))
-            vb.pbViewGoal.background.setTint(getGoalSubColor(goal.priority))
+            vb.llViewGoal.setBackgroundResource(getGoalColor(goal.priority))
+            vb.pbViewGoal.setBackgroundResource(getGoalSubColor(goal.priority))
             vb.tvViewGoalPriority.setTextColor(getGoalSubColor(goal.priority))
             vb.tvViewGoalTag.background.setTint(getGoalSubColor("N/A"))
         }
+
+        // TODO: Find way to edit display of button
+        vb.btnCompleteGoal.isEnabled = false
 
         vb.fabEditGoal.setOnClickListener {
             val editGoalIntent = Intent(this, EditGoalActivity::class.java)
@@ -105,11 +108,11 @@ class ViewGoalActivity : AppCompatActivity() {
 
     private fun getGoalColor(priority: String): Int {
         val color: Int = when(priority) {
-            "High" -> R.color.high_default
-            "Medium" -> R.color.medium_default
-            "Low" -> R.color.low_default
+            "High" -> R.drawable.regular_high
+            "Medium" -> R.drawable.regular_medium
+            "Low" -> R.drawable.regular_low
             else -> {
-                R.color.black
+                R.drawable.corners_gt
             }
         }
 
@@ -118,11 +121,11 @@ class ViewGoalActivity : AppCompatActivity() {
 
     private fun getGoalSubColor(priority: String): Int {
         val color: Int = when(priority) {
-            "High" -> R.color.high_sub
-            "Medium" -> R.color.medium_sub
-            "Low" -> R.color.low_sub
+            "High" -> R.drawable.corners_sub_high
+            "Medium" -> R.drawable.corners_sub_medium
+            "Low" -> R.drawable.corners_sub_low
             else -> {
-                R.color.black
+                R.drawable.corners_gt
             }
         }
 

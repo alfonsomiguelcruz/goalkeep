@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.databinding.GoalListLayoutBinding
 
 class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val tasksList: ArrayList<Task>) : RecyclerView.ViewHolder(goalVB.root) {
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("SetTextI18n")
     fun bindGoalData(g: Goal) {
         this.goalVB.tvGoalName.text = g.name
         this.goalVB.tvGoalPriority.text = g.priority
@@ -18,10 +19,10 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
         this.goalVB.tvGoalTimeExpected.text = g.timeExpected
         this.goalVB.pbGoals.progress = computeProgress(g)
 
-        this.goalVB.llGoalBody.background.setTint(getGoalColor(g.priority))
-        this.goalVB.pbGoals.background.setTint(getGoalSubColor(g.priority))
-        this.goalVB.tvGoalPriority.setTextColor(getGoalSubColor(g.priority))
-        this.goalVB.tvGoalTag.background.setTint(getGoalSubColor("N/A"))
+        this.goalVB.llGoalBody.setBackgroundResource(getGoalColor(g.priority))
+        this.goalVB.tvGoalPriority.text = "${g.priority} Priority"
+        this.goalVB.pbGoals.setBackgroundResource(getGoalSubColor(g.priority))
+        this.goalVB.tvGoalTag.background.setTint(getDarkGray())
     }
 
     private fun computeProgress(g: Goal): Int {
@@ -47,11 +48,11 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
 
     private fun getGoalColor(priority: String): Int {
         val color: Int = when(priority) {
-            "High" -> R.color.high_default
-            "Medium" -> R.color.medium_default
-            "Low" -> R.color.low_default
+            "High" -> R.drawable.corners_high
+            "Medium" -> R.drawable.corners_medium
+            "Low" -> R.drawable.corners_low
             else -> {
-                R.color.black
+                R.drawable.corners_gt
             }
         }
 
@@ -60,14 +61,18 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
 
     private fun getGoalSubColor(priority: String): Int {
         val color: Int = when(priority) {
-            "High" -> R.color.high_sub
-            "Medium" -> R.color.medium_sub
-            "Low" -> R.color.low_sub
+            "High" -> R.drawable.corners_sub_high
+            "Medium" -> R.drawable.corners_sub_medium
+            "Low" -> R.drawable.corners_sub_low
             else -> {
-                R.color.black
+                R.drawable.corners_gt
             }
         }
 
         return color
+    }
+
+    private fun getDarkGray() : Int {
+        return R.color.dark_grey
     }
 }
