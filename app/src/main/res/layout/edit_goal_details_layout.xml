@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:src="@drawable/check"
+            android:src="@drawable/check_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
             android:background="@color/white"
-            android:src="@drawable/close"
+            android:src="@drawable/cross_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ib_edit_goal_confirm"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Goal Title"
-            android:textColor="#A5A5A5" />
+            android:textColor="@color/grey" />
 
         <EditText
             android:id="@+id/et_edit_goal_title"
@@ -70,6 +70,16 @@
             android:backgroundTint="#A5A5A5"
             android:ems="10"
             android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tv_edit_goal_title_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textColor="@color/edit_error"
+            android:textColorHighlight="@color/edit_error"
+            android:textColorHint="@color/edit_error"
+            android:textColorLink="@color/edit_error" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Goal Expected Date of Accomplishment"
-            android:textColor="#A5A5A5" />
+            android:textColor="@color/grey" />
 
         <EditText
             android:id="@+id/et_edit_goal_time_expected"
@@ -93,6 +103,16 @@
             android:backgroundTint="#A5A5A5"
             android:ems="10"
             android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tv_edit_goal_time_expected_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textColor="@color/edit_error"
+            android:textColorHighlight="@color/edit_error"
+            android:textColorHint="@color/edit_error"
+            android:textColorLink="@color/edit_error" />
     </LinearLayout>
 
     <LinearLayout
@@ -107,7 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Goal Description"
-            android:textColor="#A5A5A5" />
+            android:textColor="@color/grey" />
 
         <EditText
             android:id="@+id/et_edit_goal_description"
@@ -116,6 +136,16 @@
             android:backgroundTint="#A5A5A5"
             android:ems="10"
             android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tv_edit_goal_description_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textColor="@color/edit_error"
+            android:textColorHighlight="@color/edit_error"
+            android:textColorHint="@color/edit_error"
+            android:textColorLink="@color/edit_error" />
 
     </LinearLayout>
 
@@ -139,7 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Goal Tag"
-                android:textColor="#A5A5A5" />
+                android:textColor="@color/grey" />
 
             <EditText
                 android:id="@+id/et_edit_goal_tag"
@@ -148,6 +178,16 @@
                 android:backgroundTint="#A5A5A5"
                 android:ems="10"
                 android:inputType="text" />
+
+            <TextView
+                android:id="@+id/tv_edit_goal_tag_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Error"
+                android:textColor="@color/edit_error"
+                android:textColorHighlight="@color/edit_error"
+                android:textColorHint="@color/edit_error"
+                android:textColorLink="@color/edit_error" />
         </LinearLayout>
 
         <LinearLayout
@@ -164,7 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Goal Priority"
-                android:textColor="#A5A5A5" />
+                android:textColor="@color/grey" />
 
             <EditText
                 android:id="@+id/et_edit_goal_priority"
@@ -173,6 +213,7 @@
                 android:backgroundTint="#A5A5A5"
                 android:ems="10"
                 android:inputType="text" />
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

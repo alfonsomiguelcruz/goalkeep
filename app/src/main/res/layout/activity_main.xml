@@ -8,6 +8,7 @@
     android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +38,7 @@
                         android:layout_width="285dp"
                         android:layout_height="35dp"
                         android:background="@drawable/corners_gt"
-                        android:backgroundTint="#EFEFEF"
+                        android:backgroundTint="@color/light_grey"
                         android:ems="10"
                         android:inputType="text"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +53,7 @@
                         android:layout_weight="1"
                         android:background="@color/white"
                         android:padding="10dp"
-                        android:src="@drawable/magnifying_glass"
+                        android:src="@drawable/search_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageButton"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:padding="10dp"
-                        android:src="@drawable/dots"
+                        android:src="@drawable/threedots_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:padding="10dp"
-                        android:src="@drawable/filter"
+                        android:src="@drawable/filter_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -92,7 +93,7 @@
                         android:layout_marginEnd="10dp"
                         android:background="@color/white"
                         android:padding="10dp"
-                        android:src="@drawable/sort"
+                        android:src="@drawable/sort_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -103,7 +104,7 @@
                 android:id="@+id/rv_goals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/Theme.AppCompat" />
+                android:layout_marginBottom="55dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -112,13 +113,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:background="@color/white"
+        android:layout_marginBottom="50dp"
+        android:background="@color/light_grey"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/add"
+        android:src="@drawable/add_icon"
         android:theme="@style/Theme.GoalKeep"
-        app:backgroundTint="#EFEFEF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@color/light_grey"
+        app:layout_constraintBottom_toTopOf="@+id/bnv_menu"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnv_menu"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:background="@color/white"
+        android:theme="@style/Theme.GoalKeep"
+        app:itemTextColor="@color/grey"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

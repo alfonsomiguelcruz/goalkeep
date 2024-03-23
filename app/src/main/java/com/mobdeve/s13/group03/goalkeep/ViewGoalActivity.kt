@@ -56,7 +56,10 @@ class ViewGoalActivity : AppCompatActivity() {
 
             vb.llViewGoal.setBackgroundResource(getGoalColor(goal.priority))
             vb.pbViewGoal.setBackgroundResource(getGoalSubColor(goal.priority))
-            vb.tvViewGoalPriority.setTextColor(getGoalSubColor(goal.priority))
+//            vb.tvViewGoalPriority.setTextColor(getGoalTextSubColor(goal.priority))
+//            vb.tvViewGoalPriority.setLinkTextColor(getGoalTextSubColor(goal.priority))
+//            vb.tvViewGoalPriority.setHintTextColor(getGoalTextSubColor(goal.priority))
+//            vb.tvViewGoalPriority.highlightColor = getGoalTextSubColor(goal.priority)
             vb.tvViewGoalTag.background.setTint(getGoalSubColor("N/A"))
         }
 
@@ -126,6 +129,19 @@ class ViewGoalActivity : AppCompatActivity() {
             "Low" -> R.drawable.corners_sub_low
             else -> {
                 R.drawable.corners_gt
+            }
+        }
+
+        return color
+    }
+
+    private fun getGoalTextSubColor(priority: String): Int {
+        val color: Int = when(priority) {
+            "High" -> R.color.high_sub
+            "Medium" -> R.color.medium_sub
+            "Low" -> R.color.low_sub
+            else -> {
+                R.color.black
             }
         }
 

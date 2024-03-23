@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.databinding.ActivityMainBinding
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var vb : ActivityMainBinding
     private lateinit var rv : RecyclerView
     private lateinit var goalsAdapter : GoalAdapter
+    private lateinit var goalsTouchHelper: ItemTouchHelper
 
     companion object {
         const val TITLE_KEY = "TITLE_KEY"
@@ -59,5 +61,10 @@ class MainActivity : AppCompatActivity() {
         val verticalLM = LinearLayoutManager(this)
         verticalLM.orientation = LinearLayoutManager.VERTICAL
         vb.rvGoals.layoutManager = verticalLM
+
+        val goalSwipeCallback = SwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
+        goalSwipeCallback.goalAdapter = this.goalsAdapter
+        goalsTouchHelper = ItemTouchHelper(goalSwipeCallback)
+        goalsTouchHelper.attachToRecyclerView(this.rv)
     }
 }
