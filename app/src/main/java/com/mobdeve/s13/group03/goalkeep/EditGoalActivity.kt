@@ -28,5 +28,20 @@ class EditGoalActivity : AppCompatActivity() {
             vb.etEditGoalTag.setText(goal.tag)
             vb.etEditGoalDescription.setText(goal.description)
         }
+
+        // TODO: Do Confirm Logic
+        vb.ibEditGoalConfirm.setOnClickListener {
+            this.finish()
+        }
+
+        // TODO: Do Cancel Logic
+        vb.ibEditGoalCancel.setOnClickListener {
+            this.finish()
+        }
+
+        // TODO: Do Delete Logic
+        vb.btnDeleteGoal.setOnClickListener {
+            this.finish()
+        }
     }
 }

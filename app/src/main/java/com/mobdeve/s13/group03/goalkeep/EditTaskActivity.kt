@@ -29,6 +29,20 @@ class EditTaskActivity : AppCompatActivity() {
             editTaskDetailsLayoutBinding.etEditTaskState.setText(task.state)
             editTaskDetailsLayoutBinding.etEditTaskTimeExpected.setText(task.timeExpected)
         }
-        Log.d("MOBDEVE_MCO3", "Edit Task Activity Done!")
+
+        // TODO: Do Confirm Logic
+        editTaskDetailsLayoutBinding.ibEditTaskConfirm.setOnClickListener {
+            this.finish()
+        }
+
+        // TODO: Do Cancel Logic
+        editTaskDetailsLayoutBinding.ibEditTaskCancel.setOnClickListener {
+            this.finish()
+        }
+
+        // TODO: Do Delete Logic
+        editTaskDetailsLayoutBinding.btnDeleteTask.setOnClickListener {
+            this.finish()
+        }
     }
 }
