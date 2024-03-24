@@ -1,13 +1,25 @@
 package com.mobdeve.s13.group03.goalkeep
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.group03.goalkeep.databinding.EditGoalDetailsLayoutBinding
+import java.util.Calendar
 
 class EditGoalActivity : AppCompatActivity() {
     private lateinit var vb : EditGoalDetailsLayoutBinding
+    private var yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
+    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH) - 1
+    private var dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+    private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
+    private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,23 +35,50 @@ class EditGoalActivity : AppCompatActivity() {
 
         if(goal != null) {
             vb.etEditGoalTitle.setText(goal.title)
-            vb.etEditGoalTimeExpected.setText(goal.timeExpected)
+            vb.tvEditGoalTimeExpectedDate.text = DateHelper.getDateFormat(goal.timeExpected)
+            vb.tvEditGoalTimeExpectedTime.text = DateHelper.getTimeFormat(goal.timeExpected)
             vb.etEditGoalPriority.setText(goal.priority)
             vb.etEditGoalTag.setText(goal.tag)
             vb.etEditGoalDescription.setText(goal.description)
         }
 
-        // TODO: Do Confirm Logic
+        // Error Messages
+        vb.tvEditGoalTagError.text = ""
+        vb.tvEditGoalDescriptionError.text = ""
+        vb.tvEditGoalTitleError.text = ""
+        vb.tvEditGoalTimeExpectedError.text = ""
+
+        vb.clEditGoalTimeExpectedDate.setOnClickListener {
+            val d = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
+                vb.tvEditGoalTimeExpectedDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"
+
+                yearInput = year
+                monthInput = monthOfYear
+                dayInput = dayOfMonth
+
+            },  yearInput, monthInput, dayInput)
+            d.show()
+        }
+
+        vb.clEditGoalTimeExpectedTime.setOnClickListener {
+            val t = TimePickerDialog(this, { view, hourOfDay, minute ->
+                vb.tvEditGoalTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: $minute ${DateHelper.getAMPM(hourOfDay)}"
+                hourInput = hourOfDay
+                minuteInput = minute
+            },  hourInput, minuteInput, false)
+            t.show()
+        }
+
+        // TODO: Do Confirm Update Logic
         vb.ibEditGoalConfirm.setOnClickListener {
             this.finish()
         }
 
-        // TODO: Do Cancel Logic
         vb.ibEditGoalCancel.setOnClickListener {
             this.finish()
         }
 
-        // TODO: Do Delete Logic
+        // TODO: Do Delete Goal Logic
         vb.btnDeleteGoal.setOnClickListener {
             this.finish()
         }

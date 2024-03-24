@@ -69,7 +69,12 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#A5A5A5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/dark_grey"
+            android:textColorHighlight="@color/dark_grey"
+            android:textColorHint="@color/dark_grey"
+            android:textColorLink="@color/dark_grey"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_edit_task_title_error"
@@ -97,13 +102,94 @@
             android:text="Task Expected Date of Accomplishment"
             android:textColor="@color/grey" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_edit_task_time_expected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_edit_task_time_expected_date"
+                android:layout_width="185dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_border"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_edit_task_time_expected_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="December 31, 2024"
+                    android:textColor="@color/dark_grey"
+                    android:textColorHighlight="@color/dark_grey"
+                    android:textColorHint="@color/dark_grey"
+                    android:textColorLink="@color/dark_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_edit_task_time_expected_date"
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calendar_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_edit_task_time_expected_time"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_border"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_edit_task_time_expected_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:53 PM"
+                    android:textColor="@color/dark_grey"
+                    android:textColorHighlight="@color/dark_grey"
+                    android:textColorHint="@color/dark_grey"
+                    android:textColorLink="@color/dark_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_edit_task_time_expected_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/clock_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <EditText
             android:id="@+id/et_edit_task_time_expected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#A5A5A5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/dark_grey"
+            android:textColorHighlight="@color/dark_grey"
+            android:textColorHint="@color/dark_grey"
+            android:textColorLink="@color/dark_grey"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_edit_task_time_expected_error"
@@ -136,7 +222,12 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#A5A5A5"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/dark_grey"
+            android:textColorHighlight="@color/dark_grey"
+            android:textColorHint="@color/dark_grey"
+            android:textColorLink="@color/dark_grey"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_edit_task_description_error"
@@ -178,7 +269,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#A5A5A5"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@color/dark_grey"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -203,7 +296,12 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#A5A5A5"
                 android:ems="10"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="@color/dark_grey"
+                android:textColorHighlight="@color/dark_grey"
+                android:textColorHint="@color/dark_grey"
+                android:textColorLink="@color/dark_grey"
+                android:textSize="14sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
