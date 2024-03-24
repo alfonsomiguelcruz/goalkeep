@@ -1,10 +1,7 @@
 package com.mobdeve.s13.group03.goalkeep
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         vb.rvGoals.layoutManager = verticalLM
 
         // Swipe Callback Function for the Items
-        val goalSwipeCallback = SwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
+        val goalSwipeCallback = GoalSwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
         goalSwipeCallback.goalAdapter = this.goalsAdapter
         goalsTouchHelper = ItemTouchHelper(goalSwipeCallback)
         goalsTouchHelper.attachToRecyclerView(this.rv)

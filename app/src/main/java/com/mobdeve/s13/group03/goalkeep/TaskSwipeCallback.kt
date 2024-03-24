@@ -1,18 +1,16 @@
 package com.mobdeve.s13.group03.goalkeep
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
-class SwipeCallback (dragDirs: Int, swipeDirs: Int, context: Context) :
+class TaskSwipeCallback (dragDirs: Int, swipeDirs: Int, context: Context) :
     ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
-    var goalAdapter: GoalAdapter? = null
+    var taskAdapter: TaskAdapter? = null
     var background: ColorDrawable = ColorDrawable(Color.BLACK)
     var activityContext: Context = context
 

@@ -1,14 +1,10 @@
 package com.mobdeve.s13.group03.goalkeep
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewGoalLayoutBinding
@@ -20,6 +16,7 @@ class ViewGoalActivity : AppCompatActivity() {
     private lateinit var vb : ViewGoalLayoutBinding
     private lateinit var rv : RecyclerView
     private lateinit var tasksAdapter: TaskAdapter
+    private lateinit var tasksTouchHelper: ItemTouchHelper
 	
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +65,10 @@ class ViewGoalActivity : AppCompatActivity() {
         verticalLM.orientation = LinearLayoutManager.VERTICAL
         vb.rvTasks.layoutManager = verticalLM
 
-
+        val taskSwipeCallback = TaskSwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
+        taskSwipeCallback.taskAdapter = this.tasksAdapter
+        tasksTouchHelper = ItemTouchHelper(taskSwipeCallback)
+        tasksTouchHelper.attachToRecyclerView(this.rv)
     }
 
     private fun computeProgress(g: Goal): Int {
