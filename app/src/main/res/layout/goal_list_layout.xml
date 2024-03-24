@@ -61,6 +61,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/corners_gt"
+                android:backgroundTint="@color/black"
                 android:text="TagName"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF" />

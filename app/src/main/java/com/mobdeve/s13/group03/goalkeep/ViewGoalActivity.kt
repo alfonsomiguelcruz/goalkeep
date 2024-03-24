@@ -55,7 +55,7 @@ class ViewGoalActivity : AppCompatActivity() {
             startActivity(editGoalIntent)
         }
 
-        vb.fabAddTask.setOnClickListener{
+        vb.fabAddTask.setOnClickListener {
             val addTaskIntent = Intent(this, AddTaskTitleActivity::class.java)
             startActivity(addTaskIntent)
         }

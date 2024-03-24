@@ -27,4 +27,5 @@
     <color name="dark_grey">#FF141414</color>
     <color name="grey">#FF888888</color>
     <color name="light_grey">#FFF3F3F3</color>
+    <color name="none">#00FFFFFF</color>
 </resources>

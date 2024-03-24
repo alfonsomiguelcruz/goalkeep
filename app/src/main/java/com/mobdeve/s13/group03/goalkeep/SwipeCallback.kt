@@ -41,9 +41,9 @@ class SwipeCallback (dragDirs: Int, swipeDirs: Int, context: Context) :
 
         RecyclerViewSwipeDecorator.Builder(activityContext, canvas, recyclerView,
             viewHolder, dX, dY, actionState, isCurrentlyActive)
-            .addSwipeLeftBackgroundColor(R.color.delete)
+            .addSwipeLeftBackgroundColor(Color.BLACK)
             .addSwipeLeftActionIcon(R.drawable.trash_icon)
-            .addSwipeRightBackgroundColor(R.color.delete)
+            .addSwipeRightBackgroundColor(Color.BLACK)
             .addSwipeRightActionIcon(R.drawable.trash_icon)
             .create()
             .decorate()

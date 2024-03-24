@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.group03.goalkeep.databinding.EditGoalDetailsLayoutBinding
 
 class EditGoalActivity : AppCompatActivity() {
-    private lateinit var goal: Goal
     private lateinit var vb : EditGoalDetailsLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
