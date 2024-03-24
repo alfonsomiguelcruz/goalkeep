@@ -54,14 +54,18 @@ class MainActivity : AppCompatActivity() {
             println(e)
         }
 
+        // Connecting Recycler View with Adapter
+        // TODO: Pass the database contents of both goals and tasks to adapter
         this.rv = vb.rvGoals
         this.goalsAdapter = GoalAdapter(goals, tasks)
         this.rv.adapter =this.goalsAdapter
 
+        // Orientation of the Activity Layout
         val verticalLM = LinearLayoutManager(this)
         verticalLM.orientation = LinearLayoutManager.VERTICAL
         vb.rvGoals.layoutManager = verticalLM
 
+        // Swipe Callback Function for the Items
         val goalSwipeCallback = SwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
         goalSwipeCallback.goalAdapter = this.goalsAdapter
         goalsTouchHelper = ItemTouchHelper(goalSwipeCallback)

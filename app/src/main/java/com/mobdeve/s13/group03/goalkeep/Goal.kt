@@ -3,12 +3,19 @@ package com.mobdeve.s13.group03.goalkeep
 import android.os.Parcel
 import android.os.Parcelable
 
-class Goal (goalId: Int, name: String, timeCreated: String, timeExpected: String,
-            timeCompleted: String, description: String, priority: String, state: String, tag: String) : Parcelable {
+class Goal (goalId: Int,
+            title: String,
+            timeCreated: String,
+            timeExpected: String,
+            timeCompleted: String,
+            description: String,
+            priority: String,
+            state: String,
+            tag: String) : Parcelable {
     var goalId = goalId
         private set
 
-    var name = name
+    var title = title
         private set
 
     var timeCreated = timeCreated
@@ -34,7 +41,7 @@ class Goal (goalId: Int, name: String, timeCreated: String, timeExpected: String
 
     constructor(parcel: Parcel): this(
         goalId = parcel.readInt(),
-        name = parcel.readString().toString(),
+        title = parcel.readString().toString(),
         timeCreated = parcel.readString().toString(),
         timeExpected = parcel.readString().toString(),
         timeCompleted = parcel.readString().toString(),
@@ -50,7 +57,7 @@ class Goal (goalId: Int, name: String, timeCreated: String, timeExpected: String
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(this.goalId)
-        parcel.writeString(this.name)
+        parcel.writeString(this.title)
         parcel.writeString(this.timeCreated)
         parcel.writeString(this.timeExpected)
         parcel.writeString(this.timeCompleted)

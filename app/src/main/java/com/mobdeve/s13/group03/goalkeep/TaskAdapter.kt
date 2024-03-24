@@ -22,7 +22,7 @@ import java.nio.file.Files.size
 
 
 
-class TaskAdapter (private val context: AppCompatActivity, private val tasks: ArrayList<Task>) : RecyclerView.Adapter<TaskViewHolder>() {
+class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<TaskViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val taskViewBinding : TaskListLayoutBinding = TaskListLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
@@ -36,13 +36,12 @@ class TaskAdapter (private val context: AppCompatActivity, private val tasks: Ar
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bindTaskData(tasks[position])
-        holder.itemView.setOnClickListener {
-            println("Clicked Task " + this.tasks[position].name)
-            showTask(tasks[position])
+        holder.itemView.setOnClickListener { view ->
+            showTask(view.context as AppCompatActivity, tasks[position])
         }
     }
 
-    private fun showTask(task: Task) {
+    private fun showTask(context: AppCompatActivity, task: Task) {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         val vbTask = ViewTaskLayoutBinding.inflate(layoutInflater)
@@ -76,13 +75,13 @@ class TaskAdapter (private val context: AppCompatActivity, private val tasks: Ar
         vbTask.tvViewTaskDescription.text = task.description
         vbTask.llViewTask.clipToOutline = true
 
-        vbTask.tvViewTaskPriority.background.setTint(getTaskColor(task.priority))
-        vbTask.flTask.background.setTint(getTaskColor(task.priority))
-        vbTask.tvViewTaskState.background.setTint(getStateColors(task.state))
+        vbTask.tvViewTaskPriority.background.setTint(DesignClass.getCorneredColor(task.priority))
+        vbTask.flTask.background.setTint(DesignClass.getCorneredColor(task.priority))
+        vbTask.tvViewTaskState.background.setTint(DesignClass.getStateColor(task.state))
 
         vbTask.fabViewTaskEdit.setOnClickListener{
-            val editTaskIntent = Intent(this.context, EditGoalActivity::class.java)
-//            startActivity(editTaskIntent)
+//            val editTaskIntent = Intent(context, EditTaskActivity::class.java)
+//            context.startActivity(editTaskIntent)
         }
 
         popUp.showAtLocation(vbTask.root, Gravity.TOP, 0, 100)
@@ -90,43 +89,5 @@ class TaskAdapter (private val context: AppCompatActivity, private val tasks: Ar
         vbTask.btnCloseTask.setOnClickListener {
             popUp.dismiss()
         }
-    }
-
-    private fun getTaskColor(priority: String): Int {
-        val color: Int = when(priority) {
-            "High" -> R.color.high_default
-            "Medium" -> R.color.medium_default
-            "Low" -> R.color.low_default
-            else -> {
-                R.drawable.corners_gt
-            }
-        }
-
-        return color
-    }
-
-    private fun getTaskSubColor(priority: String): Int {
-        val color: Int = when(priority) {
-            "High" -> R.color.high_sub
-            "Medium" -> R.color.medium_sub
-            "Low" -> R.color.low_sub
-            else -> {
-                R.color.white
-            }
-        }
-
-        return color
-    }
-
-    private fun getStateColors(state: String): Int {
-        val color: Int = when(state) {
-            "Complete" -> R.color.complete
-            "Incomplete" -> R.color.incomplete
-            else -> {
-                R.color.white
-            }
-        }
-
-        return color
     }
 }

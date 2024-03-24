@@ -13,16 +13,16 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
 
     @SuppressLint("SetTextI18n")
     fun bindGoalData(g: Goal) {
-        this.goalVB.tvGoalName.text = g.name
+        this.goalVB.tvGoalName.text = g.title
         this.goalVB.tvGoalPriority.text = g.priority
         this.goalVB.tvGoalTag.text = g.tag
         this.goalVB.tvGoalTimeExpected.text = g.timeExpected
         this.goalVB.pbGoals.progress = computeProgress(g)
 
-        this.goalVB.llGoalBody.setBackgroundResource(getGoalColor(g.priority))
+        this.goalVB.llGoalBody.setBackgroundResource(DesignClass.getCorneredColor(g.priority))
         this.goalVB.tvGoalPriority.text = "${g.priority} Priority"
-        this.goalVB.pbGoals.setBackgroundResource(getGoalSubColor(g.priority))
-        this.goalVB.tvGoalTag.background.setTint(getDarkGray())
+        this.goalVB.pbGoals.setBackgroundResource(DesignClass.getSubColor(g.priority))
+        this.goalVB.tvGoalTag.background.setTint(DesignClass.getDarkGray())
     }
 
     private fun computeProgress(g: Goal): Int {
@@ -43,36 +43,8 @@ class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val task
             progress = 0
         }
 
+
+
         return progress
-    }
-
-    private fun getGoalColor(priority: String): Int {
-        val color: Int = when(priority) {
-            "High" -> R.drawable.corners_high
-            "Medium" -> R.drawable.corners_medium
-            "Low" -> R.drawable.corners_low
-            else -> {
-                R.drawable.corners_gt
-            }
-        }
-
-        return color
-    }
-
-    private fun getGoalSubColor(priority: String): Int {
-        val color: Int = when(priority) {
-            "High" -> R.drawable.corners_sub_high
-            "Medium" -> R.drawable.corners_sub_medium
-            "Low" -> R.drawable.corners_sub_low
-            else -> {
-                R.drawable.corners_gt
-            }
-        }
-
-        return color
-    }
-
-    private fun getDarkGray() : Int {
-        return R.color.dark_grey
     }
 }

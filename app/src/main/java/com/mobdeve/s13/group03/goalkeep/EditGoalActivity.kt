@@ -9,28 +9,25 @@ class EditGoalActivity : AppCompatActivity() {
     private lateinit var goal: Goal
     private lateinit var vb : EditGoalDetailsLayoutBinding
 
-    companion object {
-        const val GOAL_KEY: String = "GOAL_KEY"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         vb = EditGoalDetailsLayoutBinding.inflate(layoutInflater)
         setContentView(vb.root)
 
-//        goal = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) ({
-//            intent.getParcelableExtra(ViewGoalActivity.GOAL_KEY, Goal::class.java)
-//        })!! else ({
-//            @Suppress("DEPRECATION")
-//            intent.getParcelableExtra(ViewGoalActivity.GOAL_KEY)
-//        })!!
-//
-//        vb.etEditGoalTitle.text = goal.name
-//        vb.etEditGoalTimeExpected.text = goal.timeExpected
-//        vb.etEditGoalPriority.text = goal.priority
-//        vb.etEditGoalTag.text = goal.tag
-//        vb.etEditGoalDescription.text = goal.description
+        val goal = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(IntentKeys.GOAL_OBJECT_KEY.name, Goal::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra(IntentKeys.GOAL_OBJECT_KEY.name)
+        }
 
+        if(goal != null) {
+            vb.etEditGoalTitle.setText(goal.title)
+            vb.etEditGoalTimeExpected.setText(goal.timeExpected)
+            vb.etEditGoalPriority.setText(goal.priority)
+            vb.etEditGoalTag.setText(goal.tag)
+            vb.etEditGoalDescription.setText(goal.description)
+        }
     }
 }

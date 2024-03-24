@@ -1,9 +1,11 @@
 package com.mobdeve.s13.group03.goalkeep
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -39,9 +41,9 @@ class SwipeCallback (dragDirs: Int, swipeDirs: Int, context: Context) :
 
         RecyclerViewSwipeDecorator.Builder(activityContext, canvas, recyclerView,
             viewHolder, dX, dY, actionState, isCurrentlyActive)
-            .addSwipeLeftBackgroundColor(R.color.incomplete)
+            .addSwipeLeftBackgroundColor(R.color.delete)
             .addSwipeLeftActionIcon(R.drawable.trash_icon)
-            .addSwipeRightBackgroundColor(R.color.incomplete)
+            .addSwipeRightBackgroundColor(R.color.delete)
             .addSwipeRightActionIcon(R.drawable.trash_icon)
             .create()
             .decorate()

@@ -21,12 +21,10 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val tasksList: Arr
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
         holder.bindGoalData(this.goals[position])
         holder.itemView.setOnClickListener { view ->
-            val context = view.context
+            val viewGoalIntent = Intent(view.context, ViewGoalActivity::class.java)
+            viewGoalIntent.putExtra(IntentKeys.GOAL_OBJECT_KEY.name, this.goals[position])
 
-            val viewGoalIntent = Intent(context, ViewGoalActivity::class.java)
-            viewGoalIntent.putExtra("GOAL_KEY", this.goals[position])
-
-            context.startActivity(viewGoalIntent)
+            view.context.startActivity(viewGoalIntent)
         }
     }
 }
