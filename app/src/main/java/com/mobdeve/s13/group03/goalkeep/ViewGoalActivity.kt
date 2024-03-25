@@ -25,7 +25,7 @@ class ViewGoalActivity : AppCompatActivity() {
     private lateinit var tasksTouchHelper: ItemTouchHelper
 
     private var yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
-    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH) - 1
+    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
     private var dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
@@ -115,7 +115,7 @@ class ViewGoalActivity : AppCompatActivity() {
 
             vb.clTaskFilterTimeExpectedStartTime.setOnClickListener {
                 val timeStartDialog = TimePickerDialog(this, { view, hourOfDay, minute ->
-                    vb.tvTaskFilterTimeExpectedStartTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: $minute ${DateHelper.getAMPM(hourOfDay)}"
+                    vb.tvTaskFilterTimeExpectedStartTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getMinuteFormat(minute)} ${DateHelper.getAMPM(hourOfDay)}"
                     hourInput = hourOfDay
                     minuteInput = minute
                 },  hourInput, minuteInput, false)
@@ -134,7 +134,7 @@ class ViewGoalActivity : AppCompatActivity() {
 
             vb.clTaskFilterTimeExpectedEndTime.setOnClickListener {
                 val timeEndDialog = TimePickerDialog(this, { view, hourOfDay, minute ->
-                    vb.tvTaskFilterTimeExpectedEndTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: $minute ${DateHelper.getAMPM(hourOfDay)}"
+                    vb.tvTaskFilterTimeExpectedEndTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getMinuteFormat(minute)} ${DateHelper.getAMPM(hourOfDay)}"
                     hourInput = hourOfDay
                     minuteInput = minute
                 },  hourInput, minuteInput, false)

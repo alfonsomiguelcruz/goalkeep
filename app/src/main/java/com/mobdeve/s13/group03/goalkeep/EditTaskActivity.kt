@@ -13,7 +13,7 @@ import java.util.Calendar
 class EditTaskActivity : AppCompatActivity() {
     private lateinit var editTaskDetailsLayoutBinding: EditTaskDetailsLayoutBinding
     private var yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
-    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH) - 1
+    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
     private var dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
@@ -35,8 +35,8 @@ class EditTaskActivity : AppCompatActivity() {
         if (task != null) {
             editTaskDetailsLayoutBinding.etEditTaskTitle.setText(task.name)
             editTaskDetailsLayoutBinding.etEditTaskDescription.setText(task.description)
-            editTaskDetailsLayoutBinding.etEditTaskPriority.setText(task.priority)
-            editTaskDetailsLayoutBinding.etEditTaskState.setText(task.state)
+            editTaskDetailsLayoutBinding.spnTaskpriority.prompt = task.priority
+            editTaskDetailsLayoutBinding.spnTaskstate.prompt = task.state
             editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedDate.text = DateHelper.getDateFormat(task.timeExpected)
             editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedTime.text = DateHelper.getTimeFormat(task.timeExpected)
         }
@@ -58,7 +58,7 @@ class EditTaskActivity : AppCompatActivity() {
 
         editTaskDetailsLayoutBinding.clEditTaskTimeExpectedTime.setOnClickListener {
             val t = TimePickerDialog(this, { view, hourOfDay, minute ->
-                editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: $minute ${DateHelper.getAMPM(hourOfDay)}"
+                editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getMinuteFormat(minute)} ${DateHelper.getAMPM(hourOfDay)}"
                 hourInput = hourOfDay
                 minuteInput = minute
             },  hourInput, minuteInput, false)

@@ -70,6 +70,13 @@ class DateHelper {
             return "${strHour}:$minute ${getAMPM(hour.toInt())}"
         }
 
+        fun getMinuteFormat(minute: Int) : String {
+            return if(minute < 10)
+                "0$minute"
+            else
+                minute.toString()
+        }
+
          fun getNonMilitaryHour(hour : Int) : Int {
             var nmHour : Int = hour
 

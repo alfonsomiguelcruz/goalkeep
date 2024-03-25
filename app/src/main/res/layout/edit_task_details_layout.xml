@@ -266,9 +266,10 @@
                 android:textColor="@color/grey" />
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/spn_taskstate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="-4dp"
                 android:background="@drawable/input_border"
                 android:entries="@array/state_types"
                 android:paddingTop="5dp"
@@ -293,9 +294,10 @@
                 android:textColor="@color/grey" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/spn_taskpriority"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="-4dp"
                 android:background="@drawable/input_border"
                 android:entries="@array/priority_types"
                 android:paddingTop="5dp"

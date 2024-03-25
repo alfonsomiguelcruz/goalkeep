@@ -14,7 +14,7 @@ import java.util.Calendar
 class EditGoalActivity : AppCompatActivity() {
     private lateinit var vb : EditGoalDetailsLayoutBinding
     private var yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
-    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH) - 1
+    private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
     private var dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
     private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
@@ -37,7 +37,7 @@ class EditGoalActivity : AppCompatActivity() {
             vb.etEditGoalTitle.setText(goal.title)
             vb.tvEditGoalTimeExpectedDate.text = DateHelper.getDateFormat(goal.timeExpected)
             vb.tvEditGoalTimeExpectedTime.text = DateHelper.getTimeFormat(goal.timeExpected)
-            vb.etEditGoalPriority.setText(goal.priority)
+            vb.spnGoalpriority.prompt = goal.priority
             vb.etEditGoalTag.setText(goal.tag)
             vb.etEditGoalDescription.setText(goal.description)
         }
@@ -62,7 +62,7 @@ class EditGoalActivity : AppCompatActivity() {
 
         vb.clEditGoalTimeExpectedTime.setOnClickListener {
             val t = TimePickerDialog(this, { view, hourOfDay, minute ->
-                vb.tvEditGoalTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: $minute ${DateHelper.getAMPM(hourOfDay)}"
+                vb.tvEditGoalTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getMinuteFormat(minute)} ${DateHelper.getAMPM(hourOfDay)}"
                 hourInput = hourOfDay
                 minuteInput = minute
             },  hourInput, minuteInput, false)
