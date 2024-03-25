@@ -3,6 +3,7 @@ package com.mobdeve.s13.group03.goalkeep
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,6 +70,14 @@ class ViewGoalActivity : AppCompatActivity() {
         taskSwipeCallback.taskAdapter = this.tasksAdapter
         tasksTouchHelper = ItemTouchHelper(taskSwipeCallback)
         tasksTouchHelper.attachToRecyclerView(this.rv)
+
+        vb.etTaskSearchbar.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus) {
+                vb.ibTaskFilter.visibility = View.GONE
+            } else {
+                vb.ibTaskFilter.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun computeProgress(g: Goal): Int {

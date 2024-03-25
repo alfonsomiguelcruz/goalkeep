@@ -56,8 +56,8 @@ class DesignClass {
 
         fun getStateColor(state: String): Int {
             val color: Int = when(state) {
-                "Complete" -> R.color.complete
-                "Incomplete" -> R.color.incomplete
+                "Complete" -> R.drawable.corners_complete
+                "Incomplete" -> R.drawable.corners_incomplete
                 else -> {
                     R.color.white
                 }

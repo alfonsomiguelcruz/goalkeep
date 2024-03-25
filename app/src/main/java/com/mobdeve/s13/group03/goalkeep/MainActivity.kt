@@ -2,6 +2,7 @@ package com.mobdeve.s13.group03.goalkeep
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,17 +37,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         try {
-            if(intent.getStringExtra(RESPONSE_KEY).toString() == "OKAY") {
+            if (intent.getStringExtra(RESPONSE_KEY).toString() == "OKAY") {
                 val goalTitle = intent.getStringExtra(TITLE_KEY).toString()
                 val goalDescription = intent.getStringExtra(DESCRIPTION_KEY).toString()
                 val goalTime = intent.getStringExtra(TIME_KEY).toString()
                 val goalTag = intent.getStringExtra(TAG_KEY).toString()
 
                 // Temporary Setting for Priority Assignment
-                goals.add(Goal(goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
-                    "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag))
+                goals.add(
+                    Goal(
+                        goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
+                        "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag
+                    )
+                )
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             println("EXCEPTION FOUND!")
             println(e)
         }
@@ -55,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         // TODO: Pass the database contents of both goals and tasks to adapter
         this.rv = vb.rvGoals
         this.goalsAdapter = GoalAdapter(goals, tasks)
-        this.rv.adapter =this.goalsAdapter
+        this.rv.adapter = this.goalsAdapter
 
         // Orientation of the Activity Layout
         val verticalLM = LinearLayoutManager(this)
@@ -63,9 +68,28 @@ class MainActivity : AppCompatActivity() {
         vb.rvGoals.layoutManager = verticalLM
 
         // Swipe Callback Function for the Items
-        val goalSwipeCallback = GoalSwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
+        val goalSwipeCallback =
+            GoalSwipeCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
         goalSwipeCallback.goalAdapter = this.goalsAdapter
         goalsTouchHelper = ItemTouchHelper(goalSwipeCallback)
         goalsTouchHelper.attachToRecyclerView(this.rv)
+
+        if (this.goalsAdapter.itemCount == 0) {
+            vb.rvGoals.visibility = View.GONE
+            vb.tvNogoalMsg.visibility = View.VISIBLE
+        } else {
+            vb.rvGoals.visibility = View.VISIBLE
+            vb.tvNogoalMsg.visibility = View.GONE
+        }
+
+        vb.etGoalSearchbar.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus) {
+                vb.ibGoalFilter.visibility = View.GONE
+                vb.ibSettings.visibility = View.GONE
+            } else {
+                vb.ibGoalFilter.visibility = View.VISIBLE
+                vb.ibSettings.visibility = View.VISIBLE
+            }
+        }
     }
 }

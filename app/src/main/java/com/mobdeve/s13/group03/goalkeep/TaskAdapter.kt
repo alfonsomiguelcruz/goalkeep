@@ -1,29 +1,16 @@
 package com.mobdeve.s13.group03.goalkeep
 
 import android.app.Dialog
-import android.content.Intent
 import android.content.Context
-import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
+import android.content.Intent
 import android.util.Log
-import android.view.Display
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskListLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewTaskLayoutBinding
-import java.nio.file.Files.size
-
-
-
 
 
 class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<TaskViewHolder>() {
@@ -41,7 +28,6 @@ class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<Ta
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bindTaskData(tasks[position])
         holder.itemView.setOnClickListener { view ->
-//            showTask(view.context as AppCompatActivity, tasks[position])
             displayTaskDialog(view.context as AppCompatActivity, tasks[position]).show()
         }
     }
