@@ -224,7 +224,7 @@
             android:layout_marginLeft="-4dp"
             android:backgroundTint="#A5A5A5"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:textColor="@color/dark_grey"
             android:textColorHighlight="@color/dark_grey"
             android:textColorHint="@color/dark_grey"
@@ -265,16 +265,16 @@
                 android:text="Task State"
                 android:textColor="@color/grey" />
 
-            <EditText
-                android:id="@+id/et_edit_task_state"
+            <Spinner
+                android:id="@+id/spinner2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
-                android:backgroundTint="#A5A5A5"
-                android:ems="10"
-                android:inputType="text"
-                android:textColor="@color/dark_grey"
-                android:textSize="14sp" />
+                android:background="@drawable/input_border"
+                android:entries="@array/state_types"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:spinnerMode="dropdown" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -282,7 +282,6 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -292,6 +291,16 @@
                 android:layout_height="wrap_content"
                 android:text="Task Priority"
                 android:textColor="@color/grey" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_border"
+                android:entries="@array/priority_types"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:spinnerMode="dropdown" />
 
             <EditText
                 android:id="@+id/et_edit_task_priority"
@@ -305,7 +314,8 @@
                 android:textColorHighlight="@color/dark_grey"
                 android:textColorHint="@color/dark_grey"
                 android:textColorLink="@color/dark_grey"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

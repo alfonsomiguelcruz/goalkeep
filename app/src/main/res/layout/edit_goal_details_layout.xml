@@ -217,7 +217,7 @@
             android:layout_marginLeft="-4dp"
             android:backgroundTint="#A5A5A5"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:textColor="@color/dark_grey"
             android:textSize="14sp" />
 
@@ -292,6 +292,16 @@
                 android:text="Goal Priority"
                 android:textColor="@color/grey" />
 
+            <Spinner
+                android:id="@+id/spinner3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_border"
+                android:entries="@array/priority_types"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:spinnerMode="dropdown" />
+
             <EditText
                 android:id="@+id/et_edit_goal_priority"
                 android:layout_width="match_parent"
@@ -301,7 +311,8 @@
                 android:ems="10"
                 android:inputType="text"
                 android:textColor="@color/dark_grey"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

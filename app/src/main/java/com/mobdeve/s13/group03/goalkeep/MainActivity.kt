@@ -112,6 +112,11 @@ class MainActivity : AppCompatActivity() {
 
             d.setContentView(vb.root)
 
+            vb.tvGoalFilterTimeExpectedStartDate.text = ""
+            vb.tvGoalFilterTimeExpectedEndDate.text = ""
+            vb.tvGoalFilterTimeExpectedStartTime.text = ""
+            vb.tvGoalFilterTimeExpectedEndTime.text = ""
+
             vb.clGoalFilterTimeExpectedStartDate.setOnClickListener {
                 val dateStartDialog = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
                     vb.tvGoalFilterTimeExpectedStartDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"
