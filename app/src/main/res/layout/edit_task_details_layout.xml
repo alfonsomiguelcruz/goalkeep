@@ -82,10 +82,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Error"
-            android:textColor="@color/edit_error"
-            android:textColorHighlight="@color/edit_error"
-            android:textColorHint="@color/edit_error"
-            android:textColorLink="@color/edit_error" />
+            android:textColor="@color/input_error"
+            android:textColorHighlight="@color/input_error"
+            android:textColorHint="@color/input_error"
+            android:textColorLink="@color/input_error" />
 
     </LinearLayout>
 
@@ -197,10 +197,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Error"
-            android:textColor="@color/edit_error"
-            android:textColorHighlight="@color/edit_error"
-            android:textColorHint="@color/edit_error"
-            android:textColorLink="@color/edit_error" />
+            android:textColor="@color/input_error"
+            android:textColorHighlight="@color/input_error"
+            android:textColorHint="@color/input_error"
+            android:textColorLink="@color/input_error" />
     </LinearLayout>
 
     <LinearLayout
@@ -236,10 +236,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Error"
-            android:textColor="@color/edit_error"
-            android:textColorHighlight="@color/edit_error"
-            android:textColorHint="@color/edit_error"
-            android:textColorLink="@color/edit_error" />
+            android:textColor="@color/input_error"
+            android:textColorHighlight="@color/input_error"
+            android:textColorHint="@color/input_error"
+            android:textColorLink="@color/input_error" />
 
     </LinearLayout>
 
@@ -283,6 +283,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

@@ -21,7 +21,7 @@
     <color name="accept_changes">#00BC6D</color>
     <color name="cancel_changes">#FF4A4A</color>
 
-    <color name="edit_error">#FF4A4A</color>
+    <color name="input_error">#FF4A4A</color>
     <color name="delete">#FFB21D32</color>
 
     <color name="dark_grey">#FF141414</color>

@@ -3,41 +3,71 @@ package com.mobdeve.s13.group03.goalkeep.model
 import android.os.Parcel
 import android.os.Parcelable
 
-class Goal (goalId: Int,
-            title: String,
-            timeCreated: String,
-            timeExpected: String,
-            timeCompleted: String,
-            description: String,
-            priority: String,
-            state: String,
-            tag: String) : Parcelable {
-    var goalId = goalId
+class Goal : Parcelable {
+    var goalId : Int = 0
         private set
 
-    var title = title
+    var title: String
         private set
 
-    var timeCreated = timeCreated
+    var timeCreated: String
         private set
 
-    var timeExpected = timeExpected
+    var timeExpected: String
         private set
 
-    var timeCompleted = timeCompleted
+    var timeCompleted: String
         private set
 
-    var description = description
+    var description: String
         private set
 
-    var tag = tag
+    var tag: String
         private set
 
-    var priority = priority
+    var priority: String
         private set
 
-    var state = state
+    var state: String
         private set
+
+    constructor(goalId: Int,
+                title: String,
+                timeCreated: String,
+                timeExpected: String,
+                timeCompleted: String,
+                description: String,
+                priority: String,
+                state: String,
+                tag: String) {
+        this.goalId = goalId
+        this.title = title
+        this.timeCreated = timeCreated
+        this.timeExpected = timeExpected
+        this.timeCompleted = timeCompleted
+        this.description = description
+        this.priority = priority
+        this.state = state
+        this.tag = tag
+    }
+
+    constructor(title: String,
+                timeCreated: String,
+                timeExpected: String,
+                timeCompleted: String,
+                description: String,
+                priority: String,
+                state: String,
+                tag: String) {
+        this.title = title
+        this.timeCreated = timeCreated
+        this.timeExpected = timeExpected
+        this.timeCompleted = timeCompleted
+        this.description = description
+        this.priority = priority
+        this.state = state
+        this.tag = tag
+    }
 
     constructor(parcel: Parcel): this(
         goalId = parcel.readInt(),

@@ -61,7 +61,7 @@ class EditGoalActivity : AppCompatActivity() {
 
         vb.clEditGoalTimeExpectedTime.setOnClickListener {
             val t = TimePickerDialog(this, { view, hourOfDay, minute ->
-                vb.tvEditGoalTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getMinuteFormat(minute)} ${DateHelper.getAMPM(hourOfDay)}"
+                vb.tvEditGoalTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getAppendZero(minute)} ${DateHelper.getAMPM(hourOfDay)}"
                 hourInput = hourOfDay
                 minuteInput = minute
             },  hourInput, minuteInput, false)

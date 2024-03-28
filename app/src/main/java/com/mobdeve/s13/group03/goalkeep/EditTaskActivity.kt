@@ -58,7 +58,7 @@ class EditTaskActivity : AppCompatActivity() {
 
         editTaskDetailsLayoutBinding.clEditTaskTimeExpectedTime.setOnClickListener {
             val t = TimePickerDialog(this, { view, hourOfDay, minute ->
-                editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getMinuteFormat(minute)} ${DateHelper.getAMPM(hourOfDay)}"
+                editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedTime.text = "${DateHelper.getNonMilitaryHour(hourOfDay)}: ${DateHelper.getAppendZero(minute)} ${DateHelper.getAMPM(hourOfDay)}"
                 hourInput = hourOfDay
                 minuteInput = minute
             },  hourInput, minuteInput, false)

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_add_goal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="25dp">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_add_goal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
@@ -15,5 +18,260 @@
         android:textColor="@color/dark_grey"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/ll_add_goal_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_add_goal_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Goal Title"
+            android:textColor="@color/grey" />
+
+        <EditText
+            android:id="@+id/et_add_goal_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-4dp"
+            android:backgroundTint="#A5A5A5"
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="@color/dark_grey"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_add_goal_title_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textColor="@color/input_error"
+            android:textColorHighlight="@color/input_error"
+            android:textColorHint="@color/input_error"
+            android:textColorLink="@color/input_error" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_add_goal_time_expected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_add_goal_time_expected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Goal Expected Date of Accomplishment"
+            android:textColor="@color/grey" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_add_goal_time_expected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_add_goal_time_expected_date"
+                android:layout_width="185dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_border"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_add_goal_time_expected_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="December 31, 2024"
+                    android:textColor="@color/dark_grey"
+                    android:textColorHighlight="@color/dark_grey"
+                    android:textColorHint="@color/dark_grey"
+                    android:textColorLink="@color/dark_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_add_goal_time_expected_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/calendar_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_add_goal_time_expected_time"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/input_border"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_add_goal_time_expected_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12:53 PM"
+                    android:textColor="@color/dark_grey"
+                    android:textColorHighlight="@color/dark_grey"
+                    android:textColorHint="@color/dark_grey"
+                    android:textColorLink="@color/dark_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_add_goal_time_expected_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/clock_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_add_goal_time_expected_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textColor="@color/input_error"
+            android:textColorHighlight="@color/input_error"
+            android:textColorHint="@color/input_error"
+            android:textColorLink="@color/input_error" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_add_goal_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_add_goal_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Goal Description"
+            android:textColor="@color/grey" />
+
+        <EditText
+            android:id="@+id/et_add_goal_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-4dp"
+            android:backgroundTint="#A5A5A5"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:textColor="@color/dark_grey"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_add_goal_description_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Error"
+            android:textColor="@color/input_error"
+            android:textColorHighlight="@color/input_error"
+            android:textColorHint="@color/input_error"
+            android:textColorLink="@color/input_error" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cv_add_goal_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp">
+
+        <LinearLayout
+            android:id="@+id/ll_add_goal_tag"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_add_goal_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Goal Tag"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/et_add_goal_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-4dp"
+                android:backgroundTint="#A5A5A5"
+                android:ems="10"
+                android:inputType="text"
+                android:textColor="@color/dark_grey"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_add_goal_tag_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Error"
+                android:textColor="@color/input_error"
+                android:textColorHighlight="@color/input_error"
+                android:textColorHint="@color/input_error"
+                android:textColorLink="@color/input_error" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_add_goal_priority"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_add_goal_priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Goal Priority"
+                android:textColor="@color/grey" />
+
+            <Spinner
+                android:id="@+id/spn_goalpriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="-4dp"
+                android:background="@drawable/input_border"
+                android:entries="@array/priority_types"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:spinnerMode="dropdown" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_add_goal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Goal" />
 
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.mobdeve.s13.group03.goalkeep
 
+import java.util.Calendar
+
 class DateHelper {
     companion object {
          fun getMonthName(monthOfYear: Int) : String{
@@ -70,7 +72,7 @@ class DateHelper {
             return "${strHour}:$minute ${getAMPM(hour.toInt())}"
         }
 
-        fun getMinuteFormat(minute: Int) : String {
+        fun getAppendZero(minute: Int) : String {
             return if(minute < 10)
                 "0$minute"
             else
@@ -89,6 +91,21 @@ class DateHelper {
             }
 
             return nmHour
+        }
+
+        fun getDatabaseTimeFormat(year : Int, month : Int,
+                                  day : Int, hour : Int, minute : Int) : String {
+            return "${getAppendZero(year)}-${getAppendZero(month)}-${getAppendZero(day)} ${getAppendZero(hour)}:${getAppendZero(minute)}:00"
+        }
+
+        fun getCurrentTime() : String {
+            val yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
+            val monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
+            val dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+            val hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
+            val minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
+
+            return "$yearInput-${getAppendZero(monthInput)}-${getAppendZero(dayInput)} ${getAppendZero(hourInput)}:${getAppendZero(minuteInput)}:00"
         }
     }
 }
