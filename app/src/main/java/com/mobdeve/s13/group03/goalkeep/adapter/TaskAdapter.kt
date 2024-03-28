@@ -1,4 +1,4 @@
-package com.mobdeve.s13.group03.goalkeep
+package com.mobdeve.s13.group03.goalkeep.adapter
 
 import android.app.Dialog
 import android.content.Context
@@ -9,8 +9,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.EditTaskActivity
+import com.mobdeve.s13.group03.goalkeep.IntentKeys
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskListLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewTaskLayoutBinding
+import com.mobdeve.s13.group03.goalkeep.model.Task
+import com.mobdeve.s13.group03.goalkeep.viewholder.TaskViewHolder
 
 
 class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<TaskViewHolder>() {

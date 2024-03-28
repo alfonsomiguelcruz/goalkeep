@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.adapter.GoalAdapter
 import com.mobdeve.s13.group03.goalkeep.databinding.ActivityMainBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.GoalSortFilterDialogLayoutBinding
 import java.util.Calendar
@@ -29,14 +29,6 @@ class MainActivity : AppCompatActivity() {
     private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
-    companion object {
-        const val TITLE_KEY = "TITLE_KEY"
-        const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
-        const val TIME_KEY = "TIME_KEY"
-        const val TAG_KEY = "TAG_KEY"
-        const val RESPONSE_KEY = "RESPONSE_KEY"
-    }
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,29 +37,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(vb.root)
 
         vb.fabAddGoalList.setOnClickListener {
-            val addGoalIntent = Intent(this, AddGoalTitleActivity::class.java)
-            startActivity(addGoalIntent)
+//            val addGoalIntent = Intent(this, AddGoalTitleActivity::class.java)
+//            startActivity(addGoalIntent)
         }
 
-        try {
-            if (intent.getStringExtra(RESPONSE_KEY).toString() == "OKAY") {
-                val goalTitle = intent.getStringExtra(TITLE_KEY).toString()
-                val goalDescription = intent.getStringExtra(DESCRIPTION_KEY).toString()
-                val goalTime = intent.getStringExtra(TIME_KEY).toString()
-                val goalTag = intent.getStringExtra(TAG_KEY).toString()
-
-                // Temporary Setting for Priority Assignment
-                goals.add(
-                    Goal(
-                        goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
-                        "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag
-                    )
-                )
-            }
-        } catch (e: Exception) {
-            println("EXCEPTION FOUND!")
-            println(e)
-        }
+//        try {
+//            if (intent.getStringExtra(RESPONSE_KEY).toString() == "OKAY") {
+//                val goalTitle = intent.getStringExtra(TITLE_KEY).toString()
+//                val goalDescription = intent.getStringExtra(DESCRIPTION_KEY).toString()
+//                val goalTime = intent.getStringExtra(TIME_KEY).toString()
+//                val goalTag = intent.getStringExtra(TAG_KEY).toString()
+//
+//                // Temporary Setting for Priority Assignment
+//                goals.add(
+//                    Goal(
+//                        goals.size + 1, goalTitle, "XXXX-XX-XX", goalTime,
+//                        "XXXX-XX-XX", goalDescription, "High", "Incomplete", goalTag
+//                    )
+//                )
+//            }
+//        } catch (e: Exception) {
+//            println("EXCEPTION FOUND!")
+//            println(e)
+//        }
 
         // Connecting Recycler View with Adapter
         // TODO: Pass the database contents of both goals and tasks to adapter

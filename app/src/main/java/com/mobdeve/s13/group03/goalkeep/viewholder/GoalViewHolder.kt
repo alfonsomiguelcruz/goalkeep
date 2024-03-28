@@ -1,13 +1,11 @@
-package com.mobdeve.s13.group03.goalkeep
+package com.mobdeve.s13.group03.goalkeep.viewholder
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
-import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.DesignClass
 import com.mobdeve.s13.group03.goalkeep.databinding.GoalListLayoutBinding
+import com.mobdeve.s13.group03.goalkeep.model.Goal
+import com.mobdeve.s13.group03.goalkeep.model.Task
 
 class GoalViewHolder(private val goalVB: GoalListLayoutBinding, private val tasksList: ArrayList<Task>) : RecyclerView.ViewHolder(goalVB.root) {
 

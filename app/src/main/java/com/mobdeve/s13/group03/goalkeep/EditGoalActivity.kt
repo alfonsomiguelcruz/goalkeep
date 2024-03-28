@@ -3,12 +3,11 @@ package com.mobdeve.s13.group03.goalkeep
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.group03.goalkeep.databinding.EditGoalDetailsLayoutBinding
+import com.mobdeve.s13.group03.goalkeep.model.Goal
 import java.util.Calendar
 
 class EditGoalActivity : AppCompatActivity() {

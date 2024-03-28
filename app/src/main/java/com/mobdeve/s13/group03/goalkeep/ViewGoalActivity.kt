@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.adapter.TaskAdapter
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskSortFilterDialogLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewGoalLayoutBinding
+import com.mobdeve.s13.group03.goalkeep.model.Goal
+import com.mobdeve.s13.group03.goalkeep.model.Task
 import java.util.Calendar
 import kotlin.math.roundToInt
 
@@ -66,8 +69,8 @@ class ViewGoalActivity : AppCompatActivity() {
         }
 
         vb.fabAddTask.setOnClickListener {
-            val addTaskIntent = Intent(this, AddTaskTitleActivity::class.java)
-            startActivity(addTaskIntent)
+//            val addTaskIntent = Intent(this, AddTaskTitleActivity::class.java)
+//            startActivity(addTaskIntent)
         }
 
         this.rv = vb.rvTasks
@@ -93,7 +96,6 @@ class ViewGoalActivity : AppCompatActivity() {
 
         vb.ibTaskFilter.setOnClickListener {
             val d = Dialog(this)
-//            val layoutInflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val vb = TaskSortFilterDialogLayoutBinding.inflate(layoutInflater)
 
             d.setContentView(vb.root)
