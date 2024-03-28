@@ -95,17 +95,31 @@ class DateHelper {
 
         fun getDatabaseTimeFormat(year : Int, month : Int,
                                   day : Int, hour : Int, minute : Int) : String {
-            return "${getAppendZero(year)}-${getAppendZero(month)}-${getAppendZero(day)} ${getAppendZero(hour)}:${getAppendZero(minute)}:00"
+            return "${getAppendZero(year)}-${getAppendZero(month + 1)}-${getAppendZero(day)} ${getAppendZero(hour)}:${getAppendZero(minute)}:00"
         }
 
         fun getCurrentTime() : String {
             val yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
-            val monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
+            val monthInput : Int = Calendar.getInstance().get(Calendar.MONTH) + 1
             val dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-            val hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
+            val hourInput : Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
             val minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
             return "$yearInput-${getAppendZero(monthInput)}-${getAppendZero(dayInput)} ${getAppendZero(hourInput)}:${getAppendZero(minuteInput)}:00"
+        }
+
+        // Check if time1 is later than time 2
+        fun isLaterTime(y1 : Int, m1 : Int, d1 : Int, h1 : Int, mn1 : Int,
+                        y2 : Int, m2 : Int, d2 : Int, h2 : Int, mn2 : Int) : Boolean {
+            return if(y1 >= y2) {
+                if (m1 >= m2) {
+                    if (d1 >= d2) {
+                        if (h1 > h2) {
+                            true
+                        } else h1 == h2 && mn1 >= mn2
+                    } else false
+                } else false
+            } else false
         }
     }
 }

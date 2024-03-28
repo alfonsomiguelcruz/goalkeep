@@ -189,16 +189,7 @@ class GoalKeepDatabase (context : Context) {
                                   null,
                                   null,
                                   null)
-        /*
-        val c : Cursor =
-            db.query(DatabaseHandler.GOAL_TABLE, getGoalAttributesArray(),
-               null,
-               null,
-               null,
-               null,
-                "CASE ${DatabaseHandler.GOAL_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END",
-               null)
-        * */
+
         while(c.moveToNext()) {
             queriedTasks.add(
                 Task(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.TASK_ID)),
@@ -256,5 +247,36 @@ class GoalKeepDatabase (context : Context) {
         )
     }
 
+    fun getCompletedGoals() : ArrayList<Goal> {
+        val queriedCompletedGoals = ArrayList<Goal>()
+        val db = databaseHandler.writableDatabase
+
+        val c : Cursor =
+            db.query(DatabaseHandler.GOAL_TABLE, getGoalAttributesArray(),
+                "state=?",
+                arrayOf("Complete"),
+                null,
+                null,
+                null,
+                null)
+
+        while(c.moveToNext()) {
+            queriedCompletedGoals.add(
+                Goal(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_ID)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TITLE)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_CREATED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_EXPECTED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_COMPLETED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_DESCRIPTION)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_PRIORITY)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_STATE)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TAG)))
+            )
+        }
+
+        c.close()
+        db.close()
+        return queriedCompletedGoals
+    }
     // TODO: FILTER and SORT OPERATIONS
 }

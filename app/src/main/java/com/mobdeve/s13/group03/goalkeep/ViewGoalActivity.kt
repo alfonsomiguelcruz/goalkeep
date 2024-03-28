@@ -63,6 +63,15 @@ class ViewGoalActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+    private val editTaskResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.data != null) {
+                if(result.resultCode == ResultCodes.EDIT_TASK.ordinal) {
+                    // TODO: Update contents in adapter and database
+                }
+            }
     }
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +103,7 @@ class ViewGoalActivity : AppCompatActivity() {
         // TODO: Find way to edit display of button
         vb.btnCompleteGoal.isEnabled = false
 
+        // TODO: Implement Launcher
         vb.fabEditGoal.setOnClickListener {
             val editGoalIntent = Intent(this, EditGoalActivity::class.java)
             editGoalIntent.putExtra(IntentKeys.GOAL_OBJECT_KEY.name, goal)

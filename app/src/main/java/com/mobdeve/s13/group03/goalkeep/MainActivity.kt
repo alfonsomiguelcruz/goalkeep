@@ -58,6 +58,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private val editGoalResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.data != null) {
+                if(result.resultCode == ResultCodes.EDIT_GOAL.ordinal) {
+                    // TODO: Update goal contents in adapter and database
+                }
+            }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

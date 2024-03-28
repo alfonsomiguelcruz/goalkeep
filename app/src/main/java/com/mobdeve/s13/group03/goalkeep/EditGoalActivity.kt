@@ -15,7 +15,7 @@ class EditGoalActivity : AppCompatActivity() {
     private var yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
     private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
     private var dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-    private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
+    private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
     @SuppressLint("SetTextI18n")
@@ -52,7 +52,7 @@ class EditGoalActivity : AppCompatActivity() {
                 vb.tvEditGoalTimeExpectedDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"
 
                 yearInput = year
-                monthInput = monthOfYear
+                monthInput = monthOfYear + 1
                 dayInput = dayOfMonth
 
             },  yearInput, monthInput, dayInput)

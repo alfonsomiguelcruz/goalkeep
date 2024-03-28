@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
@@ -21,7 +23,7 @@ class AddTaskActivity : AppCompatActivity() {
     private var yearInput : Int = Calendar.getInstance().get(Calendar.YEAR)
     private var monthInput : Int = Calendar.getInstance().get(Calendar.MONTH)
     private var dayInput : Int = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-    private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
+    private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
     private var goalId : Int = -1
@@ -38,7 +40,7 @@ class AddTaskActivity : AppCompatActivity() {
                 addTaskLayoutBinding.tvAddTaskTimeExpectedDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"
 
                 yearInput = year
-                monthInput = monthOfYear
+                monthInput = monthOfYear + 1
                 dayInput = dayOfMonth
 
             },  yearInput, monthInput, dayInput)
@@ -60,40 +62,91 @@ class AddTaskActivity : AppCompatActivity() {
         addTaskLayoutBinding.tvAddTaskTimeExpectedDate.text = ""
         addTaskLayoutBinding.tvAddTaskTimeExpectedTime.text = ""
 
+        addTaskLayoutBinding.tvAddTaskTitleError.text = ""
+        addTaskLayoutBinding.tvAddTaskDescriptionError.text = ""
+        addTaskLayoutBinding.tvAddTaskTimeExpectedError.text = ""
+
+        addTaskLayoutBinding.etAddTaskTitle.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(addTaskLayoutBinding.etAddTaskTitle.text.toString().isBlank())
+                    addTaskLayoutBinding.tvAddTaskTitleError.text = "Please add a valid task title."
+                else
+                    addTaskLayoutBinding.tvAddTaskTitleError.text = ""
+            }
+        })
+
+        addTaskLayoutBinding.etAddTaskDescription.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if(addTaskLayoutBinding.etAddTaskDescription.text.toString().isBlank())
+                    addTaskLayoutBinding.tvAddTaskDescriptionError.text = "Please add a valid task description."
+                else
+                    addTaskLayoutBinding.tvAddTaskDescriptionError.text = ""
+            }
+        })
+
         addTaskLayoutBinding.btnAddTask.setOnClickListener {
-            executorService.execute {
-                dbHandler = GoalKeepDatabase(applicationContext)
-                dbHandler.addTask(
-                    Task(
-                        addTaskLayoutBinding.etAddTaskTitle.text.toString(),
-                        DateHelper.getCurrentTime(),
-                        DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),
-                        "N/A",
-                        addTaskLayoutBinding.etAddTaskDescription.text.toString(),
-                        addTaskLayoutBinding.spnTaskpriority.selectedItem.toString(),
-                        "Incomplete",
-                        goalId
-                    ), goalId
-                )
-
-                val i = Intent()
-                i.putExtra(IntentKeys.TASK_OBJECT_KEY.name,
-                    Task(
-                        addTaskLayoutBinding.etAddTaskTitle.text.toString(),
-                        DateHelper.getCurrentTime(),
-                        DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),
-                        "N/A",
-                        addTaskLayoutBinding.etAddTaskDescription.text.toString(),
-                        addTaskLayoutBinding.spnTaskpriority.selectedItem.toString(),
-                        "Incomplete",
-                        goalId
+            if(isValidInputs(yearInput, monthInput, dayInput, hourInput, minuteInput)) {
+                executorService.execute {
+                    dbHandler = GoalKeepDatabase(applicationContext)
+                    dbHandler.addTask(
+                        Task(
+                            addTaskLayoutBinding.etAddTaskTitle.text.toString(),
+                            DateHelper.getCurrentTime(),
+                            DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),
+                            "N/A",
+                            addTaskLayoutBinding.etAddTaskDescription.text.toString(),
+                            addTaskLayoutBinding.spnTaskpriority.selectedItem.toString(),
+                            "Incomplete",
+                            goalId
+                        ), goalId
                     )
-                )
-                i.putExtra(IntentKeys.TASK_GOAL_ID_KEY.name, goalId)
 
-                setResult(ResultCodes.ADD_TASK.ordinal, i)
-                finish()
+                    val i = Intent()
+                    i.putExtra(IntentKeys.TASK_OBJECT_KEY.name,
+                        Task(
+                            addTaskLayoutBinding.etAddTaskTitle.text.toString(),
+                            DateHelper.getCurrentTime(),
+                            DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),
+                            "N/A",
+                            addTaskLayoutBinding.etAddTaskDescription.text.toString(),
+                            addTaskLayoutBinding.spnTaskpriority.selectedItem.toString(),
+                            "Incomplete",
+                            goalId
+                        )
+                    )
+                    i.putExtra(IntentKeys.TASK_GOAL_ID_KEY.name, goalId)
+
+                    setResult(ResultCodes.ADD_TASK.ordinal, i)
+                    finish()
+                }
+            } else {
+                addTaskLayoutBinding.tvAddTaskTimeExpectedError.text = "Please choose a later date and time."
             }
         }
+    }
+
+    private fun isValidInputs(y : Int, m : Int, d : Int, h : Int, mn : Int) : Boolean {
+        val currentDate = DateHelper.getCurrentTime()
+        val yc = Integer.parseInt(currentDate.substring(0,4))
+        val mc = Integer.parseInt(currentDate.substring(5,7))
+        val dc = Integer.parseInt(currentDate.substring(8,10))
+        val hc = Integer.parseInt(currentDate.substring(11,13))
+        val mnc = Integer.parseInt(currentDate.substring(14,16))
+
+        return addTaskLayoutBinding.tvAddTaskTitleError.text.isEmpty() &&
+               addTaskLayoutBinding.tvAddTaskDescriptionError.text.isEmpty() &&
+               DateHelper.isLaterTime(y, m, d, h, mn, yc, mc, dc, hc, mnc)
     }
 }
