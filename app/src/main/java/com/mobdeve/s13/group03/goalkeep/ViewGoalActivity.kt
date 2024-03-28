@@ -7,12 +7,16 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.adapter.TaskAdapter
+import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskSortFilterDialogLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewGoalLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.model.Goal
@@ -21,7 +25,6 @@ import java.util.Calendar
 import kotlin.math.roundToInt
 
 class ViewGoalActivity : AppCompatActivity() {
-    private var tasks : ArrayList<Task> = TaskDataGenerator.generateTaskData()
     private lateinit var vb : ViewGoalLayoutBinding
     private lateinit var rv : RecyclerView
     private lateinit var tasksAdapter: TaskAdapter
@@ -33,6 +36,34 @@ class ViewGoalActivity : AppCompatActivity() {
     private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
+    private var goalId : Int = -1
+    private val addTaskResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.data != null) {
+                if(result.resultCode == ResultCodes.ADD_TASK.ordinal) {
+                    val task = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        result.data!!.getParcelableExtra(IntentKeys.TASK_OBJECT_KEY.name, Task::class.java)
+                    } else {
+                        @Suppress("DEPRECATION")
+                        result.data!!.getParcelableExtra(IntentKeys.TASK_OBJECT_KEY.name)
+                    }
+
+                    val goalId = result.data!!.getIntExtra(IntentKeys.TASK_GOAL_ID_KEY.name, -1)
+
+                    if(task != null && goalId != -1) {
+                        if (this.tasksAdapter.itemCount == 0) {
+                            vb.rvTasks.visibility = View.GONE
+                            vb.tvViewGoalEmpty.visibility = View.VISIBLE
+                        } else {
+                            vb.rvTasks.visibility = View.VISIBLE
+                            vb.tvViewGoalEmpty.visibility = View.GONE
+                        }
+
+                        tasksAdapter.addTaskItem(task, goalId)
+                    }
+                }
+            }
+    }
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +88,7 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.llViewGoal.setBackgroundResource(DesignClass.getRegularColor(goal.priority))
             vb.pbViewGoal.setBackgroundResource(DesignClass.getSubColor(goal.priority))
             vb.tvViewGoalTag.background.setTint(DesignClass.getSubColor("N/A"))
+            goalId = goal.goalId
         }
 
         // TODO: Find way to edit display of button
@@ -69,12 +101,14 @@ class ViewGoalActivity : AppCompatActivity() {
         }
 
         vb.fabAddTask.setOnClickListener {
-//            val addTaskIntent = Intent(this, AddTaskTitleActivity::class.java)
-//            startActivity(addTaskIntent)
+            val addTaskIntent = Intent(this, AddTaskActivity::class.java)
+            addTaskIntent.putExtra(IntentKeys.TASK_GOAL_ID_KEY.name, goalId)
+            addTaskResultLauncher.launch(addTaskIntent)
         }
 
+        val db = GoalKeepDatabase(applicationContext)
         this.rv = vb.rvTasks
-        this.tasksAdapter = TaskAdapter(tasks)
+        this.tasksAdapter = TaskAdapter(db.getTasks(goalId), this)
         this.rv.adapter = tasksAdapter
 
         val verticalLM = LinearLayoutManager(this)
@@ -154,6 +188,14 @@ class ViewGoalActivity : AppCompatActivity() {
 
             d.setCancelable(true)
             d.show()
+        }
+
+        if (this.tasksAdapter.itemCount == 0) {
+            vb.rvTasks.visibility = View.GONE
+            vb.tvViewGoalEmpty.visibility = View.VISIBLE
+        } else {
+            vb.rvTasks.visibility = View.VISIBLE
+            vb.tvViewGoalEmpty.visibility = View.GONE
         }
     }
 

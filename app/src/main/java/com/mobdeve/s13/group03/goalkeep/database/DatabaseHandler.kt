@@ -24,7 +24,7 @@ class DatabaseHandler (context : Context) :
         const val GOAL_TAG = "tag"
 
         // TASK_TABLE
-        const val TASK_TABLE = "goals"
+        const val TASK_TABLE = "tasks"
         // TASK_TABLE ATTRIBUTES
         const val TASK_ID = "task_id"
         const val TASK_TITLE = "title"

@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Goal : Parcelable {
-    var goalId : Int = 0
+    var goalId : Int = -1
         private set
 
     var title: String

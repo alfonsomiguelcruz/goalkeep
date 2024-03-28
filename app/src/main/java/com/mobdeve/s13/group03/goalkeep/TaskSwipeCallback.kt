@@ -25,7 +25,7 @@ class TaskSwipeCallback (dragDirs: Int, swipeDirs: Int, context: Context) :
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.absoluteAdapterPosition
-        //goal!!.removePlayListMediaItem(position)
+        taskAdapter!!.deleteTaskItem(position)
     }
 
     override fun onChildDraw(

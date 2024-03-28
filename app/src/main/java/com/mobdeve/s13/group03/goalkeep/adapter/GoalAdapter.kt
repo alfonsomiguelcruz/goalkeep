@@ -53,8 +53,20 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
         notifyItemInserted(goals.size - 1)
     }
 
-    fun editGoalItem() {
-
+    fun editGoalItem(goal : Goal) {
+//        goals[goal.goalId] = Goal(
+//            goal.goalId,
+//            goal.title,
+//            goal.timeCreated,
+//            goal.timeExpected,
+//            goal.timeCompleted,
+//            goal.description,
+//            goal.priority,
+//            goal.state,
+//            goal.tag
+//        )
+//
+//        notifyItemChanged()
     }
 
     fun deleteGoalItem(position: Int) {

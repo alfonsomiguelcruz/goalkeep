@@ -208,35 +208,6 @@
         android:layout_marginBottom="25dp">
 
         <LinearLayout
-            android:id="@+id/ll_add_task_state"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_add_task_state"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Task State"
-                android:textColor="@color/grey" />
-
-            <Spinner
-                android:id="@+id/spn_taskstate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="-4dp"
-                android:background="@drawable/input_border"
-                android:entries="@array/state_types"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:spinnerMode="dropdown" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ll_add_task_priority"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

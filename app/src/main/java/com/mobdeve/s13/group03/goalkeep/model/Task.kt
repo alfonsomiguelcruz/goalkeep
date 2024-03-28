@@ -3,44 +3,70 @@ package com.mobdeve.s13.group03.goalkeep.model
 import android.os.Parcel
 import android.os.Parcelable
 
-class Task (taskId: Int,
-            name: String,
-            timeCreated: String,
-            timeExpected: String,
-            timeCompleted: String,
-            description: String,
-            priority: String,
-            state: String,
-            goalId: Int) : Parcelable {
-    var taskId = taskId
+class Task : Parcelable {
+    var taskId : Int = -1
         private set
 
-    var name = name
+    var name : String
         private set
 
-    var timeCreated = timeCreated
+    var timeCreated : String
         private set
 
-    var timeExpected = timeExpected
+    var timeExpected : String
         private set
 
-    var timeCompleted = timeCompleted
+    var timeCompleted : String
         private set
 
-    var description = description
+    var description : String
         private set
 
-    var priority = priority
+    var priority : String
         private set
 
-    var state = state
+    var state : String
         private set
 
-    var goalId = goalId
+    var goalId : Int = -1
         private set
 
-    override fun describeContents(): Int {
-        return 0
+    constructor(taskId: Int,
+                name: String,
+                timeCreated: String,
+                timeExpected: String,
+                timeCompleted: String,
+                description: String,
+                priority: String,
+                state: String,
+                goalId: Int) {
+        this.taskId = taskId
+        this.name = name
+        this.timeCreated = timeCreated
+        this.timeExpected = timeExpected
+        this.timeCompleted = timeCompleted
+        this.description = description
+        this.priority = priority
+        this.state = state
+        this.goalId = goalId
+    }
+
+    constructor(name: String,
+                timeCreated: String,
+                timeExpected: String,
+                timeCompleted: String,
+                description: String,
+                priority: String,
+                state: String,
+                goalId: Int) {
+        this.name = name
+        this.timeCreated = timeCreated
+        this.timeExpected = timeExpected
+        this.timeCompleted = timeCompleted
+        this.description = description
+        this.priority = priority
+        this.state = state
+        this.goalId = goalId
     }
 
     constructor(parcel: Parcel): this(
@@ -65,6 +91,10 @@ class Task (taskId: Int,
         parcel.writeString(this.priority)
         parcel.writeString(this.state)
         parcel.writeInt(this.goalId)
+    }
+
+    override fun describeContents(): Int {
+        return 0
     }
 
     companion object CREATOR : Parcelable.Creator<Task> {

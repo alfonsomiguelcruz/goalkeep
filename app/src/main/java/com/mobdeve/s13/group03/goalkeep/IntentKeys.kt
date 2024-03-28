@@ -23,5 +23,6 @@ enum class IntentKeys {
     TASK_DESCRIPTION_KEY,
     TASK_PRIORITY_KEY,
     TASK_STATE_KEY,
+    TASK_GOAL_ID_KEY,
     TASK_OBJECT_KEY
 }

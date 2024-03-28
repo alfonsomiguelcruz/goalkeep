@@ -1,5 +1,6 @@
 package com.mobdeve.s13.group03.goalkeep.adapter
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -11,13 +12,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.EditTaskActivity
 import com.mobdeve.s13.group03.goalkeep.IntentKeys
+import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskListLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewTaskLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.model.Task
 import com.mobdeve.s13.group03.goalkeep.viewholder.TaskViewHolder
 
 
-class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<TaskViewHolder>() {
+class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Activity) : RecyclerView.Adapter<TaskViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val taskViewBinding : TaskListLayoutBinding = TaskListLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
@@ -36,6 +38,34 @@ class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<Ta
         }
     }
 
+    fun addTaskItem (task : Task, goalId : Int) {
+        tasks.add(Task(
+            tasks.size,
+            task.name,
+            task.timeCreated,
+            task.timeExpected,
+            task.timeCompleted,
+            task.description,
+            task.priority,
+            task.state,
+            goalId
+        ))
+
+        notifyItemInserted(tasks.size - 1)
+    }
+
+    fun editTaskItem () {
+        //notifyItemChanged()
+    }
+
+    fun deleteTaskItem (position : Int) {
+        val db = GoalKeepDatabase(activity.applicationContext)
+        db.deleteTask(tasks[position])
+
+        tasks.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     private fun displayTaskDialog (context: AppCompatActivity, task: Task) : Dialog {
         val d = Dialog(context)
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -52,7 +82,6 @@ class TaskAdapter (private val tasks: ArrayList<Task>) : RecyclerView.Adapter<Ta
         vbTask.fabEditTask.setOnClickListener { view ->
             val editTaskIntent = Intent(view.context, EditTaskActivity::class.java)
             editTaskIntent.putExtra(IntentKeys.TASK_OBJECT_KEY.name, task)
-            Log.d("MOBDEVE_MCO3", "Put Extra Done!")
             view.context.startActivity(editTaskIntent)
         }
 

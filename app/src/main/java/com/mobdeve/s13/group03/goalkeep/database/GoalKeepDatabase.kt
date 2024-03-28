@@ -189,7 +189,16 @@ class GoalKeepDatabase (context : Context) {
                                   null,
                                   null,
                                   null)
-
+        /*
+        val c : Cursor =
+            db.query(DatabaseHandler.GOAL_TABLE, getGoalAttributesArray(),
+               null,
+               null,
+               null,
+               null,
+                "CASE ${DatabaseHandler.GOAL_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END",
+               null)
+        * */
         while(c.moveToNext()) {
             queriedTasks.add(
                 Task(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.TASK_ID)),
@@ -203,6 +212,9 @@ class GoalKeepDatabase (context : Context) {
                      c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.TASK_GOAL_ID)))
             )
         }
+
+        c.close()
+        db.close()
 
         return queriedTasks
     }
