@@ -4,12 +4,15 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.DesignClass
 import com.mobdeve.s13.group03.goalkeep.EditTaskActivity
 import com.mobdeve.s13.group03.goalkeep.IntentKeys
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
@@ -91,7 +94,13 @@ class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Act
 
         d.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         d.window?.setGravity(Gravity.TOP)
-//        d.window?.setBackgroundDrawableResource()
+
+        vbTask.clViewTaskHeader.setBackgroundResource(DesignClass.getRegularColor(task.priority))
+        vbTask.tvViewTaskPriority.setBackgroundResource(DesignClass.getCorneredColor(task.priority))
+        vbTask.tvViewTaskStatus.setBackgroundResource(DesignClass.getStateColor(task.state))
+
+        vbTask.tvViewTaskPriority.setTextColor(Color.WHITE)
+
         d.setCancelable(true)
 
         return d
