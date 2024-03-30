@@ -46,24 +46,13 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (goal != null) {
-                        if (this.goalsAdapter.itemCount == 0) {
-                            vb.rvGoals.visibility = View.GONE
-                            vb.tvNogoalMsg.visibility = View.VISIBLE
-                        } else {
-                            vb.rvGoals.visibility = View.VISIBLE
-                            vb.tvNogoalMsg.visibility = View.GONE
-                        }
-                        goalsAdapter.addGoalItem(goal)
-                    }
-                }
-            }
-    }
+                        this.goalsAdapter.addGoalItem(goal)
 
-    private val editGoalResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.data != null) {
-                if(result.resultCode == ResultCodes.EDIT_GOAL.ordinal) {
-                    // TODO: Update goal contents in adapter and database
+                        vb.rvGoals.visibility = View.VISIBLE
+                        vb.tvNogoalMsg.visibility = View.GONE
+
+                        this.goalsAdapter.notifyItemInserted(this.goalsAdapter.itemCount - 1)
+                    }
                 }
             }
     }
@@ -89,6 +78,7 @@ class MainActivity : AppCompatActivity() {
                 vb.ibSettings.visibility = View.VISIBLE
             }
         }
+
 
         vb.ibGoalFilter.setOnClickListener {
             val d = Dialog(this)
@@ -151,8 +141,8 @@ class MainActivity : AppCompatActivity() {
             d.setCancelable(true)
             d.show()
         }
+
         // Connecting Recycler View with Adapter
-        // TODO: Pass the database contents of both goals and tasks to adapter
         val db = GoalKeepDatabase(applicationContext)
         this.rv = vb.rvGoals
         this.goalsAdapter = GoalAdapter(db.getGoals(), this)
@@ -177,5 +167,17 @@ class MainActivity : AppCompatActivity() {
             vb.rvGoals.visibility = View.VISIBLE
             vb.tvNogoalMsg.visibility = View.GONE
         }
+
+        Log.d("MOBDEVE_MCO", "Main Activity - CREATE")
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onStart() {
+        super.onStart()
+
+        this.goalsAdapter = GoalAdapter(GoalKeepDatabase(applicationContext).getGoals(), this)
+        this.rv.adapter = this.goalsAdapter
+
+        Log.d("MOBDEVE_MCO", "Main Activity - START")
     }
 }

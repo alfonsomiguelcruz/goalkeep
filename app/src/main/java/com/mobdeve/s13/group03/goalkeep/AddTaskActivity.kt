@@ -40,7 +40,7 @@ class AddTaskActivity : AppCompatActivity() {
                 addTaskLayoutBinding.tvAddTaskTimeExpectedDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"
 
                 yearInput = year
-                monthInput = monthOfYear + 1
+                monthInput = monthOfYear
                 dayInput = dayOfMonth
 
             },  yearInput, monthInput, dayInput)
@@ -97,10 +97,11 @@ class AddTaskActivity : AppCompatActivity() {
         })
 
         addTaskLayoutBinding.btnAddTask.setOnClickListener {
-            if(isValidInputs(yearInput, monthInput, dayInput, hourInput, minuteInput)) {
+            if(isValidInputs(yearInput, monthInput+1, dayInput, hourInput, minuteInput)) {
                 executorService.execute {
+                    monthInput++
                     dbHandler = GoalKeepDatabase(applicationContext)
-                    dbHandler.addTask(
+                    val id = dbHandler.addTask(
                         Task(
                             addTaskLayoutBinding.etAddTaskTitle.text.toString(),
                             DateHelper.getCurrentTime(),
@@ -116,6 +117,7 @@ class AddTaskActivity : AppCompatActivity() {
                     val i = Intent()
                     i.putExtra(IntentKeys.TASK_OBJECT_KEY.name,
                         Task(
+                            id.toInt(),
                             addTaskLayoutBinding.etAddTaskTitle.text.toString(),
                             DateHelper.getCurrentTime(),
                             DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),

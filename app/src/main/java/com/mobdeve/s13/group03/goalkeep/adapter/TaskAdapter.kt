@@ -43,7 +43,7 @@ class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Act
 
     fun addTaskItem (task : Task, goalId : Int) {
         tasks.add(Task(
-            tasks.size,
+            task.taskId,
             task.name,
             task.timeCreated,
             task.timeExpected,
@@ -63,7 +63,7 @@ class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Act
 
     fun deleteTaskItem (position : Int) {
         val db = GoalKeepDatabase(activity.applicationContext)
-        db.deleteTask(tasks[position])
+        db.deleteTask(tasks[position].taskId)
 
         tasks.removeAt(position)
         notifyItemRemoved(position)

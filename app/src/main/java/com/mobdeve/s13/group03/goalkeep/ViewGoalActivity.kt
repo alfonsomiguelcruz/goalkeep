@@ -36,6 +36,7 @@ class ViewGoalActivity : AppCompatActivity() {
     private var hourInput : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
+    private var mainGoal : Goal? = null
     private var goalId : Int = -1
     private val addTaskResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
@@ -65,14 +66,37 @@ class ViewGoalActivity : AppCompatActivity() {
             }
         }
 
-    private val editTaskResultLauncher = registerForActivityResult(
+    @SuppressLint("SetTextI18n")
+    private val edit_deleteGoalResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.data != null) {
-                if(result.resultCode == ResultCodes.EDIT_TASK.ordinal) {
-                    // TODO: Update contents in adapter and database
+        if(result.data != null) {
+            if(result.resultCode == ResultCodes.EDIT_GOAL.ordinal) {
+                val goal = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    result.data!!.getParcelableExtra(IntentKeys.GOAL_OBJECT_KEY.name, Goal::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    result.data!!.getParcelableExtra(IntentKeys.GOAL_OBJECT_KEY.name)
                 }
+
+                // Update View Goal's contents
+                if(goal != null) {
+                    vb.tvViewGoalTitle.text = goal.title
+                    vb.tvViewGoalTimeExpected.text = goal.timeExpected
+                    vb.tvViewGoalPriority.text = "${goal.priority} Priority"
+                    vb.tvViewGoalTag.text = goal.tag
+                    vb.tvViewGoalDescription.text = goal.description
+                    vb.llViewGoal.setBackgroundResource(DesignClass.getRegularColor(goal.priority))
+                    vb.pbViewGoal.setBackgroundResource(DesignClass.getSubColor(goal.priority))
+                    vb.tvViewGoalTag.background.setTint(DesignClass.getSubColor("N/A"))
+
+                    mainGoal = goal
+                }
+            } else if(result.resultCode == ResultCodes.DELETE_GOAL.ordinal) {
+                finish()
             }
+        }
     }
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,33 +105,31 @@ class ViewGoalActivity : AppCompatActivity() {
         setContentView(vb.root)
 
         val intent = intent
-        val goal = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        mainGoal = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(IntentKeys.GOAL_OBJECT_KEY.name, Goal::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(IntentKeys.GOAL_OBJECT_KEY.name)
         }
 
-        if (goal != null) {
-            vb.tvViewGoalTitle.text = goal.title
-            vb.tvViewGoalTimeExpected.text = goal.timeExpected
-            vb.tvViewGoalPriority.text = goal.priority
-            vb.tvViewGoalTag.text = goal.tag
-            vb.tvViewGoalDescription.text = goal.description
-            vb.llViewGoal.setBackgroundResource(DesignClass.getRegularColor(goal.priority))
-            vb.pbViewGoal.setBackgroundResource(DesignClass.getSubColor(goal.priority))
+        if (mainGoal != null) {
+            vb.tvViewGoalTitle.text = mainGoal!!.title
+            vb.tvViewGoalTimeExpected.text = mainGoal!!.timeExpected
+            vb.tvViewGoalPriority.text = "${mainGoal!!.priority} Priority"
+            vb.tvViewGoalTag.text = mainGoal!!.tag
+            vb.tvViewGoalDescription.text = mainGoal!!.description
+            vb.llViewGoal.setBackgroundResource(DesignClass.getRegularColor(mainGoal!!.priority))
+            vb.pbViewGoal.setBackgroundResource(DesignClass.getSubColor(mainGoal!!.priority))
             vb.tvViewGoalTag.background.setTint(DesignClass.getSubColor("N/A"))
-            goalId = goal.goalId
+            goalId = mainGoal!!.goalId
         }
 
-        // TODO: Find way to edit display of button
         vb.btnCompleteGoal.isEnabled = false
 
-        // TODO: Implement Launcher
         vb.fabEditGoal.setOnClickListener {
             val editGoalIntent = Intent(this, EditGoalActivity::class.java)
-            editGoalIntent.putExtra(IntentKeys.GOAL_OBJECT_KEY.name, goal)
-            startActivity(editGoalIntent)
+            editGoalIntent.putExtra(IntentKeys.GOAL_OBJECT_KEY.name, mainGoal!!)
+            edit_deleteGoalResultLauncher.launch(editGoalIntent)
         }
 
         vb.fabAddTask.setOnClickListener {
@@ -207,6 +229,12 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.rvTasks.visibility = View.VISIBLE
             vb.tvViewGoalEmpty.visibility = View.GONE
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onStart() {
+        super.onStart()
+        tasksAdapter.notifyDataSetChanged()
     }
 
     private fun computeProgress(g: Goal): Int {

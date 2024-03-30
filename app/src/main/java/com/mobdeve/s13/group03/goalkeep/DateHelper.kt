@@ -95,7 +95,7 @@ class DateHelper {
 
         fun getDatabaseTimeFormat(year : Int, month : Int,
                                   day : Int, hour : Int, minute : Int) : String {
-            return "${getAppendZero(year)}-${getAppendZero(month + 1)}-${getAppendZero(day)} ${getAppendZero(hour)}:${getAppendZero(minute)}:00"
+            return "${getAppendZero(year)}-${getAppendZero(month)}-${getAppendZero(day)} ${getAppendZero(hour)}:${getAppendZero(minute)}:00"
         }
 
         fun getCurrentTime() : String {
@@ -111,15 +111,27 @@ class DateHelper {
         // Check if time1 is later than time 2
         fun isLaterTime(y1 : Int, m1 : Int, d1 : Int, h1 : Int, mn1 : Int,
                         y2 : Int, m2 : Int, d2 : Int, h2 : Int, mn2 : Int) : Boolean {
-            return if(y1 >= y2) {
-                if (m1 >= m2) {
-                    if (d1 >= d2) {
-                        if (h1 > h2) {
-                            true
-                        } else h1 == h2 && mn1 >= mn2
-                    } else false
-                } else false
-            } else false
+            if(y1 > y2)
+                return true
+            else if(y1 == y2)
+                if(m1 > m2)
+                    return true
+                else if(m1 == m2)
+                    if(d1 > d2)
+                        return true
+                    else if(d1 == d2)
+                        if(h1 > h2)
+                            return true
+                        else if (h1 == h2)
+                            return mn1 >= mn2
+                        else
+                            return false
+                    else
+                        return false
+                else
+                    return false
+            else
+                return false
         }
     }
 }

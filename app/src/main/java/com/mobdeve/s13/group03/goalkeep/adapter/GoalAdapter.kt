@@ -39,7 +39,7 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
 
     fun addGoalItem(goal : Goal) {
         goals.add(Goal(
-            goals.size,
+            goal.goalId,
             goal.title,
             goal.timeCreated,
             goal.timeExpected,
@@ -49,8 +49,6 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
             goal.state,
             goal.tag
         ))
-
-        notifyItemInserted(goals.size - 1)
     }
 
     fun editGoalItem(goal : Goal) {
@@ -71,7 +69,7 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
 
     fun deleteGoalItem(position: Int) {
         val db = GoalKeepDatabase(activity.applicationContext)
-        db.deleteGoal(goals[position])
+        db.deleteGoal(goals[position].goalId)
 
         goals.removeAt(position)
         notifyItemRemoved(position)

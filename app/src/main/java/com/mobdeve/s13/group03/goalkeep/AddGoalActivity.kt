@@ -60,7 +60,7 @@ class AddGoalActivity : AppCompatActivity() {
         addGoalLayoutBinding.tvAddGoalTagError.text = ""
         addGoalLayoutBinding.tvAddGoalDescriptionError.text = ""
         addGoalLayoutBinding.tvAddGoalTitleError.text = ""
-        addGoalLayoutBinding.tvAddGoalTimeExpectedError
+        addGoalLayoutBinding.tvAddGoalTimeExpectedError.text = ""
 
         addGoalLayoutBinding.etAddGoalTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -108,10 +108,11 @@ class AddGoalActivity : AppCompatActivity() {
         })
 
         addGoalLayoutBinding.btnAddGoal.setOnClickListener {
-            if(isValidInputs(yearInput, monthInput, dayInput, hourInput, minuteInput)) {
+            if(isValidInputs(yearInput, monthInput+1, dayInput, hourInput, minuteInput)) {
                 executorService.execute {
+                    monthInput++
                     dbHandler = GoalKeepDatabase(applicationContext)
-                    dbHandler.addGoal(
+                    var id : Long = dbHandler.addGoal(
                         Goal(
                             addGoalLayoutBinding.etAddGoalTitle.text.toString(),
                             DateHelper.getCurrentTime(),
@@ -127,6 +128,7 @@ class AddGoalActivity : AppCompatActivity() {
                     val i = Intent()
                     i.putExtra(IntentKeys.GOAL_OBJECT_KEY.name,
                         Goal(
+                            id.toInt(),
                             addGoalLayoutBinding.etAddGoalTitle.text.toString(),
                             DateHelper.getCurrentTime(),
                             DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),

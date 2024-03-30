@@ -15,7 +15,7 @@ class GoalKeepDatabase (context : Context) {
     }
 
     // GOAL DATABASE OPERATIONS
-    fun addGoal(g: Goal) {
+    fun addGoal(g: Goal) : Long {
         val db = databaseHandler.writableDatabase
 
         val contentValues = ContentValues()
@@ -29,9 +29,11 @@ class GoalKeepDatabase (context : Context) {
         contentValues.put(DatabaseHandler.GOAL_STATE, g.state)
         contentValues.put(DatabaseHandler.GOAL_TAG, g.tag)
 
-        db.insert(DatabaseHandler.GOAL_TABLE, null, contentValues)
-        Log.d("MOBDEVE_MCO", "Added New Goal")
+        var id = db.insert(DatabaseHandler.GOAL_TABLE, null, contentValues)
+        Log.d("MOBDEVE_MCO", "Added New Goal ")
         db.close()
+
+        return id
     }
 
     fun updateGoal(g: Goal) {
@@ -39,26 +41,41 @@ class GoalKeepDatabase (context : Context) {
 
         val contentValues = ContentValues()
         // Goal Id should not be updated
-        contentValues.put(DatabaseHandler.GOAL_TITLE, g.title)
+
+        if(g.title != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_TITLE, g.title)
+
         // Time Created should not be updated
-        contentValues.put(DatabaseHandler.GOAL_TIME_EXPECTED, g.timeExpected)
-        contentValues.put(DatabaseHandler.GOAL_TIME_COMPLETED, g.timeCompleted)
-        contentValues.put(DatabaseHandler.GOAL_DESCRIPTION, g.description)
-        contentValues.put(DatabaseHandler.GOAL_PRIORITY, g.priority)
-        contentValues.put(DatabaseHandler.GOAL_STATE, g.state)
-        contentValues.put(DatabaseHandler.GOAL_TAG, g.tag)
+
+        if(g.timeExpected != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_TIME_EXPECTED, g.timeExpected)
+
+        if(g.timeCompleted != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_TIME_COMPLETED, g.timeCompleted)
+
+        if(g.description != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_DESCRIPTION, g.description)
+
+        if(g.priority != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_PRIORITY, g.priority)
+
+        if(g.state != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_STATE, g.state)
+
+        if(g.state != "NO_EDIT")
+            contentValues.put(DatabaseHandler.GOAL_TAG, g.tag)
 
         db.update(DatabaseHandler.GOAL_TABLE, contentValues,
-            "goal_id=?", arrayOf(g.goalId.toString()))
+            "goal_id=?", arrayOf(g.goalId.toLong().toString()))
         db.close()
     }
 
-    fun deleteGoal(g: Goal) {
+    fun deleteGoal(goalId : Int) {
         val db = databaseHandler.writableDatabase
 
         // Delete the tasks under the goal before deleting the goal
-        db.delete(DatabaseHandler.TASK_TABLE, "goal_id=?", arrayOf(g.goalId.toString()))
-        db.delete(DatabaseHandler.GOAL_TABLE, "goal_id=?", arrayOf(g.goalId.toString()))
+        db.delete(DatabaseHandler.TASK_TABLE, "goal_id=?", arrayOf(goalId.toString()))
+        db.delete(DatabaseHandler.GOAL_TABLE, "goal_id=?", arrayOf(goalId.toString()))
         db.close()
     }
 
@@ -132,7 +149,7 @@ class GoalKeepDatabase (context : Context) {
     }
 
     // TASK DATABASE OPERATIONS
-    fun addTask(t: Task, goalId: Int) {
+    fun addTask(t: Task, goalId: Int) : Long {
         val db = databaseHandler.writableDatabase
 
         val contentValues = ContentValues()
@@ -146,8 +163,10 @@ class GoalKeepDatabase (context : Context) {
         contentValues.put(DatabaseHandler.TASK_STATE, t.state)
         contentValues.put(DatabaseHandler.TASK_GOAL_ID, goalId)
 
-        db.insert(DatabaseHandler.TASK_TABLE, null, contentValues)
+        var id = db.insert(DatabaseHandler.TASK_TABLE, null, contentValues)
         db.close()
+
+        return id
     }
 
     fun updateTask(t: Task) {
@@ -155,23 +174,37 @@ class GoalKeepDatabase (context : Context) {
 
         val contentValues = ContentValues()
         // Task Id should not be updated
-        contentValues.put(DatabaseHandler.TASK_TITLE, t.name)
+
+        if(t.name != "NO_EDIT")
+            contentValues.put(DatabaseHandler.TASK_TITLE, t.name)
+
         // Time Created should not be updated
-        contentValues.put(DatabaseHandler.TASK_TIME_EXPECTED, t.timeExpected)
-        contentValues.put(DatabaseHandler.TASK_TIME_COMPLETED, t.timeCompleted)
-        contentValues.put(DatabaseHandler.TASK_DESCRIPTION, t.description)
-        contentValues.put(DatabaseHandler.TASK_PRIORITY, t.priority)
-        contentValues.put(DatabaseHandler.TASK_STATE, t.state)
+
+        if(t.timeExpected != "NO_EDIT")
+            contentValues.put(DatabaseHandler.TASK_TIME_EXPECTED, t.timeExpected)
+
+        if(t.timeCompleted != "NO_EDIT")
+            contentValues.put(DatabaseHandler.TASK_TIME_COMPLETED, t.timeCompleted)
+
+        if(t.description != "NO_EDIT")
+            contentValues.put(DatabaseHandler.TASK_DESCRIPTION, t.description)
+
+        if(t.description != "NO_EDIT")
+            contentValues.put(DatabaseHandler.TASK_PRIORITY, t.priority)
+
+        if(t.description != "NO_EDIT")
+            contentValues.put(DatabaseHandler.TASK_STATE, t.state)
+
         // Goal Id FK should not be updated
 
         db.update(DatabaseHandler.TASK_TABLE, contentValues,
-                "task_id=?", arrayOf(t.taskId.toString()))
+                "task_id=?", arrayOf(t.taskId.toLong().toString()))
     }
 
-    fun deleteTask(t: Task) {
+    fun deleteTask(taskId : Int) {
         val db = databaseHandler.writableDatabase
 
-        db.delete(DatabaseHandler.TASK_TABLE, "task_id=?", arrayOf(t.taskId.toString()))
+        db.delete(DatabaseHandler.TASK_TABLE, "task_id=?", arrayOf(taskId.toString()))
         db.close()
     }
 

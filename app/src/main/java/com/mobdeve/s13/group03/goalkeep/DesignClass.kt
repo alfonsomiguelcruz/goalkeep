@@ -69,5 +69,9 @@ class DesignClass {
         fun getDarkGray() : Int {
             return R.color.dark_grey
         }
+
+        fun getWhite() : Int {
+            return R.color.white
+        }
     }
 }
