@@ -81,18 +81,6 @@
                         android:src="@drawable/filter_icon"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/ib_settings"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <ImageButton
-                        android:id="@+id/ib_settings"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:padding="10dp"
-                        android:src="@drawable/threedots_icon"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ib_alarms"
                         app:layout_constraintTop_toTopOf="parent" />
 
