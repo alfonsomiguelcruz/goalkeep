@@ -47,7 +47,7 @@ class EditGoalActivity : AppCompatActivity() {
             vb.etEditGoalTitle.setText(goal.title)
             vb.tvEditGoalTimeExpectedDate.text = DateHelper.getDateFormat(goal.timeExpected)
             vb.tvEditGoalTimeExpectedTime.text = DateHelper.getTimeFormat(goal.timeExpected)
-            vb.spnGoalpriority.prompt = goal.priority
+            vb.spnGoalpriority.setSelection(getSpinnerPriorityIndex(goal.priority))
             vb.etEditGoalTag.setText(goal.tag)
             vb.etEditGoalDescription.setText(goal.description)
             goalId = goal.goalId
@@ -192,5 +192,13 @@ class EditGoalActivity : AppCompatActivity() {
                vb.tvEditGoalDescriptionError.text.isEmpty() &&
                vb.tvEditGoalTagError.text.isEmpty() &&
                DateHelper.isLaterTime(y, m, d, h, mn, yc, mc, dc, hc, mnc)
+    }
+
+    private fun getSpinnerPriorityIndex(p: String): Int {
+        return when(p) {
+            "High" -> 0
+            "Medium" -> 1
+            else -> {2}
+        }
     }
 }

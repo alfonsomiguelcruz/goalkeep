@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.DesignClass
 import com.mobdeve.s13.group03.goalkeep.EditTaskActivity
 import com.mobdeve.s13.group03.goalkeep.IntentKeys
+import com.mobdeve.s13.group03.goalkeep.ViewGoalActivity
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskListLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewTaskLayoutBinding

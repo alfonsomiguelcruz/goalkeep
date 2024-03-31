@@ -40,7 +40,7 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
 
         holder.itemView.setOnLongClickListener {
 
-            true
+            false
         }
     }
 
@@ -56,22 +56,6 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
             goal.state,
             goal.tag
         ))
-    }
-
-    fun editGoalItem(goal : Goal) {
-//        goals[goal.goalId] = Goal(
-//            goal.goalId,
-//            goal.title,
-//            goal.timeCreated,
-//            goal.timeExpected,
-//            goal.timeCompleted,
-//            goal.description,
-//            goal.priority,
-//            goal.state,
-//            goal.tag
-//        )
-//
-//        notifyItemChanged()
     }
 
     fun clear() {

@@ -176,7 +176,7 @@ class GoalKeepDatabase (context : Context) {
         contentValues.put(DatabaseHandler.TASK_PRIORITY, t.priority)
         contentValues.put(DatabaseHandler.TASK_STATE, t.state)
         contentValues.put(DatabaseHandler.TASK_GOAL_ID, goalId)
-
+        Log.d("MOBDEVE_MCO", t.state)
         var id = db.insert(DatabaseHandler.TASK_TABLE, null, contentValues)
         db.close()
 
@@ -333,7 +333,6 @@ class GoalKeepDatabase (context : Context) {
         db.close()
         return queriedCompletedGoals
     }
-    // TODO: FILTER and SORT OPERATIONS
 
     @SuppressLint("Recycle")
     fun getSearchQuery(query: String) : ArrayList<Goal> {
@@ -343,7 +342,7 @@ class GoalKeepDatabase (context : Context) {
         val c : Cursor = db.query(DatabaseHandler.GOAL_TABLE,
                                   getGoalAttributesArray(),
                                   "title LIKE ?",
-                                  arrayOf("%${query}%",),
+                                  arrayOf("%${query}%"),
                                   null,
                                   null,
                                   "CASE ${DatabaseHandler.GOAL_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END",
@@ -367,6 +366,128 @@ class GoalKeepDatabase (context : Context) {
         db.close()
 
         return queriedGoals
+    }
+
+    @SuppressLint("Recycle")
+    fun sortFilterGoals(chosenPriority : String, startDateTime : String, endDateTime : String, goalState : String,
+                        sortGoalName : String, sortTimeExpected : String, sortPriority : String) : ArrayList<Goal> {
+        val filteredGoals = ArrayList<Goal>()
+        val db = databaseHandler.writableDatabase
+        var finalQuery = ""
+        var finalOrderByQuery = ""
+        val arrayListQuery = ArrayList<String>()
+
+        var prioritySubQuery = ""
+        if(chosenPriority != "N/A") {
+            prioritySubQuery = "${DatabaseHandler.GOAL_PRIORITY}=\'$chosenPriority\' "
+            arrayListQuery.add(chosenPriority)
+        }
+
+        var dateRangeSubQuery = ""
+        arrayListQuery.add(startDateTime)
+        arrayListQuery.add(endDateTime)
+        dateRangeSubQuery = "DATE(\'$startDateTime\') <= ${DatabaseHandler.GOAL_TIME_EXPECTED} AND " + "${DatabaseHandler.GOAL_TIME_EXPECTED} <= DATE(\'$endDateTime\')"
+
+        var goalSubQuery = ""
+        if(goalState != "N/A") {
+            goalSubQuery = "${DatabaseHandler.GOAL_STATE}=\'$goalState\'"
+            arrayListQuery.add(goalState)
+        }
+
+        // Combine for selection param
+        if(prioritySubQuery.isNotEmpty()) {
+            finalQuery = "$prioritySubQuery AND $dateRangeSubQuery"
+        } else
+            finalQuery = dateRangeSubQuery
+
+        if(goalSubQuery.isNotEmpty()) {
+            finalQuery = "$finalQuery AND $goalSubQuery"
+        }
+
+        var finalArrayQuery = arrayOfNulls<String>(arrayListQuery.size)
+        finalArrayQuery = arrayListQuery.toArray(finalArrayQuery)
+
+
+        // SORT
+        var sortPrioritySubQuery  = ""
+        if(sortPriority != "N/A") {
+            when(sortPriority) {
+                "ASC" ->
+                    sortPrioritySubQuery = "CASE ${DatabaseHandler.GOAL_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END"
+                "DESC" ->
+                    sortPrioritySubQuery = "CASE ${DatabaseHandler.GOAL_PRIORITY} WHEN \'High\' THEN 3 WHEN \'Medium\' THEN 2 ELSE 1 END"
+            }
+        }
+
+        var sortTimeExpectedSubQuery = ""
+        if(sortTimeExpected != "N/A")
+            sortTimeExpectedSubQuery = "${DatabaseHandler.GOAL_TIME_EXPECTED} $sortTimeExpected"
+
+        var sortGoalNameSubQuery = ""
+        if(sortGoalName != "N/A")
+            sortGoalNameSubQuery = "${DatabaseHandler.GOAL_TITLE} $sortGoalName"
+
+        // Combine for orderBy param
+        if(sortPrioritySubQuery.isNotEmpty()) {
+            finalOrderByQuery = sortPrioritySubQuery
+        }
+
+        if(sortTimeExpectedSubQuery.isNotEmpty()) {
+            if(finalOrderByQuery.isEmpty())
+                finalOrderByQuery = sortTimeExpectedSubQuery
+            else
+                finalOrderByQuery = "$finalOrderByQuery, $sortTimeExpectedSubQuery"
+        }
+
+        if(sortGoalNameSubQuery.isNotEmpty()) {
+            if(finalOrderByQuery.isEmpty())
+                finalOrderByQuery = sortGoalNameSubQuery
+            else
+                finalOrderByQuery = "$finalOrderByQuery, $sortGoalNameSubQuery"
+        }
+
+        val c : Cursor
+        if(finalOrderByQuery.isNotEmpty())
+            c = db.query(DatabaseHandler.GOAL_TABLE,
+                                    getGoalAttributesArray(),
+                                    finalQuery,
+                                    finalArrayQuery,
+                                    null,
+                                    null,
+                                    finalOrderByQuery,
+                                    null)
+        else
+            c = db.query(DatabaseHandler.GOAL_TABLE,
+                getGoalAttributesArray(),
+                finalQuery,
+                finalArrayQuery,
+                null,
+                null,
+                null,
+                null)
+
+        Log.d("MOBDEVE_MCO", finalQuery)
+        Log.d("MOBDEVE_MCO", finalArrayQuery.toString())
+        Log.d("MOBDEVE_MCO", finalOrderByQuery)
+
+        while(c.moveToNext()) {
+            filteredGoals.add(
+                Goal(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_ID)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TITLE)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_CREATED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_EXPECTED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_COMPLETED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_DESCRIPTION)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_PRIORITY)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_STATE)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TAG)))
+            )
+        }
+
+        c.close()
+        db.close()
+
+        return filteredGoals
     }
 
     fun getProgressCount(goalId : Int) : Int {

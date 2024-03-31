@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
 import com.mobdeve.s13.group03.goalkeep.databinding.EditTaskDetailsLayoutBinding
@@ -43,8 +44,8 @@ class EditTaskActivity : AppCompatActivity() {
         if (task != null) {
             editTaskDetailsLayoutBinding.etEditTaskTitle.setText(task.name)
             editTaskDetailsLayoutBinding.etEditTaskDescription.setText(task.description)
-            editTaskDetailsLayoutBinding.spnTaskpriority.prompt = task.priority
-            editTaskDetailsLayoutBinding.spnTaskstate.prompt = task.state
+            editTaskDetailsLayoutBinding.spnTaskpriority.setSelection(getSpinnerPriorityIndex(task.priority))
+            editTaskDetailsLayoutBinding.spnTaskstate.setSelection(getSpinnerStateIndex(task.state))
             editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedDate.text = DateHelper.getDateFormat(task.timeExpected)
             editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedTime.text = DateHelper.getTimeFormat(task.timeExpected)
             taskId = task.taskId
@@ -97,23 +98,6 @@ class EditTaskActivity : AppCompatActivity() {
                         editTaskDetailsLayoutBinding.spnTaskstate.selectedItem.toString(),
                         -1
                     ))
-
-//                    val i = Intent(this, EditGoalActivity::class.java)
-//                    i.putExtra(IntentKeys.TASK_OBJECT_KEY.name,
-//                        Task (
-//                            taskId,
-//                            editTaskDetailsLayoutBinding.etEditTaskTitle.text.toString(),
-//                            "NO_EDIT",
-//                            DateHelper.getDatabaseTimeFormat(yearInput, monthInput, dayInput, hourInput, minuteInput),
-//                            date,
-//                            editTaskDetailsLayoutBinding.etEditTaskDescription.text.toString(),
-//                            editTaskDetailsLayoutBinding.spnTaskpriority.selectedItem.toString(),
-//                            editTaskDetailsLayoutBinding.spnTaskstate.selectedItem.toString(),
-//                            -1
-//                        )
-//                    )
-//
-//                    startActivity(i)
                     finish()
                 }
             }
@@ -144,5 +128,20 @@ class EditTaskActivity : AppCompatActivity() {
         return editTaskDetailsLayoutBinding.tvEditTaskTitleError.text.isEmpty() &&
                editTaskDetailsLayoutBinding.tvEditTaskDescriptionError.text.isEmpty() &&
                DateHelper.isLaterTime(y, m, d, h, mn, yc, mc, dc, hc, mnc)
+    }
+
+    private fun getSpinnerPriorityIndex(p: String): Int {
+        return when(p) {
+            "High" -> 0
+            "Medium" -> 1
+            else -> {2}
+        }
+    }
+
+    private fun getSpinnerStateIndex(s : String): Int {
+        return when(s) {
+            "Complete" -> 0
+            else -> 1
+        }
     }
 }

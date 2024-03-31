@@ -27,6 +27,7 @@ class AddTaskActivity : AppCompatActivity() {
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
     private var goalId : Int = -1
+    private lateinit var goalTimeExpected : String
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,7 @@ class AddTaskActivity : AppCompatActivity() {
 
         val intent = intent
         goalId = intent.getIntExtra(IntentKeys.TASK_GOAL_ID_KEY.name, -1)
+        goalTimeExpected = intent.getStringExtra(IntentKeys.GOAL_TIME_EXPECTED_KEY.name).toString()
 
         addTaskLayoutBinding.tvAddTaskTimeExpectedDate.text = ""
         addTaskLayoutBinding.tvAddTaskTimeExpectedTime.text = ""
@@ -134,7 +136,7 @@ class AddTaskActivity : AppCompatActivity() {
                     finish()
                 }
             } else {
-                addTaskLayoutBinding.tvAddTaskTimeExpectedError.text = "Please choose a later date and time."
+                addTaskLayoutBinding.tvAddTaskTimeExpectedError.text = "Please make the date and time set before the goal deadline."
             }
         }
     }
@@ -147,8 +149,18 @@ class AddTaskActivity : AppCompatActivity() {
         val hc = Integer.parseInt(currentDate.substring(11,13))
         val mnc = Integer.parseInt(currentDate.substring(14,16))
 
+        val yg = Integer.parseInt(goalTimeExpected.substring(0,4))
+        val mg = Integer.parseInt(goalTimeExpected.substring(5,7))
+        val dg = Integer.parseInt(goalTimeExpected.substring(8,10))
+        val hg = Integer.parseInt(goalTimeExpected.substring(11,13))
+        val mng = Integer.parseInt(goalTimeExpected.substring(14,16))
+
+        Log.d("MOBDEVE_MCO", goalTimeExpected)
+        Log.d("MOBDEVE_MCO", currentDate)
+
         return addTaskLayoutBinding.tvAddTaskTitleError.text.isEmpty() &&
                addTaskLayoutBinding.tvAddTaskDescriptionError.text.isEmpty() &&
+               DateHelper.isLaterTime(yg, mg, dg, hg, mng, y, m, d, h, mn) &&
                DateHelper.isLaterTime(y, m, d, h, mn, yc, mc, dc, hc, mnc)
     }
 }

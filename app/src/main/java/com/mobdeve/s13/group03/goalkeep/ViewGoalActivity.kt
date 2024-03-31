@@ -41,6 +41,7 @@ class ViewGoalActivity : AppCompatActivity() {
     private var minuteInput : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
     private var mainGoal : Goal? = null
+    private lateinit var goalTimeExpected : String
     private var goalId : Int = -1
 
     private val addTaskResultLauncher = registerForActivityResult(
@@ -128,7 +129,9 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.pbViewGoal.progress = GoalKeepDatabase(applicationContext).getProgressCount(mainGoal!!.goalId)
             vb.pbViewGoal.secondaryProgress = 100
             goalId = mainGoal!!.goalId
+            goalTimeExpected = mainGoal!!.timeExpected
         }
+
 
         vb.fabEditGoal.setOnClickListener {
             val editGoalIntent = Intent(this, EditGoalActivity::class.java)
@@ -139,6 +142,7 @@ class ViewGoalActivity : AppCompatActivity() {
         vb.fabAddTask.setOnClickListener {
             val addTaskIntent = Intent(this, AddTaskActivity::class.java)
             addTaskIntent.putExtra(IntentKeys.TASK_GOAL_ID_KEY.name, goalId)
+            addTaskIntent.putExtra(IntentKeys.GOAL_TIME_EXPECTED_KEY.name, goalTimeExpected)
             addTaskResultLauncher.launch(addTaskIntent)
         }
 
