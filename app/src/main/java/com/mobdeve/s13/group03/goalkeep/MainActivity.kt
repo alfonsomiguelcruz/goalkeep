@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rv : RecyclerView
     private lateinit var goalsAdapter : GoalAdapter
     private lateinit var goalsTouchHelper: ItemTouchHelper
+    private var isFocused: Boolean = false
 
     private var yearInputStart : Int = Calendar.getInstance().get(Calendar.YEAR)
     private var monthInputStart : Int = Calendar.getInstance().get(Calendar.MONTH)
@@ -440,7 +441,19 @@ class MainActivity : AppCompatActivity() {
             d.show()
         }
 
-        Log.d("MOBDEVE_MCO", "Main Activity - CREATE")
+        vb.ibCompletedgoals.setOnClickListener {
+            isFocused = !isFocused
+            goalsAdapter.clear()
+            if(isFocused) {
+                this.rv = vb.rvGoals
+                this.goalsAdapter = GoalAdapter(GoalKeepDatabase(applicationContext).getCompletedGoals(), this)
+                this.rv.adapter = this.goalsAdapter
+            } else {
+                this.rv = vb.rvGoals
+                this.goalsAdapter = GoalAdapter(GoalKeepDatabase(applicationContext).getGoals(), this)
+                this.rv.adapter = this.goalsAdapter
+            }
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

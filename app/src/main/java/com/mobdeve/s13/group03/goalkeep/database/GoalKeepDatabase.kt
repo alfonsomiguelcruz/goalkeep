@@ -308,8 +308,8 @@ class GoalKeepDatabase (context : Context) {
 
         val c : Cursor =
             db.query(DatabaseHandler.GOAL_TABLE, getGoalAttributesArray(),
-                "state=?",
-                arrayOf("Complete"),
+                "state=\'Complete\'",
+                null,
                 null,
                 null,
                 null,
