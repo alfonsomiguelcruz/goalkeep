@@ -368,6 +368,8 @@ class ViewGoalActivity : AppCompatActivity() {
             }
         }
 
+        vb.tvViewGoalTasks.text = "${db.getRemainingTasksCount(goalId)}"
+
         if (this.tasksAdapter.itemCount == 0) {
             vb.rvTasks.visibility = View.GONE
             vb.tvViewGoalEmpty.visibility = View.VISIBLE

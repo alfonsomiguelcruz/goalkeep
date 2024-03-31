@@ -518,4 +518,30 @@ class GoalKeepDatabase (context : Context) {
         else
             completedGoals * 100 / totalGoals
     }
+
+    fun getRemainingTasksCount(goalId : Int) : Int {
+        val db = databaseHandler.writableDatabase
+        var completedGoals = 0
+        var totalGoals = 0
+        val c : Cursor = db.query(DatabaseHandler.TASK_TABLE,
+            getTaskAttributesArray(),
+            "goal_id=?",
+            arrayOf(goalId.toString()),
+            null,
+            null,
+            null,
+            null)
+
+        totalGoals = c.count
+
+        while(c.moveToNext()) {
+            if(c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_STATE)).equals("Complete"))
+                completedGoals += 1
+        }
+
+        c.close()
+        db.close()
+
+        return totalGoals - completedGoals
+    }
 }
