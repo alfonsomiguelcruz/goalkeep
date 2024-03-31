@@ -1,8 +1,10 @@
 package com.mobdeve.s13.group03.goalkeep
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Color
@@ -14,6 +16,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -57,6 +60,7 @@ class ViewGoalActivity : AppCompatActivity() {
     private lateinit var goalTimeExpected : String
     private var goalId : Int = -1
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val addTaskResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
             if(result.data != null) {
@@ -80,6 +84,14 @@ class ViewGoalActivity : AppCompatActivity() {
                         }
 
                         tasksAdapter.addTaskItem(task, goalId)
+
+                        val intent = Intent(this, NotificationBroadcaster::class.java)
+                        intent.putExtra("NOTIF_MSG", "Reminder to finish ${task.name} at ${task.timeExpected}")
+                        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
+                            PendingIntent.FLAG_IMMUTABLE)
+
+                        val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+                        alarmManager.set(AlarmManager.RTC, DateHelper.getMillisecondsTime(task.timeExpected, 1), pendingIntent)
                     }
                 }
             }

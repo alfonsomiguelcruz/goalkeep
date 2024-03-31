@@ -77,12 +77,12 @@ class MainActivity : AppCompatActivity() {
                         this.goalsAdapter.notifyItemInserted(this.goalsAdapter.itemCount - 1)
 
                         val intent = Intent(this, NotificationBroadcaster::class.java)
+                        intent.putExtra("NOTIF_MSG", "Reminder to finish ${goal.title} at ${goal.timeExpected}")
                         val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
                             PendingIntent.FLAG_IMMUTABLE)
 
                         val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                        // DateHelper.getMillisecondsTime(goal.timeExpected, 1)
-                        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, 5000, pendingIntent)
+                        alarmManager.set(AlarmManager.RTC, DateHelper.getMillisecondsTime(goal.timeExpected, 1), pendingIntent)
                     }
                 }
             }

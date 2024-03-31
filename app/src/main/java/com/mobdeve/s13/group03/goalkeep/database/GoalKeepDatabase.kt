@@ -490,6 +490,128 @@ class GoalKeepDatabase (context : Context) {
         return filteredGoals
     }
 
+    @SuppressLint("Recycle")
+    fun sortFilterTasks(chosenPriority : String, startDateTime : String, endDateTime : String, taskState : String,
+                        sortTaskName : String, sortTimeExpected : String, sortPriority : String) : ArrayList<Task> {
+        val filteredTasks = ArrayList<Task>()
+        val db = databaseHandler.writableDatabase
+        var finalQuery = ""
+        var finalOrderByQuery = ""
+        val arrayListQuery = ArrayList<String>()
+
+        var prioritySubQuery = ""
+        if(chosenPriority != "N/A") {
+            prioritySubQuery = "${DatabaseHandler.TASK_PRIORITY}=\'$chosenPriority\' "
+            arrayListQuery.add(chosenPriority)
+        }
+
+        var dateRangeSubQuery = ""
+        arrayListQuery.add(startDateTime)
+        arrayListQuery.add(endDateTime)
+        dateRangeSubQuery = "DATE(\'$startDateTime\') <= ${DatabaseHandler.TASK_TIME_EXPECTED} AND " + "${DatabaseHandler.TASK_TIME_EXPECTED} <= DATE(\'$endDateTime\')"
+
+        var taskSubQuery = ""
+        if(taskState != "N/A") {
+            taskSubQuery = "${DatabaseHandler.TASK_STATE}=\'$taskState\'"
+            arrayListQuery.add(taskState)
+        }
+
+        // Combine for selection param
+        if(prioritySubQuery.isNotEmpty()) {
+            finalQuery = "$prioritySubQuery AND $dateRangeSubQuery"
+        } else
+            finalQuery = dateRangeSubQuery
+
+        if(taskSubQuery.isNotEmpty()) {
+            finalQuery = "$finalQuery AND $taskSubQuery"
+        }
+
+        var finalArrayQuery = arrayOfNulls<String>(arrayListQuery.size)
+        finalArrayQuery = arrayListQuery.toArray(finalArrayQuery)
+
+
+        // SORT
+        var sortPrioritySubQuery  = ""
+        if(sortPriority != "N/A") {
+            when(sortPriority) {
+                "ASC" ->
+                    sortPrioritySubQuery = "CASE ${DatabaseHandler.TASK_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END"
+                "DESC" ->
+                    sortPrioritySubQuery = "CASE ${DatabaseHandler.TASK_PRIORITY} WHEN \'High\' THEN 3 WHEN \'Medium\' THEN 2 ELSE 1 END"
+            }
+        }
+
+        var sortTimeExpectedSubQuery = ""
+        if(sortTimeExpected != "N/A")
+            sortTimeExpectedSubQuery = "${DatabaseHandler.TASK_TIME_EXPECTED} $sortTimeExpected"
+
+        var sortTaskNameSubQuery = ""
+        if(sortTaskName != "N/A")
+            sortTaskNameSubQuery = "${DatabaseHandler.TASK_TITLE} $sortTaskName"
+
+        // Combine for orderBy param
+        if(sortPrioritySubQuery.isNotEmpty()) {
+            finalOrderByQuery = sortPrioritySubQuery
+        }
+
+        if(sortTimeExpectedSubQuery.isNotEmpty()) {
+            if(finalOrderByQuery.isEmpty())
+                finalOrderByQuery = sortTimeExpectedSubQuery
+            else
+                finalOrderByQuery = "$finalOrderByQuery, $sortTimeExpectedSubQuery"
+        }
+
+        if(sortTaskNameSubQuery.isNotEmpty()) {
+            if(finalOrderByQuery.isEmpty())
+                finalOrderByQuery = sortTaskNameSubQuery
+            else
+                finalOrderByQuery = "$finalOrderByQuery, $sortTaskNameSubQuery"
+        }
+
+        val c : Cursor
+        if(finalOrderByQuery.isNotEmpty())
+            c = db.query(DatabaseHandler.TASK_TABLE,
+                getTaskAttributesArray(),
+                finalQuery,
+                finalArrayQuery,
+                null,
+                null,
+                finalOrderByQuery,
+                null)
+        else
+            c = db.query(DatabaseHandler.TASK_TABLE,
+                getTaskAttributesArray(),
+                finalQuery,
+                finalArrayQuery,
+                null,
+                null,
+                null,
+                null)
+
+        Log.d("MOBDEVE_MCO", finalQuery)
+        Log.d("MOBDEVE_MCO", finalArrayQuery.toString())
+        Log.d("MOBDEVE_MCO", finalOrderByQuery)
+
+        while(c.moveToNext()) {
+            filteredTasks.add(
+                Task(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.TASK_ID)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_TITLE)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_TIME_CREATED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_TIME_EXPECTED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_TIME_COMPLETED)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_DESCRIPTION)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_PRIORITY)),
+                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_STATE)),
+                    c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.TASK_GOAL_ID)))
+            )
+        }
+
+        c.close()
+        db.close()
+
+        return filteredTasks
+    }
+
     fun getProgressCount(goalId : Int) : Int {
         val db = databaseHandler.writableDatabase
         var completedGoals = 0

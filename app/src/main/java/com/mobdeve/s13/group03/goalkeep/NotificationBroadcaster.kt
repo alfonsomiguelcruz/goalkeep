@@ -5,16 +5,17 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 class NotificationBroadcaster : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val builder = NotificationCompat.Builder(context, "testId")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+        val builder = NotificationCompat.Builder(context, "notifId")
+            .setSmallIcon(R.drawable.goalkeep_icon)
             .setContentTitle("GoalKeep")
-            .setContentText("TestText") // TODO: Get text from intent, use Goal Title and Time Expected
+            .setContentText(intent.getStringExtra("NOTIF_MSG"))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notifManager = NotificationManagerCompat.from(context)
