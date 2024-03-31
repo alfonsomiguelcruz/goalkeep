@@ -69,8 +69,6 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (goal != null) {
-                        createNotificationChannel()
-
                         this.goalsAdapter.addGoalItem(goal)
 
                         vb.rvGoals.visibility = View.VISIBLE
@@ -83,7 +81,8 @@ class MainActivity : AppCompatActivity() {
                             PendingIntent.FLAG_IMMUTABLE)
 
                         val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.getMillisecondsTime(goal.timeExpected, 1), pendingIntent)
+                        // DateHelper.getMillisecondsTime(goal.timeExpected, 1)
+                        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, 5000, pendingIntent)
                     }
                 }
             }
@@ -93,6 +92,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createNotificationChannel()
 
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb.root)
@@ -451,13 +451,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun createNotificationChannel() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val str : CharSequence = "GoalKeep"
-            val description : String = "Test Description"
+            val str = "GoalKeep"
+            val desc = "TestDescription"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("testId", str, importance)
-            channel.description = description
+            val channel = NotificationChannel("notifId", str, importance)
+            channel.description = desc
 
-            val notifManager = getSystemService(NotificationManager::class.java)
+            val notifManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notifManager.createNotificationChannel(channel)
         }
     }
