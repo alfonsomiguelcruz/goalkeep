@@ -22,6 +22,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s13.group03.goalkeep.adapter.GoalAdapter
 import com.mobdeve.s13.group03.goalkeep.adapter.TaskAdapter
 import com.mobdeve.s13.group03.goalkeep.database.DatabaseHandler
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
@@ -128,6 +129,7 @@ class ViewGoalActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -475,6 +477,9 @@ class ViewGoalActivity : AppCompatActivity() {
 
                 val filteredTasks = db.sortFilterTasks(chosenPriority, startDateTime, endDateTime, taskState,
                     sortTaskName, sortTimeExpected, sortPriority)
+
+                sortFilterData(filteredTasks)
+                d.dismiss()
             }
 
             d.setCancelable(true)
@@ -505,5 +510,12 @@ class ViewGoalActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         vb.pbViewGoal.progress = GoalKeepDatabase(applicationContext).getProgressCount(goalId)
+    }
+
+    private fun sortFilterData(tasks : ArrayList<Task>) {
+        tasksAdapter.clear()
+        this.rv = vb.rvTasks
+        this.tasksAdapter = TaskAdapter(tasks, this)
+        this.rv.adapter = this.tasksAdapter
     }
 }

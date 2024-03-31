@@ -84,6 +84,12 @@ class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Act
         notifyItemRemoved(position)
     }
 
+    fun clear() {
+        val size : Int = tasks.size
+        tasks.clear()
+        notifyItemRangeRemoved(0, size)
+    }
+
     private fun displayTaskDialog (context: AppCompatActivity, task: Task) : Dialog {
         val d = Dialog(context)
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

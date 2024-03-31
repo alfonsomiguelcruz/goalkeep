@@ -232,7 +232,7 @@ class GoalKeepDatabase (context : Context) {
                                   arrayOf(goalId.toString()),
                                   null,
                                   null,
-                                  null,
+                                  "CASE ${DatabaseHandler.TASK_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END",
                                   null)
 
         while(c.moveToNext()) {
@@ -406,8 +406,7 @@ class GoalKeepDatabase (context : Context) {
 
         var finalArrayQuery = arrayOfNulls<String>(arrayListQuery.size)
         finalArrayQuery = arrayListQuery.toArray(finalArrayQuery)
-
-
+        
         // SORT
         var sortPrioritySubQuery  = ""
         if(sortPriority != "N/A") {
@@ -446,12 +445,16 @@ class GoalKeepDatabase (context : Context) {
                 finalOrderByQuery = "$finalOrderByQuery, $sortGoalNameSubQuery"
         }
 
+        Log.d("MOBDEVE_MCO", finalQuery)
+        Log.d("MOBDEVE_MCO", finalArrayQuery.toString())
+        Log.d("MOBDEVE_MCO", finalOrderByQuery)
+
         val c : Cursor
         if(finalOrderByQuery.isNotEmpty())
             c = db.query(DatabaseHandler.GOAL_TABLE,
                                     getGoalAttributesArray(),
                                     finalQuery,
-                                    finalArrayQuery,
+                                    null,
                                     null,
                                     null,
                                     finalOrderByQuery,
@@ -460,15 +463,11 @@ class GoalKeepDatabase (context : Context) {
             c = db.query(DatabaseHandler.GOAL_TABLE,
                 getGoalAttributesArray(),
                 finalQuery,
-                finalArrayQuery,
+                null,
                 null,
                 null,
                 null,
                 null)
-
-        Log.d("MOBDEVE_MCO", finalQuery)
-        Log.d("MOBDEVE_MCO", finalArrayQuery.toString())
-        Log.d("MOBDEVE_MCO", finalOrderByQuery)
 
         while(c.moveToNext()) {
             filteredGoals.add(

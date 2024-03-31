@@ -31,6 +31,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.adapter.GoalAdapter
+import com.mobdeve.s13.group03.goalkeep.adapter.TaskAdapter
+import com.mobdeve.s13.group03.goalkeep.database.DatabaseHandler
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
 import com.mobdeve.s13.group03.goalkeep.databinding.ActivityMainBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.GoalSortFilterDialogLayoutBinding
@@ -430,6 +432,8 @@ class MainActivity : AppCompatActivity() {
 
                 val filteredGoals = db.sortFilterGoals(chosenPriority, startDateTime, endDateTime, goalState,
                                                        sortGoalName, sortTimeExpected, sortPriority)
+                sortFilterData(filteredGoals)
+                d.dismiss()
             }
 
             d.setCancelable(true)
@@ -443,8 +447,10 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-//        this.goalsAdapter = GoalAdapter(GoalKeepDatabase(applicationContext).getGoals(), this)
-//        this.rv.adapter = this.goalsAdapter
+        goalsAdapter.clear()
+        this.rv = vb.rvGoals
+        this.goalsAdapter = GoalAdapter(GoalKeepDatabase(applicationContext).getGoals(), this)
+        this.rv.adapter = this.goalsAdapter
 
         Log.d("MOBDEVE_MCO", "Main Activity - START")
     }
@@ -460,5 +466,12 @@ class MainActivity : AppCompatActivity() {
             val notifManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notifManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun sortFilterData(goals : ArrayList<Goal>) {
+        goalsAdapter.clear()
+        this.rv = vb.rvGoals
+        this.goalsAdapter = GoalAdapter(goals, this)
+        this.rv.adapter = this.goalsAdapter
     }
 }
