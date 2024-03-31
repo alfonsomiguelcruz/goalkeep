@@ -547,12 +547,16 @@ class GoalKeepDatabase (context : Context) {
                 finalOrderByQuery = "$finalOrderByQuery, $sortTaskNameSubQuery"
         }
 
+        Log.d("MOBDEVE_MCO", finalQuery)
+        Log.d("MOBDEVE_MCO", finalArrayQuery.toString())
+        Log.d("MOBDEVE_MCO", finalOrderByQuery)
+
         val c : Cursor
         if(finalOrderByQuery.isNotEmpty())
             c = db.query(DatabaseHandler.TASK_TABLE,
                 getTaskAttributesArray(),
                 finalQuery,
-                finalArrayQuery,
+                null,
                 null,
                 null,
                 finalOrderByQuery,
@@ -561,15 +565,11 @@ class GoalKeepDatabase (context : Context) {
             c = db.query(DatabaseHandler.TASK_TABLE,
                 getTaskAttributesArray(),
                 finalQuery,
-                finalArrayQuery,
+                null,
                 null,
                 null,
                 null,
                 null)
-
-        Log.d("MOBDEVE_MCO", finalQuery)
-        Log.d("MOBDEVE_MCO", finalArrayQuery.toString())
-        Log.d("MOBDEVE_MCO", finalOrderByQuery)
 
         while(c.moveToNext()) {
             filteredTasks.add(
