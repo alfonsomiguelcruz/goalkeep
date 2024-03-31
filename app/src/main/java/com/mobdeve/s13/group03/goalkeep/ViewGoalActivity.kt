@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
@@ -103,7 +104,7 @@ class ViewGoalActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -163,9 +164,27 @@ class ViewGoalActivity : AppCompatActivity() {
         vb.etTaskSearchbar.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus) {
                 vb.ibTaskFilter.visibility = View.GONE
+                vb.ibTaskAlarm.visibility = View.GONE
             } else {
                 vb.ibTaskFilter.visibility = View.VISIBLE
+                vb.ibTaskAlarm.visibility = View.VISIBLE
             }
+        }
+
+        vb.ibTaskAlarm.setOnClickListener {
+            val timeEndDialog = TimePickerDialog(this, { view, hourOfDay, minute ->
+                hourInput = hourOfDay
+                minuteInput = minute
+
+                val i = Intent(AlarmClock.ACTION_SET_ALARM)
+                i.putExtra(AlarmClock.EXTRA_MESSAGE, vb.tvViewGoalTitle.text)
+                i.putExtra(AlarmClock.EXTRA_HOUR, hourInput)
+                i.putExtra(AlarmClock.EXTRA_MINUTES, minuteInput)
+                i.putExtra(AlarmClock.EXTRA_SKIP_UI, true)
+                if(i.resolveActivity(packageManager) != null)
+                    startActivity(i)
+            },  hourInput, minuteInput, false)
+            timeEndDialog.show()
         }
 
         vb.ibTaskFilter.setOnClickListener {

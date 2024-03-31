@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -19,7 +22,9 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     private var hourInputEnd : Int = Calendar.getInstance().get(Calendar.HOUR)
     private var minuteInputEnd : Int = Calendar.getInstance().get(Calendar.MINUTE)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private val addGoalResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
             if(result.data != null) {
@@ -63,17 +69,27 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (goal != null) {
+                        createNotificationChannel()
+
                         this.goalsAdapter.addGoalItem(goal)
 
                         vb.rvGoals.visibility = View.VISIBLE
                         vb.tvNogoalMsg.visibility = View.GONE
 
                         this.goalsAdapter.notifyItemInserted(this.goalsAdapter.itemCount - 1)
+
+                        val intent = Intent(this, NotificationBroadcaster::class.java)
+                        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
+                            PendingIntent.FLAG_IMMUTABLE)
+
+                        val alarmManager : AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+                        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, DateHelper.getMillisecondsTime(goal.timeExpected, 1), pendingIntent)
                     }
                 }
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,12 +105,10 @@ class MainActivity : AppCompatActivity() {
         vb.etGoalSearchbar.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus) {
                 vb.ibGoalFilter.visibility = View.GONE
-                vb.ibSettings.visibility = View.GONE
                 vb.ibAlarms.visibility = View.GONE
                 vb.ibCompletedgoals.visibility = View.GONE
             } else {
                 vb.ibGoalFilter.visibility = View.VISIBLE
-                vb.ibSettings.visibility = View.VISIBLE
                 vb.ibAlarms.visibility = View.VISIBLE
                 vb.ibCompletedgoals.visibility = View.VISIBLE
                 this.currentFocus?.let { view ->
@@ -122,12 +136,6 @@ class MainActivity : AppCompatActivity() {
         vb.ibAlarms.setOnClickListener {
             val i = Intent(AlarmClock.ACTION_SHOW_ALARMS)
             startActivity(i)
-//            i.putExtra(AlarmClock.EXTRA_MESSAGE, "Message ni Bakla")
-//            i.putExtra(AlarmClock.EXTRA_HOUR, 3)
-//            i.putExtra(AlarmClock.EXTRA_MINUTES, 11)
-//            i.putExtra(AlarmClock.EXTRA_SKIP_UI, true)
-//            if(i.resolveActivity(packageManager) != null)
-//                startActivity(i)
         }
 
         // Connecting Recycler View with Adapter
@@ -439,5 +447,18 @@ class MainActivity : AppCompatActivity() {
 //        this.rv.adapter = this.goalsAdapter
 
         Log.d("MOBDEVE_MCO", "Main Activity - START")
+    }
+
+    private fun createNotificationChannel() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val str : CharSequence = "GoalKeep"
+            val description : String = "Test Description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("testId", str, importance)
+            channel.description = description
+
+            val notifManager = getSystemService(NotificationManager::class.java)
+            notifManager.createNotificationChannel(channel)
+        }
     }
 }

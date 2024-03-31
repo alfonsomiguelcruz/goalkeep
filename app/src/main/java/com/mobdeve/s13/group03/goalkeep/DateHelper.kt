@@ -1,6 +1,12 @@
 package com.mobdeve.s13.group03.goalkeep
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+
 
 class DateHelper {
     companion object {
@@ -132,6 +138,18 @@ class DateHelper {
                     return false
             else
                 return false
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getMillisecondsTime(time: String, offSetDays : Int): Long {
+            val localDateTime = LocalDateTime.parse(
+                time,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            )
+
+            return localDateTime
+                .atZone(ZoneId.systemDefault())
+                .toInstant().toEpochMilli() - (offSetDays * (1000 * 60 * 60 * 24))
         }
     }
 }
