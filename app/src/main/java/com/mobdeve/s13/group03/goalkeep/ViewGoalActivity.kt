@@ -87,6 +87,7 @@ class ViewGoalActivity : AppCompatActivity() {
                         tasksAdapter.addTaskItem(task, goalId)
 
                         val intent = Intent(this, NotificationBroadcaster::class.java)
+                        Log.d("MOBDEVE_MCO", "${task.name} and ${task.timeExpected}")
                         intent.putExtra("NOTIF_MSG", "Reminder to finish ${task.name} at ${task.timeExpected}")
                         val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
                             PendingIntent.FLAG_IMMUTABLE)
@@ -490,7 +491,7 @@ class ViewGoalActivity : AppCompatActivity() {
             Log.d("MOBDEVE_MCO", "GOAL PROGRESS: ${vb.pbViewGoal.progress}")
             if(vb.pbViewGoal.progress == 100) {
                 vb.btnCompleteGoal.isEnabled = true
-                db.updateTaskState(goalId)
+                db.updateGoalState(goalId)
                 finish()
             }
         }

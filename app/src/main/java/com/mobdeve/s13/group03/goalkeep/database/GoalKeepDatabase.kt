@@ -150,14 +150,15 @@ class GoalKeepDatabase (context : Context) {
         )
     }
 
-    fun completeGoal (goalId : Int) {
+    fun updateGoalState(goalId : Int) {
         val db = databaseHandler.writableDatabase
         val contentValues = ContentValues()
 
         contentValues.put(DatabaseHandler.GOAL_STATE, "Complete")
         contentValues.put(DatabaseHandler.GOAL_TIME_COMPLETED, DateHelper.getCurrentTime())
 
-        db.update(DatabaseHandler.GOAL_TABLE, contentValues, "goal_id=?", arrayOf(goalId.toString()))
+        db.update(DatabaseHandler.GOAL_TABLE, contentValues,
+            "${DatabaseHandler.GOAL_ID}=?", arrayOf(goalId.toLong().toString()))
 
         db.close()
     }
@@ -255,29 +256,6 @@ class GoalKeepDatabase (context : Context) {
         return queriedTasks
     }
 
-    fun getTaskId(g: Goal) : Int {
-        val db = databaseHandler.writableDatabase
-        var taskId : Int = -1
-
-        val c : Cursor = db.query(DatabaseHandler.TASK_TABLE,
-            arrayOf(DatabaseHandler.TASK_ID),
-            "goal_id=?",
-            arrayOf(g.goalId.toString()),
-            null,
-            null,
-            null,
-            null)
-
-
-        while(c.moveToNext())
-            taskId = c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.TASK_ID))
-
-        c.close()
-        db.close()
-
-        return taskId
-    }
-
     private fun getTaskAttributesArray() : Array<String> {
         return arrayOf(
             DatabaseHandler.TASK_ID,
@@ -297,6 +275,7 @@ class GoalKeepDatabase (context : Context) {
         val contentValues = ContentValues()
 
         contentValues.put(DatabaseHandler.TASK_STATE, "Complete")
+        contentValues.put(DatabaseHandler.TASK_TIME_COMPLETED, DateHelper.getCurrentTime())
 
         db.update(DatabaseHandler.TASK_TABLE, contentValues,
             "task_id=?", arrayOf(taskId.toLong().toString()))
@@ -308,7 +287,7 @@ class GoalKeepDatabase (context : Context) {
 
         val c : Cursor =
             db.query(DatabaseHandler.GOAL_TABLE, getGoalAttributesArray(),
-                "state=\'Complete\'",
+                "${DatabaseHandler.GOAL_STATE}=\'Complete\'",
                 null,
                 null,
                 null,
@@ -328,6 +307,7 @@ class GoalKeepDatabase (context : Context) {
                      c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TAG)))
             )
         }
+        Log.d("MOBDEVE_MCO", "${queriedCompletedGoals.size}")
 
         c.close()
         db.close()

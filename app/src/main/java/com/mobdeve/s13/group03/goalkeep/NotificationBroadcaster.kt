@@ -12,10 +12,12 @@ import androidx.core.app.NotificationManagerCompat
 
 class NotificationBroadcaster : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        val msg = intent.getStringExtra("NOTIF_MSG")
+        Log.d("MOBDEVE_MCO", msg!!)
         val builder = NotificationCompat.Builder(context, "notifId")
             .setSmallIcon(R.drawable.goalkeep_icon)
             .setContentTitle("GoalKeep")
-            .setContentText(intent.getStringExtra("NOTIF_MSG"))
+            .setContentText(msg)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notifManager = NotificationManagerCompat.from(context)
