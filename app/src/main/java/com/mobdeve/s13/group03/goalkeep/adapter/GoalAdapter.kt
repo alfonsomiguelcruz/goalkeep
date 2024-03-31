@@ -29,11 +29,18 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
 
     override fun onBindViewHolder(holder: GoalViewHolder, position: Int) {
         holder.bindGoalData(this.goals[position])
+        holder.setProgress(GoalKeepDatabase(activity.applicationContext).getProgressCount(this.goals[position].goalId))
+
         holder.itemView.setOnClickListener { view ->
             val viewGoalIntent = Intent(view.context, ViewGoalActivity::class.java)
             viewGoalIntent.putExtra(IntentKeys.GOAL_OBJECT_KEY.name, this.goals[position])
 
             view.context.startActivity(viewGoalIntent)
+        }
+
+        holder.itemView.setOnLongClickListener {
+
+            true
         }
     }
 
@@ -65,6 +72,12 @@ class GoalAdapter(private val goals: ArrayList<Goal>, private val activity: Acti
 //        )
 //
 //        notifyItemChanged()
+    }
+
+    fun clear() {
+        val size : Int = goals.size
+        goals.clear()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun deleteGoalItem(position: Int) {

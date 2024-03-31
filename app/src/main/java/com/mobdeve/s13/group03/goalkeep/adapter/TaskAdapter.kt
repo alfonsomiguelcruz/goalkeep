@@ -39,6 +39,13 @@ class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Act
         holder.itemView.setOnClickListener { view ->
             displayTaskDialog(view.context as AppCompatActivity, tasks[position]).show()
         }
+
+        holder.itemView.setOnLongClickListener {
+            editTaskState(tasks[position], position)
+            holder.completeTask()
+            Log.d("MOBDEVE_MCO", "UPDATED TASK STATE")
+            true
+        }
     }
 
     fun addTaskItem (task : Task, goalId : Int) {
@@ -59,6 +66,13 @@ class TaskAdapter (private val tasks: ArrayList<Task>, private val activity: Act
 
     fun editTaskItem () {
         //notifyItemChanged()
+    }
+
+    fun editTaskState (t : Task, position : Int) {
+        val db = GoalKeepDatabase(activity.applicationContext)
+        db.updateTaskState(t.taskId)
+
+        notifyItemChanged(position)
     }
 
     fun deleteTaskItem (position : Int) {

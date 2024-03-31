@@ -43,8 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/corners_gt"
-                android:backgroundTint="@color/light_grey"
                 android:orientation="horizontal">
 
                 <TextView
@@ -52,6 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/left_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="High"
@@ -69,6 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/middle_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Medium"
@@ -86,6 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/right_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Low"
@@ -314,8 +315,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/corners_gt"
-                android:backgroundTint="@color/light_grey"
                 android:orientation="horizontal">
 
                 <TextView
@@ -323,6 +322,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/left_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Complete"
@@ -340,6 +340,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/right_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Incomplete"
@@ -379,8 +380,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/corners_gt"
-                android:backgroundTint="@color/light_grey"
                 android:orientation="horizontal">
 
                 <TextView
@@ -388,6 +387,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/left_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="A - Z"
@@ -405,6 +405,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/right_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Z - A"
@@ -432,8 +433,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/corners_gt"
-                android:backgroundTint="@color/light_grey"
                 android:orientation="horizontal">
 
                 <TextView
@@ -441,6 +440,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/left_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Earliest to Latest"
@@ -458,6 +458,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/right_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Latest to Earliest"
@@ -485,8 +486,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/corners_gt"
-                android:backgroundTint="@color/light_grey"
                 android:orientation="horizontal">
 
                 <TextView
@@ -494,6 +493,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/left_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Highest to Lowest"
@@ -511,6 +511,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/right_option_default"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="Lowest to Highest"

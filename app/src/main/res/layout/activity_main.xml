@@ -5,7 +5,10 @@
     android:id="@+id/cl_goal_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsv_goal_list"
@@ -25,7 +28,7 @@
                 android:id="@+id/ll_topnav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="15dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -49,6 +52,7 @@
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:stateListAnimator="@android:anim/slide_out_right"
+                        android:textIsSelectable="true"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ib_goal_filter"
@@ -88,6 +92,28 @@
                         android:padding="10dp"
                         android:src="@drawable/threedots_icon"
                         android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ib_alarms"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/ib_alarms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:padding="10dp"
+                        android:src="@drawable/clock_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/ib_completedgoals"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/ib_completedgoals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:padding="10dp"
+                        android:src="@drawable/star_icon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -133,27 +159,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="25dp"
         android:background="@color/light_grey"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/add_icon"
         android:theme="@style/Theme.GoalKeep"
         app:backgroundTint="@color/light_grey"
-        app:layout_constraintBottom_toTopOf="@+id/bnv_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnv_menu"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:background="@color/white"
-        android:theme="@style/Theme.GoalKeep"
-        app:itemIconTint="@color/dark_grey"
-        app:itemTextColor="@color/grey"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,11 @@
 package com.mobdeve.s13.group03.goalkeep.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.util.Log
+import com.mobdeve.s13.group03.goalkeep.DateHelper
 import com.mobdeve.s13.group03.goalkeep.model.Goal
 import com.mobdeve.s13.group03.goalkeep.model.Task
 
@@ -148,6 +150,18 @@ class GoalKeepDatabase (context : Context) {
         )
     }
 
+    fun completeGoal (goalId : Int) {
+        val db = databaseHandler.writableDatabase
+        val contentValues = ContentValues()
+
+        contentValues.put(DatabaseHandler.GOAL_STATE, "Complete")
+        contentValues.put(DatabaseHandler.GOAL_TIME_COMPLETED, DateHelper.getCurrentTime())
+
+        db.update(DatabaseHandler.GOAL_TABLE, contentValues, "goal_id=?", arrayOf(goalId.toString()))
+
+        db.close()
+    }
+
     // TASK DATABASE OPERATIONS
     fun addTask(t: Task, goalId: Int) : Long {
         val db = databaseHandler.writableDatabase
@@ -209,8 +223,6 @@ class GoalKeepDatabase (context : Context) {
     }
 
     fun getTasks(goalId : Int) : ArrayList<Task> {
-        // Use goal id to get the tasks (INNER JOIN on goal id = task's goal id)
-        // for View Goal
         val queriedTasks = ArrayList<Task>()
         val db = databaseHandler.writableDatabase
 
@@ -280,6 +292,16 @@ class GoalKeepDatabase (context : Context) {
         )
     }
 
+    fun updateTaskState(taskId : Int) {
+        val db = databaseHandler.writableDatabase
+        val contentValues = ContentValues()
+
+        contentValues.put(DatabaseHandler.TASK_STATE, "Complete")
+
+        db.update(DatabaseHandler.TASK_TABLE, contentValues,
+            "task_id=?", arrayOf(taskId.toLong().toString()))
+    }
+
     fun getCompletedGoals() : ArrayList<Goal> {
         val queriedCompletedGoals = ArrayList<Goal>()
         val db = databaseHandler.writableDatabase
@@ -296,14 +318,14 @@ class GoalKeepDatabase (context : Context) {
         while(c.moveToNext()) {
             queriedCompletedGoals.add(
                 Goal(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_ID)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TITLE)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_CREATED)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_EXPECTED)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_COMPLETED)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_DESCRIPTION)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_PRIORITY)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_STATE)),
-                    c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TAG)))
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TITLE)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_CREATED)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_EXPECTED)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_COMPLETED)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_DESCRIPTION)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_PRIORITY)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_STATE)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TAG)))
             )
         }
 
@@ -312,4 +334,67 @@ class GoalKeepDatabase (context : Context) {
         return queriedCompletedGoals
     }
     // TODO: FILTER and SORT OPERATIONS
+
+    @SuppressLint("Recycle")
+    fun getSearchQuery(query: String) : ArrayList<Goal> {
+        val queriedGoals = ArrayList<Goal>()
+        val db = databaseHandler.writableDatabase
+
+        val c : Cursor = db.query(DatabaseHandler.GOAL_TABLE,
+                                  getGoalAttributesArray(),
+                                  "title LIKE ?",
+                                  arrayOf("%${query}%",),
+                                  null,
+                                  null,
+                                  "CASE ${DatabaseHandler.GOAL_PRIORITY} WHEN \'High\' THEN 1 WHEN \'Medium\' THEN 2 ELSE 3 END",
+                                  null)
+
+        while(c.moveToNext()) {
+            queriedGoals.add(
+                Goal(c.getInt(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_ID)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TITLE)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_CREATED)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_EXPECTED)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TIME_COMPLETED)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_DESCRIPTION)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_PRIORITY)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_STATE)),
+                     c.getString(c.getColumnIndexOrThrow(DatabaseHandler.GOAL_TAG)))
+            )
+        }
+
+        c.close()
+        db.close()
+
+        return queriedGoals
+    }
+
+    fun getProgressCount(goalId : Int) : Int {
+        val db = databaseHandler.writableDatabase
+        var completedGoals = 0
+        var totalGoals = 0
+        val c : Cursor = db.query(DatabaseHandler.TASK_TABLE,
+            getTaskAttributesArray(),
+            "goal_id=?",
+            arrayOf(goalId.toString()),
+            null,
+            null,
+            null,
+            null)
+
+        totalGoals = c.count
+
+        while(c.moveToNext()) {
+            if(c.getString(c.getColumnIndexOrThrow(DatabaseHandler.TASK_STATE)).equals("Complete"))
+                completedGoals += 1
+        }
+
+        c.close()
+        db.close()
+
+        return if(totalGoals == 0)
+            0
+        else
+            completedGoals * 100 / totalGoals
+    }
 }

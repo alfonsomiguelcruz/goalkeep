@@ -16,4 +16,8 @@ class TaskViewHolder(private val taskVB: TaskListLayoutBinding) : RecyclerView.V
         taskVB.tvTaskPriority.setTextColor(DesignClass.getDarkGray())
         taskVB.tvTaskState.setBackgroundResource(DesignClass.getStateColor(t.state))
     }
+
+    fun completeTask() {
+        taskVB.tvTaskState.text = "Complete"
+    }
 }

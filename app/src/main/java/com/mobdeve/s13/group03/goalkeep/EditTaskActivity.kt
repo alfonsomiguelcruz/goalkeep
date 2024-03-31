@@ -55,6 +55,7 @@ class EditTaskActivity : AppCompatActivity() {
         editTaskDetailsLayoutBinding.tvEditTaskDescriptionError.text = ""
         editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedError.text = ""
 
+
         editTaskDetailsLayoutBinding.clEditTaskTimeExpectedDate.setOnClickListener {
             val d = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
                 editTaskDetailsLayoutBinding.tvEditTaskTimeExpectedDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"

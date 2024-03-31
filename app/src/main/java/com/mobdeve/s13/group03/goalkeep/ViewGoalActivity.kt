@@ -5,6 +5,8 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +14,12 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.group03.goalkeep.adapter.TaskAdapter
+import com.mobdeve.s13.group03.goalkeep.database.DatabaseHandler
 import com.mobdeve.s13.group03.goalkeep.database.GoalKeepDatabase
 import com.mobdeve.s13.group03.goalkeep.databinding.TaskSortFilterDialogLayoutBinding
 import com.mobdeve.s13.group03.goalkeep.databinding.ViewGoalLayoutBinding
@@ -38,6 +42,7 @@ class ViewGoalActivity : AppCompatActivity() {
 
     private var mainGoal : Goal? = null
     private var goalId : Int = -1
+
     private val addTaskResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
             if(result.data != null) {
@@ -119,12 +124,11 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.tvViewGoalTag.text = mainGoal!!.tag
             vb.tvViewGoalDescription.text = mainGoal!!.description
             vb.llViewGoal.setBackgroundResource(DesignClass.getRegularColor(mainGoal!!.priority))
-            vb.pbViewGoal.setBackgroundResource(DesignClass.getSubColor(mainGoal!!.priority))
             vb.tvViewGoalTag.background.setTint(DesignClass.getSubColor("N/A"))
+            vb.pbViewGoal.progress = GoalKeepDatabase(applicationContext).getProgressCount(mainGoal!!.goalId)
+            vb.pbViewGoal.secondaryProgress = 100
             goalId = mainGoal!!.goalId
         }
-
-        vb.btnCompleteGoal.isEnabled = false
 
         vb.fabEditGoal.setOnClickListener {
             val editGoalIntent = Intent(this, EditGoalActivity::class.java)
@@ -171,6 +175,116 @@ class ViewGoalActivity : AppCompatActivity() {
             vb.tvTaskFilterTimeExpectedStartTime.text = ""
             vb.tvTaskFilterTimeExpectedEndTime.text = ""
 
+            // PRIORITY
+            vb.tvTaskFilterPriorityTabHigh.setOnClickListener {
+                if(vb.tvTaskFilterPriorityTabHigh.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.left_option_selected, null))) {
+                    vb.tvTaskFilterPriorityTabHigh.setBackgroundResource(R.drawable.left_option_selected)
+                    vb.tvTaskFilterPriorityTabHigh.setTypeface(vb.tvTaskFilterPriorityTabHigh.typeface, Typeface.BOLD)
+                    vb.tvTaskFilterPriorityTabHigh.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskFilterPriorityTabHigh.setBackgroundResource(R.drawable.left_option_default)
+                    vb.tvTaskFilterPriorityTabHigh.setTypeface(vb.tvTaskFilterPriorityTabHigh.typeface, Typeface.NORMAL)
+                    vb.tvTaskFilterPriorityTabHigh.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskFilterPriorityTabMedium.setOnClickListener {
+                if(vb.tvTaskFilterPriorityTabMedium.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.middle_option_default, null))) {
+                    vb.tvTaskFilterPriorityTabMedium.setBackgroundResource(R.drawable.middle_option_selected)
+                    vb.tvTaskFilterPriorityTabMedium.setTypeface(vb.tvTaskFilterPriorityTabMedium.typeface, Typeface.BOLD)
+                    vb.tvTaskFilterPriorityTabMedium.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskFilterPriorityTabMedium.setBackgroundResource(R.drawable.middle_option_default)
+                    vb.tvTaskFilterPriorityTabMedium.setTypeface(vb.tvTaskFilterPriorityTabMedium.typeface, Typeface.NORMAL)
+                    vb.tvTaskFilterPriorityTabMedium.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskFilterPriorityTabLow.setOnClickListener {
+                if(vb.tvTaskFilterPriorityTabLow.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.right_option_default, null))) {
+                    vb.tvTaskFilterPriorityTabLow.setBackgroundResource(R.drawable.right_option_selected)
+                    vb.tvTaskFilterPriorityTabLow.setTypeface(vb.tvTaskFilterPriorityTabLow.typeface, Typeface.BOLD)
+                    vb.tvTaskFilterPriorityTabLow.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskFilterPriorityTabLow.setBackgroundResource(R.drawable.right_option_default)
+                    vb.tvTaskFilterPriorityTabLow.setTypeface(vb.tvTaskFilterPriorityTabLow.typeface, Typeface.NORMAL)
+                    vb.tvTaskFilterPriorityTabLow.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            // STATE
+            vb.tvTaskFilterStateComplete.setOnClickListener {
+                if(vb.tvTaskFilterStateComplete.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.left_option_default, null))) {
+                    vb.tvTaskFilterStateComplete.setBackgroundResource(R.drawable.left_option_selected)
+                    vb.tvTaskFilterStateComplete.setTypeface(vb.tvTaskFilterStateComplete.typeface, Typeface.BOLD)
+                    vb.tvTaskFilterStateComplete.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskFilterStateComplete.setBackgroundResource(R.drawable.left_option_default)
+                    vb.tvTaskFilterStateComplete.setTypeface(vb.tvTaskFilterStateComplete.typeface, Typeface.NORMAL)
+                    vb.tvTaskFilterStateComplete.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskFilterStateIncomplete.setOnClickListener {
+                if(vb.tvTaskFilterStateIncomplete.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.right_option_default, null))) {
+                    vb.tvTaskFilterStateIncomplete.setBackgroundResource(R.drawable.right_option_selected)
+                    vb.tvTaskFilterStateIncomplete.setTypeface(vb.tvTaskFilterStateIncomplete.typeface, Typeface.BOLD)
+                    vb.tvTaskFilterStateIncomplete.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskFilterStateIncomplete.setBackgroundResource(R.drawable.right_option_default)
+                    vb.tvTaskFilterStateIncomplete.setTypeface(vb.tvTaskFilterStateIncomplete.typeface, Typeface.NORMAL)
+                    vb.tvTaskFilterStateIncomplete.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskSortTimeExpectedLE.setOnClickListener {
+                if(vb.tvTaskSortTimeExpectedLE.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.left_option_default, null))) {
+                    vb.tvTaskSortTimeExpectedLE.setBackgroundResource(R.drawable.left_option_selected)
+                    vb.tvTaskSortTimeExpectedLE.setTypeface(vb.tvTaskSortTimeExpectedLE.typeface, Typeface.BOLD)
+                    vb.tvTaskSortTimeExpectedLE.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskSortTimeExpectedLE.setBackgroundResource(R.drawable.left_option_default)
+                    vb.tvTaskSortTimeExpectedLE.setTypeface(vb.tvTaskSortTimeExpectedLE.typeface, Typeface.NORMAL)
+                    vb.tvTaskSortTimeExpectedLE.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskSortTimeExpectedLE.setOnClickListener {
+                if(vb.tvTaskSortTimeExpectedLE.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.right_option_default, null))) {
+                    vb.tvTaskSortTimeExpectedLE.setBackgroundResource(R.drawable.right_option_selected)
+                    vb.tvTaskSortTimeExpectedLE.setTypeface(vb.tvTaskSortTimeExpectedLE.typeface, Typeface.BOLD)
+                    vb.tvTaskSortTimeExpectedLE.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskSortTimeExpectedLE.setBackgroundResource(R.drawable.right_option_default)
+                    vb.tvTaskSortTimeExpectedLE.setTypeface(vb.tvTaskSortTimeExpectedLE.typeface, Typeface.NORMAL)
+                    vb.tvTaskSortTimeExpectedLE.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskSortPriorityHL.setOnClickListener {
+                if(vb.tvTaskSortPriorityHL.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.left_option_default, null))) {
+                    vb.tvTaskSortPriorityHL.setBackgroundResource(R.drawable.left_option_selected)
+                    vb.tvTaskSortPriorityHL.setTypeface(vb.tvTaskSortPriorityHL.typeface, Typeface.BOLD)
+                    vb.tvTaskSortPriorityHL.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskSortPriorityHL.setBackgroundResource(R.drawable.left_option_default)
+                    vb.tvTaskSortPriorityHL.setTypeface(vb.tvTaskSortPriorityHL.typeface, Typeface.NORMAL)
+                    vb.tvTaskSortPriorityHL.setTextColor(Color.DKGRAY)
+                }
+            }
+
+            vb.tvTaskSortPriorityLH.setOnClickListener {
+                if(vb.tvTaskSortPriorityLH.background.equals(ResourcesCompat.getDrawable(resources, R.drawable.right_option_default, null))) {
+                    vb.tvTaskSortPriorityLH.setBackgroundResource(R.drawable.right_option_selected)
+                    vb.tvTaskSortPriorityLH.setTypeface(vb.tvTaskSortPriorityLH.typeface, Typeface.BOLD)
+                    vb.tvTaskSortPriorityLH.setTextColor(Color.WHITE)
+                } else {
+                    vb.tvTaskSortPriorityLH.setBackgroundResource(R.drawable.right_option_default)
+                    vb.tvTaskSortPriorityLH.setTypeface(vb.tvTaskSortPriorityLH.typeface, Typeface.NORMAL)
+                    vb.tvTaskSortPriorityLH.setTextColor(Color.DKGRAY)
+                }
+            }
+
             vb.clTaskFilterTimeExpectedStartDate.setOnClickListener {
                 val dateStartDialog = DatePickerDialog(this, { view, year, monthOfYear, dayOfMonth ->
                     vb.tvTaskFilterTimeExpectedStartDate.text = "${DateHelper.getMonthName(monthOfYear + 1)} $dayOfMonth, $year"
@@ -215,11 +329,20 @@ class ViewGoalActivity : AppCompatActivity() {
 
             // TODO: After closing the dialog, update recycler view contents
             vb.btnTaskSortFilterApply.setOnClickListener {
-                d.dismiss()
+                // db.sortFilterTasks()
             }
 
             d.setCancelable(true)
             d.show()
+        }
+
+        vb.btnCompleteGoal.setOnClickListener {
+            Log.d("MOBDEVE_MCO", "GOAL PROGRESS: ${vb.pbViewGoal.progress}")
+            if(vb.pbViewGoal.progress == 100) {
+                vb.btnCompleteGoal.isEnabled = true
+                db.updateTaskState(goalId)
+                finish()
+            }
         }
 
         if (this.tasksAdapter.itemCount == 0) {
@@ -234,28 +357,6 @@ class ViewGoalActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onStart() {
         super.onStart()
-        tasksAdapter.notifyDataSetChanged()
-    }
-
-    private fun computeProgress(g: Goal): Int {
-        var totalMatched: Int = 0
-        var totalComplete: Int = 0
-
-//        for(i in 0..<tasksList.size)
-//            if(tasksList[i].goalId == g.goalId) {
-//                totalMatched++
-//                if (tasksList[i].state == "Complete")
-//                    totalComplete++
-//            }
-        totalMatched = 10
-        totalComplete = 5
-
-        val progress: Int = try {
-            ((totalComplete * 1.0 / totalMatched) * 100).roundToInt()
-        } catch (e: ArithmeticException) {
-            0
-        }
-
-        return progress
+        vb.pbViewGoal.progress = GoalKeepDatabase(applicationContext).getProgressCount(goalId)
     }
 }
